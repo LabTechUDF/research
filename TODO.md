@@ -1,0 +1,5 @@
+- [ ] Adicionar artigos de revisão bibliográfica no fichamento
+- [ ] Começar a filtrar e renomear os artigos atuais
+- [ ] Adicionar artigos filtrados ao fichamento
+- [ ] Adicionar artigos de revisão bibliográfica ao fichamento
+- [ ] Cefinir objetivo geral e específicos

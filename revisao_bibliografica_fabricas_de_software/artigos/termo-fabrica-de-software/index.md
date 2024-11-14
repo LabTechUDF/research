@@ -5,6 +5,7 @@ https://www.periodicos.capes.gov.br/index.php/acervo/buscador.html?q=all%3Aexact
 
 resultado:
 encontrados através dos termos de pesquisa 74 artigos
+sendo que 55 foram filtrados da leitura do abstract
 
 áreas de pesquisa:
 Ciências Sociais Aplicadas
