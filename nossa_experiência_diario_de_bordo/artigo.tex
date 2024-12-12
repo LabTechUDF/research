@@ -1,0 +1,217 @@
+% ------------------------------------------------------------------------
+% Template Baseado no fornecido pelo usuário, adaptado para o artigo científico solicitado
+% Autores: Danrley Pereira e Rayssa Paiva
+% Orientador: Kerlla de Souza
+%
+% "Fábrica de Software Acadêmica: Análise da Experiência de Gestão e Desenvolvimento 
+% de Software no Centro Universitário do Distrito Federal em 2024"
+% ------------------------------------------------------------------------
+
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,				% tamanho da fonte
+	openright,			% capítulos começam em pág ímpar
+	oneside,			% para impressão apenas em frente
+	a4paper,			% tamanho do papel.
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,
+	%section=TITLE,
+	%subsection=TITLE,
+	%subsubsection=TITLE,
+	brazil,				% idioma
+	]{abntex2}
+
+
+% ---
+% PACOTES
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}		
+\usepackage[utf8]{inputenc}		% Codificação UTF-8
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			
+\usepackage{lipsum}             % Texto de exemplo
+\usepackage[brazilian,hyperpageref]{backref}	
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+
+% Configurações de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+\renewcommand{\backref}{}
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 
+		Nenhuma citação no texto.
+	\or
+		Citado na página #2.
+	\else
+		Citado #1 vezes nas páginas #2.
+	\fi
+}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+	pdftitle={Fábrica de Software Acadêmica: Análise da Experiência de Gestão e Desenvolvimento de Software no Centro Universitário do Distrito Federal em 2024}, 
+	pdfauthor={Danrley Pereira e Rayssa Paiva},
+	pdfsubject={Artigo Científico},
+	pdfcreator={LaTeX com abntex2},
+	pdfkeywords={Fábrica de Software Acadêmica, Desenvolvimento Ágil, Educação em Engenharia de Software, Gestão de Projetos, Mentoria Técnica}, 
+	colorlinks=true,        
+	linkcolor=blue,          
+	citecolor=blue,        	
+	filecolor=magenta,   	
+	urlcolor=blue,
+	bookmarksdepth=4
+}
+\makeatother
+
+\setlength{\parindent}{1.3cm}
+\setlength{\parskip}{0.2cm}
+
+\makeindex
+
+% Dados para Capa e Folha de Rosto
+\titulo{Fábrica de Software Acadêmica: Análise da Experiência de Gestão e Desenvolvimento de Software no Centro Universitário do Distrito Federal em 2024}
+\autor{Danrley Pereira \and Rayssa Paiva}
+\local{Brasília, DF}
+\data{2024}
+\instituicao{%
+Centro Universitário do Distrito Federal - UDF\\
+Escola de Engenharia, Arquitetura e TI}
+\tipotrabalho{Artigo Científico}
+\preambulo{Artigo Científico desenvolvido no âmbito da Fábrica de Software Acadêmica do UDF, sob orientação da Profa. Kerlla de Souza}
+
+% Início do documento
+\begin{document}
+
+\selectlanguage{brazil}
+\frenchspacing
+
+\imprimircapa
+
+\imprimirfolhaderosto
+
+% ---
+% inserir lista de ilustrações
+% ---
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+% ---
+
+% Sumário
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+% ----------------------------------------------------------
+% INTRODUÇÃO
+% ----------------------------------------------------------
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+O presente artigo apresenta a análise da experiência de gestão e desenvolvimento de software em uma Fábrica de Software Acadêmica implementada no Centro Universitário do Distrito Federal (UDF) durante o ano de 2024. O projeto emergiu como uma iniciativa de caráter educacional e prático, buscando oferecer aos estudantes da área de Engenharia e Tecnologia uma vivência real de desenvolvimento de software, com ênfase em gestão de projetos, aplicação de metodologias ágeis, mentoria técnica e soft skills.
+
+A Fábrica de Software consistiu em equipes multidisciplinares de estudantes, orientadas por um professor-mentor, responsáveis pelo desenvolvimento de sistemas de apoio, como o Sistema de Eventos e o Sistema de Alocação de Professores, além de um sistema principal de Reserva de Salas. O período analisado, de setembro a dezembro de 2024, permitiu acompanhar o ciclo completo desde a concepção dos projetos, a definição de arquitetura, implementação das funcionalidades e integração com diferentes tecnologias.
+
+Do ponto de vista educacional, a Fábrica de Software Acadêmica busca não apenas o desenvolvimento de soluções tecnológicas, mas também o amadurecimento dos estudantes enquanto profissionais, preparando-os para o mercado de trabalho. Com isso, o artigo se estrutura da seguinte forma: na seção seguinte abordam-se os referenciais teóricos sobre fábricas de software acadêmicas, desenvolvimento ágil e mentoria; depois, descrevemos a metodologia adotada. Em seguida, apresentamos resultados e discussão sobre aspectos técnicos, gerenciais e educacionais. Por fim, indicamos trabalhos futuros e conclusões.
+
+% ----------------------------------------------------------
+% FUNDAMENTAÇÃO TEÓRICA
+% ----------------------------------------------------------
+\section{Fundamentação Teórica}
+
+As fábricas de software acadêmicas são ambientes controlados, normalmente em instituições de ensino superior, que visam proporcionar a alunos uma experiência prática de desenvolvimento de software próximo ao ambiente empresarial \cite{rocha2014fabrica}. Essa abordagem, segundo diversos estudos, possibilita a aplicação de conceitos teóricos em cenários reais, fomentando o amadurecimento de habilidades técnicas e comportamentais \cite{barreto2019ensino}.
+
+No contexto educacional, metodologias ágeis, como Scrum e Kanban, são amplamente adotadas para oferecer ciclos curtos de feedback, maior visibilidade do progresso e facilitar a integração entre os membros da equipe \cite{schwaber2017scrum}. Além disso, a utilização de ferramentas de controle de versão (Git), sistemas de integração contínua, contêineres (Docker) e frameworks modernos (Spring Boot, React, entre outros) aproxima o estudante das práticas atuais do mercado.
+
+A mentoria técnica e a gestão de projetos são elementos-chave: um mentor experiente orienta as equipes, promove boas práticas de engenharia de software, incentiva comunicação e colaboração, além de avaliar e direcionar as entregas. As soft skills, tais como comunicação, trabalho em equipe, autonomia e capacidade de aprendizado rápido, são cada vez mais valorizadas no mercado \cite{martins2020softskills}.
+
+Portanto, a união de um ambiente acadêmico controlado, metodologias ágeis, orientação por mentoria e foco em soft skills compõe o arcabouço teórico e prático que sustenta a proposta de uma Fábrica de Software Acadêmica.
+
+% ----------------------------------------------------------
+% METODOLOGIA
+% ----------------------------------------------------------
+\section{Metodologia}
+
+O estudo realizou uma análise qualitativa a partir dos relatórios semanais e mensais produzidos ao longo do ano de 2024. A Fábrica de Software foi conduzida no UDF, envolvendo alunos de diferentes semestres dos cursos de Engenharia de Software e Ciência da Computação. Os dados foram coletados por meio de:
+
+\begin{itemize}
+    \item Diário de bordo do mentor: descrevendo reuniões, atribuições de tarefas, dificuldades enfrentadas, adoção de tecnologias e ferramentas.
+    \item Relatórios de estágio e feedbacks individuais dos participantes.
+    \item Observação direta dos repositórios de código-fonte (GitHub), integrações com APIs, ferramentas de CI/CD.
+\end{itemize}
+
+A análise considerou três dimensões principais:
+\begin{enumerate}
+    \item \textbf{Gestão de Projetos}: reuniões, planejamento, prazos, comunicação e organização do backlog (via Discord e GitHub Issues).
+    \item \textbf{Desenvolvimento Técnico}: uso de frameworks (Spring Boot, Flask, React), padrões de arquitetura (três camadas, factories, singletons), testes e integrações.
+    \item \textbf{Aprendizagem e Soft Skills}: evolução dos alunos, mentoria, trabalho em equipe, autonomia, dedicação e habilidades de comunicação.
+\end{enumerate}
+
+A arquitetura do sistema, mostrada na Figura \ref{fig:arq}, foi disponibilizada no ambiente acadêmico, permitindo a visualização da topologia de microsserviços, autenticação centralizada, integrações com bancos de dados e sistemas de cache.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{topologia.png}
+\caption{Topologia da Solução da Fábrica de Software (LabTech/UDF).}
+\label{fig:arq}
+\end{figure}
+
+% ----------------------------------------------------------
+% RESULTADOS E DISCUSSÃO
+% ----------------------------------------------------------
+\section{Resultados e Discussão}
+
+\subsection{Aspectos Técnicos}
+
+Ao longo do período analisado, a equipe desenvolveu componentes do sistema de reserva de salas, eventos e alocação de professores. Houve progressos significativos no backend, usando Python (Flask) e Java (Spring Boot), e no frontend, adotando React. Conceitos de arquitetura, testes unitários, uso de MongoDB Atlas, PostgreSQL, GraphQL, autenticação e integração contínua foram introduzidos.
+
+Alguns membros, como Guilherme e Nicole, demonstraram evolução técnica notável, passando de tarefas simples a entregas mais complexas com padrões de projeto e testes. Outros, como Gustavo, tiveram maior dificuldade em configurar ambientes e manter comunicação fluida, porém mostraram interesse em participar.
+
+\subsection{Aspectos Gerenciais}
+
+A gestão de projetos foi baseada em reuniões semanais, uso de um backlog no Discord e GitHub, evitando ferramentas mais complexas. Houve dificuldades de comunicação entre alguns membros, falta de transparência em disponibilidade (como o caso do Emerson, que deixou o projeto sem avisar), e problemas em pedir ajuda em tempo hábil.
+
+Entretanto, a mentoria fornecida por Danrley (professor/mentor) ajudou a direcionar esforços, apresentar tecnologias, corrigir falhas de integração e sugerir boas práticas de desenvolvimento. Membros mais engajados se beneficiaram desse contato próximo, aprendendo sobre fluxo de trabalho com Git, PRs e testes.
+
+\subsection{Aspectos Educacionais}
+
+Do ponto de vista educacional, o projeto proporcionou um ambiente de aprendizado prático. Os alunos tiveram a oportunidade de trabalhar com tecnologias atuais, entender o funcionamento de uma pipeline de desenvolvimento, praticar comunicação, resolução de problemas, autonomia e responsabilidade com prazos.
+
+A heterogeneidade da equipe e a ausência de papéis rígidos (como Product Owner ou Scrum Master) fez com que alguns alunos tivessem que assumir diferentes funções, fomentando assim a versatilidade. Como resultado, alunos que se comunicaram bem, pediram ajuda quando precisaram e buscaram se aprimorar tiveram maior evolução.
+
+A experiência também evidenciou a importância de soft skills em conjunto com habilidades técnicas. Comunicação transparente, trabalho em equipe e dedicação foram fundamentais para o progresso individual e coletivo.
+
+% ----------------------------------------------------------
+% TRABALHOS FUTUROS
+% ----------------------------------------------------------
+\section{Trabalhos Futuros}
+
+Para os próximos ciclos, sugere-se:
+
+\begin{itemize}
+    \item \textbf{Revisão sistemática sobre fábricas de software universitárias (2024-2025)}: mapear práticas, desafios e métricas utilizadas em outras instituições.
+    \item \textbf{Desenvolvimento de metodologia própria (2025)}: criar um framework de mentoria, processos e ferramentas adaptado à realidade do UDF.
+    \item \textbf{Expansão do programa}: incluir novos projetos, integrar mais alunos, estabelecer parcerias com empresas e aprimorar a integração contínua entre backend, frontend e serviços de dados.
+\end{itemize}
+
+Essas ações visam fortalecer a cultura de aprendizado prático e contínuo, aumentando a qualidade das entregas, o engajamento dos estudantes e a relevância da experiência para o mercado.
+
+% ----------------------------------------------------------
+% CONSIDERAÇÕES FINAIS
+% ----------------------------------------------------------
+\section*{Considerações Finais}
+\addcontentsline{toc}{section}{Considerações Finais}
+
+A experiência da Fábrica de Software Acadêmica no UDF em 2024 mostrou-se valiosa tanto do ponto de vista técnico quanto educacional. Embora tenham surgido desafios em comunicação, autonomia e integração técnica, o aprendizado proporcionado aos alunos foi significativo. O amadurecimento em habilidades de desenvolvimento, testes, arquitetura e soft skills prepara esses estudantes para as demandas reais do mercado de trabalho.
+
+A iniciativa contribuiu para consolidar um ambiente de aprendizado prático, fortalecendo as competências necessárias para a formação de desenvolvedores mais completos. O feedback individual fornecido aos membros da equipe, aliado ao registro de diários de bordo e relatórios, formou um conjunto rico de dados qualitativos. Assim, espera-se que as lições aprendidas possam orientar melhorias no programa, resultando em equipes mais coesas, sistemas mais robustos e uma experiência educacional ainda mais gratificante.
+
+% ----------------------------------------------------------
+% REFERÊNCIAS
+% ----------------------------------------------------------
+\bibliography{abntex2-modelo-references}
+
+\end{document}
