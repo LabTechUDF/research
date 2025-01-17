@@ -1,0 +1,300 @@
+\documentclass[12pt]{article}
+
+\usepackage{sbc-template}
+\usepackage{graphicx,url}
+\usepackage[utf8]{inputenc}
+\usepackage{indentfirst}
+\usepackage{cite}
+
+\sloppy
+
+\title{Fábrica de Software Acadêmica: Um Relato de Experiência no UDF}
+
+\author{%
+  Danrley Pereira\inst{1},
+  Kerlla de Souza\inst{1},
+  Rayssa Paiva\inst{1}
+}
+
+\address{%
+  Centro Universitário do Distrito Federal -- UDF\\
+  Departamento de Engenharia, Arquitetura e TI\\
+  \email{\{danrley, kerlla, rayssa\}@udf.edu.br}
+}
+
+\begin{document} 
+
+\maketitle
+
+% ---
+% inserir lista de abreviaturas e siglas
+% ---
+%\begin{siglas}
+%  \item[PPC] Plano Pedagógico de Curso
+%  \item[DCN] Diretrizes Curriculares Nacional
+%  \item[UDF] Centro Universitário do Distrito Federal
+%  \item[DF] Distrito Federal
+%\end{siglas}
+% ---
+
+\begin{abstract}
+Este artigo apresenta um relato de experiência sobre a implementação e gestão de uma Fábrica de Software Acadêmica no Centro Universitário do Distrito Federal (UDF). Inicialmente, contextualiza-se a instituição de ensino, destacando sua relevância na capital do país e seu histórico de práticas tecnológicas e educacionais. Na sequência, analisam-se os cursos de tecnologia do Departamento de Engenharia, Arquitetura e TI, justificando a necessidade da Fábrica de Software. Em seguida, descreve-se a metodologia adotada na coleta de dados e discute-se os principais achados acerca dos aspectos técnicos, gerenciais e educacionais, culminando em propostas de trabalhos futuros e conclusões.
+\end{abstract}
+
+% ----------------------------------------------------------------------------
+% TÓPICO 1
+% ----------------------------------------------------------------------------
+\section{Introdução à Instituição de Ensino (UDF)}
+\label{sec:introducao-udf}
+
+O Centro Universitário do Distrito Federal (UDF) \index{UDF}, criado em 1967, destaca-se como uma das pioneiras no ensino superior particular em Brasília. Com cursos em diversas áreas, promove ensino \index{ensino}, pesquisa \index{pesquisa} e extensão \index{extensão} de excelência na região \cite{udfppc2023}. Tornou-se Centro Universitário em 2004, ampliando sua autonomia para criação de novos cursos e intensificação de projetos de extensão e iniciação científica.
+
+\subsection{Breve Histórico e Missão}
+\label{sec:breve-historico}
+
+Desde sua fundação, o UDF busca formar cidadãos éticos e inovadores, preparados para contribuir no desenvolvimento socioeconômico do Distrito Federal (DF) \index{DF}. De acordo com seu Projeto Pedagógico de Curso (PCN) \index{PCN} \cite{udfppc2023}, sua missão institucional é:
+\begin{quote}
+    \emph{Oferecer à comunidade ensino superior de excelência, produzir e disseminar o conhecimento científico e tecnológico para formação de profissionais e cidadãos eticamente responsáveis, com postura colaborativa, inclusiva, criativa e inovadora, capazes de contribuir para a transformação sociocultural e ambiental, e para o desenvolvimento sustentável do país e do mundo.}
+\end{quote}
+
+\subsection{Relevância Local e Impacto em Brasília}
+\label{sec:relevancia-local}
+
+Situado na região central de Brasília \index{Brasília}, o UDF \index{UDF} beneficia-se da proximidade com os órgãos públicos federais e empresas privadas, facilitando parcerias e estágios para seus estudantes. Além disso, a instituição estende suas atividades a diversas regiões administrativas por meio de projetos de extensão e ações de responsabilidade social, dentre essas regiões Ceilândia e Taguatinga têm maior destaque \cite{dcncomputacao2016}.
+
+\subsection{Dados Gerais (Alunos e Cursos)}
+\label{sec:dados-gerais}
+
+Com mais de cinco décadas de história, o UDF oferece cursos em áreas como Ciências Administrativas e de Negócios, Ciência da Computação e da Saúde, Ciências Exatas e Tecnológicas e Ciências Humanas, Sociais e Aplicadas. Quase 2.000 alunos estão matriculados nos cursos de TI (dados consolidados de 2024), distribuídos em diferentes modalidades e períodos. A infraestrutura inclui laboratórios especializados e recursos tecnológicos avançados, buscando atender às demandas acadêmicas, de pesquisa e de extensão.
+
+\subsection{Importância de Iniciativas Práticas}
+\label{sec:importancia-fabrica}
+
+A Fábrica de Software Acadêmica exemplifica o compromisso do UDF em unir teoria e prática, oferecendo aos estudantes projetos reais e estimulando a inovação. Além disso, outras atividades de extensão reforçam a formação dos alunos, conectando-os às necessidades do mercado e fortalecendo o ecossistema local de tecnologia.
+
+% ----------------------------------------------------------------------------
+% TÓPICO 2
+% ----------------------------------------------------------------------------
+\section{Cursos de Tecnologia no Departamento de Engenharia, Arquitetura e TI}
+\label{sec:cursos-ti}
+
+O objetivo deste tópico é analisar o perfil acadêmico do departamento de TI, destacando o crescimento e os desafios enfrentados pelos cursos oferecidos, e como esses fatores justificam a implementação da Fábrica de Software.
+
+\subsection{Panorama Geral dos Cursos}
+\label{sec:panorama-geral}
+
+O Departamento de Engenharia, Arquitetura e TI do UDF engloba cursos como:
+\begin{itemize}
+  \item \textbf{Engenharia de Software:} Desenvolvimento de soluções escaláveis e aplicação de boas práticas de engenharia.
+  \item \textbf{Ciência da Computação:} Foco em fundamentos teóricos, algoritmos, inteligência artificial e pesquisa.
+  \item \textbf{Sistemas de Informação:} Orientado à gestão de TI, integração de soluções empresariais e análise de processos.
+  \item \textbf{Design (Digital):} Combina criatividade e tecnologia, abordando experiência do usuário e interfaces.
+  \item \textbf{Análise e Desenvolvimento de Sistemas:} Programa prático com ênfase em linguagens de programação e metodologias ágeis.
+\end{itemize}
+
+\subsection{Crescimento e Dados Comparativos}
+\label{sec:crescimento-dados}
+
+Nos últimos dois anos, houve crescimento expressivo nas matrículas dos cursos de TI. A Tabela~\ref{tab:matriculas-ti} ilustra essa evolução:
+
+
+\begin{table}[ht]
+\centering
+\caption{Evolução das Matrículas nos Cursos de TI (2022-2024). Fonte: [sistema interno da UDF]}
+\label{tab:matriculas-ti}
+\begin{tabular}{lrrr}
+\hline
+\textbf{Curso} & \textbf{2022} & \textbf{2023} & \textbf{2024*} \\ \hline
+Engenharia de Software & 500 & 650 & 123 \\ 
+Ciência da Computação & 380 & 520 & 639 \\ 
+Sistemas de Informação & 300 & 400 & 148 \\ 
+Design (Digital) & 200 & 270 & 201 \\ 
+Análise e Desenv. de Sist. & 150 & 160 & 696 \\ \hline
+\textbf{Total} & \textbf{1.530} & \textbf{2.000} & \textbf{1.807} \\
+\hline
+\multicolumn{4}{l}{* Dados consolidados de 2024.}
+\end{tabular}
+\end{table}
+
+Comparando com outros departamentos, os cursos de TI têm se destacado como vetores de crescimento. Atualmente, sabe-se que cerca de 2.000 alunos estejam matriculados em tais cursos, somando todos os períodos.  
+
+\subsection{Desafios Enfrentados}
+\label{sec:desafios-ti}
+
+A despeito do crescimento, alguns desafios persistem:
+\begin{itemize}
+  \item \textbf{Falta de Experiências Práticas Reais:} Disciplinas teóricas não suprem totalmente a necessidade de projetos de mercado.
+  \item \textbf{Adaptação a Metodologias Ágeis e Ferramentas Modernas:} Scrum, Kanban e tecnologias de ponta nem sempre são profundamente explorados.
+  \item \textbf{Conexão com a Fábrica de Software:} Emergem iniciativas como a Fábrica de Software para viabilizar maior contato com projetos reais e promover vivências práticas.
+\end{itemize}
+
+Esses aspectos justificam a iniciativa de se criar um ambiente de desenvolvimento acadêmico estruturado, apresentado no Tópico~\ref{sec:fabrica}.
+
+% ----------------------------------------------------------------------------
+% TÓPICO 3
+% ----------------------------------------------------------------------------
+\section{A Fábrica de Software Acadêmica}
+\label{sec:fabrica}
+
+Uma fábrica de software é um processo estruturado, controlado e melhorado de forma contínua para o desenvolvimento de software \cite{fernandes2004fabrica}, não sendo uma novidade na comunidade acadêmica \cite{cusumano1991japan}. Assim, um projeto de fábrica de software em cursos de graduação de TI visa proporcionar meios para experimentação profissional em ambiente controlado, lançando mão de uma metodologia baseada na vivência prática, na resolução de problemas e na auto regulação da aprendizagem \cite{oliveira2017conduccao}.
+
+\subsection{Objetivos e Justificativas}
+A Fábrica de Software Acadêmica do UDF (LabTech) \index{LabTech}, mencionado em documentos da UDF como Projeto "LabTech: Criando Soluções", surgiu para suprir a demanda por experiências práticas, aproximando teoria e prática e habilitando estudantes a atuarem com metodologias e ferramentas atuais. O projeto visa desenvolver competências técnicas, gerenciais e interpessoais necessárias ao mercado de trabalho.
+
+\subsection{Estrutura Organizacional e Dinâmica}
+Os alunos são organizados em equipes multidisciplinares, com papéis flexíveis e reuniões periódicas. Há uso de ferramentas como GitHub, Trello e Jira para realização de cerimônias do framework SCRUM e controle de atividades usando a metodologia ágil KANBAN. Encontros presenciais e virtuais complementam o acompanhamento do professor e dos respectivos gerentes, que orientam as entregas e resolvem bloqueios técnicos.
+
+\subsection{Ferramentas e Práticas Utilizadas}
+Entre as principais ferramentas, destacam-se Git (controle de versão), Figma (prototipagem), Discord (comunicação) e metodologias ágeis como Scrum e Kanban, adaptadas às necessidade vigentes no semestre. Em alguns projetos, emprega-se Spring Boot, Flask ou React, estimulando o contato com tecnologias modernas.
+
+\subsection{Exemplos de Projetos em Desenvolvimento}
+\begin{itemize}
+  \item \textbf{Sistema de Reserva de Salas:} Auxilia no gerenciamento de espaços para aulas e eventos.
+  \item \textbf{Sistema de Eventos:} Possibilita a organização de palestras, workshops e minicursos.
+  \item \textbf{Sistema de Alocação de Professores:} Suporte à distribuição de docentes em disciplinas.
+\end{itemize}
+
+\subsection{Perfil dos Participantes}
+O LabTech engloba alunos de diversos semestres e cursos, alguns utilizando a experiência como estágio ou monitoria, enquanto outros participam voluntariamente para aperfeiçoar habilidades práticas. Uma planilha de dados registra informações como matrícula, curso, período e participação em projetos.
+
+Utilizamos Python para processar a planilha de dados. As bibliotecas usadas incluem:
+\begin{itemize}
+    \item \textbf{pandas}: para manipulação e análise de dados;
+    \item \textbf{matplotlib}: para geração de gráficos;
+    \item \textbf{re}: para processamento de texto e identificação de padrões.
+\end{itemize}
+
+Os gráficos gerados a seguir ilustram as características dos participantes.
+
+\subsubsection{Distribuição por Semestre}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{graficos/distribuicao_por_semestre.png}
+    \caption{Distribuição dos participantes por semestre.}
+    \label{fig:distribuicao_semestre}
+\end{figure}
+
+\newpage
+
+\subsubsection{Classificação de Experiência}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{graficos/experiencia_classificacao.png}
+    \caption{Classificação de experiência dos participantes.}
+    \label{fig:experiencia_classificacao}
+\end{figure}
+
+\subsubsection{Número de Estudantes por Curso}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{graficos/numero_estudantes_por_curso.png}
+    \caption{Número de estudantes por curso.}
+    \label{fig:estudantes_curso}
+\end{figure}
+
+\newpage
+
+\subsubsection{Participação por Ano}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{graficos/participacao_por_ano.png}
+    \caption{Participação por ano.}
+    \label{fig:participacao_ano}
+\end{figure}
+
+\subsubsection{Linguagens Mais Citadas}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{graficos/top_linguagens_citadas.png}
+    \caption{As 10 linguagens mais citadas pelos participantes.}
+    \label{fig:linguagens_citadas}
+\end{figure}
+
+\subsection{Desafios Enfrentados e Aprendizados}
+Os diários de bordo e relatórios semanais apontam dificuldades na comunicação interna, falta de padronização nos registros e conciliação das demandas do LabTech com a carga horária acadêmica. Em contrapartida, observa-se avanço em \emph{hard skills} (arquitetura, programação) e \emph{soft skills} (liderança, comunicação). No Tópico~\ref{sec:metodologia} detalhamos a coleta e análise dessas informações.
+
+
+% ----------------------------------------------------------------------------
+% TÓPICO 4
+% ----------------------------------------------------------------------------
+\section{Metodologia do Estudo}
+\label{sec:metodologia}
+
+\subsection{Abordagem Qualitativa e Quantitativa}
+Optou-se por uma abordagem mista. Elementos quantitativos incluem número de matrículas, frequência e atividade nos repositórios. A vertente qualitativa abrange diários de bordo, relatórios de estágio e observação direta das equipes.
+
+\subsection{Fontes de Dados}
+\begin{itemize}
+    \item \textbf{Diários de Bordo dos Alunos-Gerentes:} relatam comunicação, bloqueios técnicos e evolução do projeto.
+    \item \textbf{Relatórios Semanais/Mensais:} elaborados pelos participantes e pelo mentor, descrevendo progresso e dificuldades.
+    \item \textbf{Observação Direta:} participação em reuniões, análise de commits, pull requests e issues.
+    \item \textbf{Planilha de Dados dos Participantes:} matrícula, curso, período, idade, se faz estágio ou não, papel (monitor, estagiário, participante).
+\end{itemize}
+
+\subsection{Procedimentos de Análise}
+Os dados foram triangulados, cruzando informações qualitativas (diários e relatórios) com métricas de commits, PRs e monitoria. A análise seguiu três dimensões principais:
+\begin{itemize}
+  \item \textbf{Técnica:} tecnologias adotadas, padrões de projeto, desafios técnicos.
+  \item \textbf{Gerencial:} organização do backlog, comunicação, transparência e práticas de gestão.
+  \item \textbf{Educacional:} desenvolvimento de \emph{hard skills} (linguagens e frameworks) e \emph{soft skills} (colaboração, liderança).
+\end{itemize}
+
+\subsection{Limitações Metodológicas}
+\textbf{Falta de Guia Estruturado para Diários de Bordo}: cada aluno-gerente registrou observações de forma subjetiva, dificultando comparação sistemática. Pretende-se elaborar um guia de registro padronizado, incluindo eixos de avaliação técnicos e comportamentais (Tópico~\ref{sec:trabalhos-futuros}).
+
+% ----------------------------------------------------------------------------
+% TÓPICO 5
+% ----------------------------------------------------------------------------
+\section{Discussão e Resultados}
+\label{sec:discussao-resultados}
+
+\subsection{Aspectos Técnicos}
+Conforme relatado nos diários de bordo, a adoção de frameworks modernos (Spring Boot, Flask, React) impulsionou o domínio de tecnologias pelos alunos. Desafios incluíram configuração de ambiente, controle de versão e integração contínua, mas contribuíram para a formação prática \cite{sommerville2019}.
+
+\subsection{Aspectos Gerenciais}
+A ausência de papéis formais (Scrum Master ou Product Owner) demandou maior autonomia dos alunos-gerentes. Falhas de comunicação ocorreram, especialmente quando membros do time não informavam indisponibilidade ou bloqueios. Revisões de código e reuniões semanais mitigaram parte desses problemas.
+
+\subsection{Aspectos Educacionais}
+Em termos educacionais, observou-se avanço na capacidade de resolução de problemas, liderança e trabalho em equipe. Os participantes também relataram ganhos em autoeficácia, pois experimentaram cenários próximos ao mercado. A falta de um guia estruturado para registros, contudo, dificultou medir objetivamente a evolução de \emph{soft skills}.
+
+% ----------------------------------------------------------------------------
+% TÓPICO 6
+% ----------------------------------------------------------------------------
+\section{Trabalhos Futuros}
+\label{sec:trabalhos-futuros}
+
+\subsection{Revisão Sistemática de Literatura (2024--2025)}
+Mapeamento de outras Fábricas de Software Acadêmicas, identificando melhores práticas e métricas de avaliação, a fim de comparar metodologias e propor melhorias para o modelo do UDF.
+
+\subsection{Proposta de Metodologia Própria}
+Prevê-se a criação de um framework de mentoria e processos, incluindo:
+\begin{itemize}
+    \item \textbf{Guia Estruturado de Diários de Bordo:} definindo eixos de avaliação, periodicidade e formato.
+    \item \textbf{Padronização de Relatórios Semanais:} templates com indicadores de progresso, bloqueios e retrospectivas.
+\end{itemize}
+
+\subsection{Perguntas de Pesquisa}
+Algumas questões que direcionam estudos futuros:
+\begin{itemize}
+    \item Como mensurar objetivamente o impacto na formação de \emph{hard} e \emph{soft skills}?
+    \item Que estratégias de mentoria melhoram o engajamento e a autonomia dos estudantes?
+    \item Quais métricas de produtividade e qualidade são mais adequadas em contexto acadêmico?
+\end{itemize}
+
+\subsection{Expansão do Programa}
+Planeja-se ampliar os projetos para outras áreas, inclusive com parcerias externas, bem como aprofundar a integração entre backend, frontend e ciência de dados. A criação de novos módulos de extensão também será avaliada, fortalecendo a presença do UDF no ecossistema de TI em Brasília.
+
+% ----------------------------------------------------------------------------
+% TÓPICO 7
+% ----------------------------------------------------------------------------
+\section{Conclusão}
+\label{sec:conclusao}
+
+Este artigo apresentou um relato de experiência acerca da Fábrica de Software Acadêmica no UDF, contextualizando a instituição, os cursos de TI e as demandas que justificam a criação desse ambiente de aprendizagem prática. Os resultados evidenciam ganhos em competências técnicas e interpessoais, aproximando a formação acadêmica das exigências reais do mercado de trabalho.
+
+A falta de um guia estruturado para diários de bordo foi identificada como limitação metodológica, direcionando propostas de trabalhos futuros que visam padronizar registros, comparar resultados e expandir o programa para novos projetos e parcerias. Espera-se que tais esforços fortaleçam ainda mais a formação de profissionais qualificados para o setor de TI no Distrito Federal.
+
+\bibliographystyle{sbc}
+\bibliography{sbc-template}
+
+\end{document}
