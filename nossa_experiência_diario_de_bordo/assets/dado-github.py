@@ -10,7 +10,9 @@ Features:
   - Caches every GET response to a file in the "cache" folder so that
     subsequent runs can use stored data (avoiding extra API calls).
   - Blacklists repositories (e.g. forks and specified repos) so that they are skipped.
-
+  - Retrieves extra member details ("public_repos", "followers", "following", "created_at")
+    and attaches them to each member.
+  
 Set your GitHub personal access token in the environment variable GITHUB_TOKEN.
 """
 
@@ -42,7 +44,6 @@ if not os.path.exists(CACHE_DIR):
     os.makedirs(CACHE_DIR)
 
 # Define a list of repository names to blacklist.
-# You can add any repo names you want to skip.
 REPO_BLACKLIST = [
     # e.g., "forked-repo-name", "experimental-project", etc.
     "Hi.Events",
@@ -54,9 +55,7 @@ REPO_BLACKLIST = [
 # ------------------------------------------------------------------------------
 
 def get_cache_filename(url, params):
-    """
-    Generate a safe filename for caching based on the URL and parameters.
-    """
+    """Generate a safe filename for caching based on the URL and parameters."""
     key_source = url
     if params:
         # Sort parameters to get a consistent key.
@@ -99,7 +98,6 @@ def api_get(url, params=None, headers=HEADERS, force_update=False):
 
     try:
         response = requests.get(url, params=params, headers=headers)
-        # Log rate limit details if available.
         if "X-RateLimit-Remaining" in response.headers:
             print(f"[Rate Limit] Limit: {response.headers.get('X-RateLimit-Limit')}, "
                   f"Used: {response.headers.get('X-RateLimit-Used')}, "
@@ -232,6 +230,26 @@ def build_relationship_mapping(repo, repo_issues, repo_commits, repo_collaborato
                 mapping[login]["pull_requests"] += 1
     return mapping
 
+def get_member_details(member):
+    """
+    For a given member dictionary (which must have the "url" field),
+    fetch additional details like public_repos, followers, following, and created_at.
+    """
+    user_url = member.get("url")
+    response = api_get(user_url)
+    if response:
+        detail = response.json()
+        return {
+            "login": member.get("login"),
+            "id": member.get("id"),
+            "html_url": member.get("html_url"),
+            "public_repos": detail.get("public_repos"),
+            "followers": detail.get("followers"),
+            "following": detail.get("following"),
+            "created_at": detail.get("created_at")
+        }
+    return member  # fallback if no extra details could be fetched
+
 # ------------------------------------------------------------------------------
 # Main routine: data collection and saving
 # ------------------------------------------------------------------------------
@@ -248,14 +266,14 @@ def main():
         return
     output["organization"] = org_data
     
-    # 2. Members Data
+    # 2. Members Data (with extra details)
     print("Fetching members data...")
     members = get_members(org_data["members_url"])
-    output["members"] = [{
-        "login": member.get("login"),
-        "id": member.get("id"),
-        "html_url": member.get("html_url")
-    } for member in members]
+    detailed_members = []
+    for member in members:
+        detailed = get_member_details(member)
+        detailed_members.append(detailed)
+    output["members"] = detailed_members
     
     # 3. Repositories Data
     print("Fetching repositories data...")
