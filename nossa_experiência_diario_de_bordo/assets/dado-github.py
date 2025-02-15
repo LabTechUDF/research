@@ -9,6 +9,7 @@ Features:
   - Logs GitHub API rate limit details after live calls.
   - Caches every GET response to a file in the "cache" folder so that
     subsequent runs can use stored data (avoiding extra API calls).
+  - Blacklists repositories (e.g. forks and specified repos) so that they are skipped.
 
 Set your GitHub personal access token in the environment variable GITHUB_TOKEN.
 """
@@ -22,7 +23,7 @@ import requests
 # ------------------------------------------------------------------------------
 # Global configuration
 # ------------------------------------------------------------------------------
-TOKEN = os.environ.get("GITHUB_TOKEN")
+TOKEN = os.environ.get("GITHUB_TOKEN") or "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"
 if not TOKEN:
     print("Please set the GITHUB_TOKEN environment variable with your GitHub personal access token.")
     exit(1)
@@ -39,6 +40,14 @@ TIMELINE_HEADERS["Accept"] = "application/vnd.github.mockingbird-preview+json"
 CACHE_DIR = "cache"
 if not os.path.exists(CACHE_DIR):
     os.makedirs(CACHE_DIR)
+
+# Define a list of repository names to blacklist.
+# You can add any repo names you want to skip.
+REPO_BLACKLIST = [
+    # e.g., "forked-repo-name", "experimental-project", etc.
+    "Hi.Events",
+    "demo-repository"
+]
 
 # ------------------------------------------------------------------------------
 # Caching helpers
@@ -73,10 +82,10 @@ class CachedResponse:
 
 def api_get(url, params=None, headers=HEADERS, force_update=False):
     """
-    Perform a GET request to the specified URL with caching.
-    If a cached file exists for the same URL/params and force_update is False,
-    returns a CachedResponse. Otherwise, makes a live API call, logs rate limit
-    info, saves the response to cache, and returns the response.
+    Perform a GET request with caching.
+    If a cached file exists for the URL/params and force_update is False,
+    returns a CachedResponse; otherwise, makes a live API call, logs rate-limit info,
+    saves the response to cache, and returns the response.
     """
     cache_file = get_cache_filename(url, params)
     if not force_update and os.path.exists(cache_file):
@@ -98,7 +107,6 @@ def api_get(url, params=None, headers=HEADERS, force_update=False):
                   f"Reset: {response.headers.get('X-RateLimit-Reset')}")
         if response.status_code != 200:
             print(f"[Error] GET {url} returned {response.status_code}: {response.text}")
-            # Optionally, you could cache errors as well to avoid repeated calls.
         # Cache the response
         try:
             cache_content = {
@@ -118,9 +126,7 @@ def api_get(url, params=None, headers=HEADERS, force_update=False):
 def get_all_pages(url, params=None, headers=HEADERS):
     """
     Retrieve and aggregate all items from paginated endpoints.
-    Follows the 'Link' header to get next pages.
-    Uses the caching-enabled api_get function.
-    Returns a list of items.
+    Follows the 'Link' header to fetch subsequent pages.
     """
     items = []
     while url:
@@ -262,6 +268,10 @@ def main():
     
     for repo in repos:
         repo_name = repo.get("name")
+        if repo.get("fork") or repo_name in REPO_BLACKLIST:
+            print(f"Skipping repository {repo_name} (fork or blacklisted)")
+            continue
+
         print(f"Processing repository: {repo_name}")
         repo_info = {
             "name": repo_name,
@@ -287,7 +297,7 @@ def main():
             "open_issues": repo.get("open_issues")
         }
         repositories_list.append(repo_info)
-        repo_full_name = repo.get("full_name")  # e.g., "LabTechUDF/python-services"
+        repo_full_name = repo.get("full_name")
         
         # 4. Issues
         print(f"  Fetching issues for {repo_name}...")
