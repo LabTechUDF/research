@@ -8,10 +8,11 @@ Features:
   - Logs GitHub API rate limit details after live calls.
   - Caches every GET response in the "cache" folder to avoid repeated API calls.
   - Blacklists repositories (e.g., forks and specified repos) so they are skipped.
-  - Retrieves extra member details and then filters nested user objects so that only:
-      id, node_id, and login are stored.
-  - Filters issues and commits to keep only the fields required for analysis.
-  - For timeline events, if an event contains an "actor" or "user", it is filtered.
+  - Retrieves extra member details for active organization members.
+  - For relationship mapping, if a contributor (via commit/issue) is not an active member,
+    fetches and saves their basic user data (id, node_id, login) with an extra flag "active": false.
+  - Filters issues, commits, and timeline events to keep only required fields.
+  - In relationship mapping, only contributors with non-zero contributions are saved.
   
 Set your GitHub personal access token in the GITHUB_TOKEN environment variable.
 """
@@ -57,7 +58,6 @@ def get_cache_filename(url, params):
     """Generate a safe filename for caching based on the URL and parameters."""
     key_source = url
     if params:
-        # Sort parameters to get a consistent key.
         key_source += json.dumps(params, sort_keys=True)
     key = hashlib.md5(key_source.encode("utf-8")).hexdigest()
     return os.path.join(CACHE_DIR, f"{key}.json")
@@ -132,7 +132,6 @@ def get_all_pages(url, params=None, headers=HEADERS):
             items.extend(data)
         else:
             items.append(data)
-        # Check for pagination using the Link header.
         link = response.headers.get("Link", None)
         if link:
             next_url = None
@@ -188,7 +187,6 @@ def filter_issue(issue):
     filtered["closed_by"] = filter_user(issue.get("closed_by"))
     pr = issue.get("pull_request")
     if pr:
-        # Only keep selected fields in pull_request
         filtered["pull_request"] = {k: pr.get(k) for k in ["url", "html_url", "diff_url", "patch_url", "merged_at"]}
     else:
         filtered["pull_request"] = None
@@ -197,7 +195,7 @@ def filter_issue(issue):
 def filter_commit(commit_obj):
     """
     Filter a commit dictionary to only include the fields needed for analysis.
-    For nested user objects (author/committer), only keep id, node_id, and login.
+    For nested user objects, only keep id, node_id, and login.
     """
     filtered = {}
     keys_to_keep = ["sha", "node_id", "url", "comments_url"]
@@ -233,7 +231,7 @@ def filter_timeline_event(event):
     return filtered
 
 # ------------------------------------------------------------------------------
-# Data fetching functions
+# Data fetching functions (unchanged)
 # ------------------------------------------------------------------------------
 
 def get_organization(org_name):
@@ -272,31 +270,69 @@ def get_repo_collaborators(collaborators_url):
     url = remove_template(collaborators_url)
     return get_all_pages(url)
 
-def build_relationship_mapping(repo, repo_issues, repo_commits, repo_collaborators):
+
+# ------------------------------------------------------------------------------
+# Updated Relationship Mapping function
+# ------------------------------------------------------------------------------
+def build_relationship_mapping(repo, repo_issues, repo_commits, repo_collaborators, active_members, external_members):
+    """
+    Build a mapping (per contributor login) of:
+      - Number of commits
+      - Number of issues opened
+      - Number of pull requests
+    If a contributor is not among the active organization members,
+    fetch and add their basic user data (if not already present) to external_members,
+    tagging them as "active": False.
+    Only include contributors with at least one contribution.
+    """
     mapping = {}
+    # Start with current collaborators.
     for collaborator in repo_collaborators:
         login = collaborator.get("login")
-        mapping[login] = {"commits": 0, "issues_opened": 0, "pull_requests": 0}
+        if login:
+            mapping[login] = {"commits": 0, "issues_opened": 0, "pull_requests": 0}
+
+    # Process commits.
     for commit in repo_commits:
         author = commit.get("author")
         if author and "login" in author:
             login = author["login"]
-            if login in mapping:
-                mapping[login]["commits"] += 1
+            if login not in mapping:
+                mapping[login] = {"commits": 0, "issues_opened": 0, "pull_requests": 0}
+            mapping[login]["commits"] += 1
+
+    # Process issues.
     for issue in repo_issues:
         user = issue.get("user")
         if user and "login" in user:
             login = user["login"]
-            if login in mapping:
-                mapping[login]["issues_opened"] += 1
-            if "pull_request" in issue and login in mapping:
+            if login not in mapping:
+                mapping[login] = {"commits": 0, "issues_opened": 0, "pull_requests": 0}
+            mapping[login]["issues_opened"] += 1
+            if "pull_request" in issue:
                 mapping[login]["pull_requests"] += 1
+
+    # Remove entries with zero total contributions.
+    mapping = {login: stats for login, stats in mapping.items() if any(val > 0 for val in stats.values())}
+
+    # For each contributor in mapping, if not active, add to external_members.
+    for login in mapping:
+        if login not in active_members:
+            if login not in external_members:
+                user_url = f"https://api.github.com/users/{login}"
+                response = api_get(user_url)
+                if response:
+                    user_detail = filter_user(response.json())
+                    user_detail["active"] = False
+                    external_members[login] = user_detail
+                else:
+                    external_members[login] = {"id": None, "node_id": None, "login": login, "active": False}
     return mapping
 
 def get_member_details(member):
     """
     For a given member dictionary (which must have the "url" field),
-    fetch additional details and then filter to only id, node_id, and login.
+    fetch extra details and return a filtered user object.
     """
     user_url = member.get("url")
     response = api_get(user_url)
@@ -305,10 +341,10 @@ def get_member_details(member):
         return filter_user(detail)
     return filter_user(member)
 
+
 # ------------------------------------------------------------------------------
 # Main routine: data collection and saving
 # ------------------------------------------------------------------------------
-
 def main():
     org_name = "LabTechUDF"
     output = {}
@@ -321,14 +357,20 @@ def main():
         return
     output["organization"] = org_data
     
-    # 2. Members Data (with extra details, filtered)
-    print("Fetching members data...")
+    # 2. Members Data (active organization members; filtered)
+    print("Fetching active members data...")
     members = get_members(org_data["members_url"])
     detailed_members = []
     for member in members:
         detailed = get_member_details(member)
+        # Mark active members as active.
+        detailed["active"] = True
         detailed_members.append(detailed)
     output["members"] = detailed_members
+    # Build a lookup dictionary for active members.
+    active_members = {member["login"]: member for member in detailed_members}
+    # Prepare a dictionary to hold external (non-active) contributors.
+    external_members = {}
     
     # 3. Repositories Data
     print("Fetching repositories data...")
@@ -372,40 +414,46 @@ def main():
         repositories_list.append(repo_info)
         repo_full_name = repo.get("full_name")
         
-        # 4. Issues: fetch and filter each issue.
+        # 4. Issues: fetch and filter.
         print(f"  Fetching issues for {repo_name}...")
         issues = get_repo_issues(repo.get("issues_url", ""))
         filtered_issues = [filter_issue(issue) for issue in issues]
         all_issues[repo_name] = filtered_issues
         
-        # 5. Commits: fetch and filter each commit.
+        # 5. Commits: fetch and filter.
         print(f"  Fetching commits for {repo_name}...")
         commits = get_repo_commits(repo.get("commits_url", ""))
         filtered_commits = [filter_commit(commit) for commit in commits]
         all_commits[repo_name] = filtered_commits
         
-        # 6. Timeline events: for each issue, fetch events and filter user data.
+        # 6. Timeline events: fetch events for each issue and filter nested user data.
         timeline_events_repo = {}
         print(f"  Fetching timeline events for issues in {repo_name}...")
         for issue in issues:
             issue_number = issue.get("number")
             events = get_timeline_events(repo_full_name, issue_number)
-            # Filter each timeline event: if it has "actor" or "user", filter them.
             filtered_events = [filter_timeline_event(event) for event in events]
             timeline_events_repo[issue_number] = filtered_events
         all_timeline_events[repo_name] = timeline_events_repo
         
-        # 7. Relationship Mapping: collaborators vs. contributions.
-        print(f"  Fetching collaborators for {repo_name}...")
+        # 7. Relationship Mapping: build mapping for contributors.
+        print(f"  Building relationship mapping for {repo_name}...")
         collaborators = get_repo_collaborators(repo.get("collaborators_url", ""))
-        mapping = build_relationship_mapping(repo, filtered_issues, filtered_commits, collaborators)
+        mapping = build_relationship_mapping(repo, filtered_issues, filtered_commits, collaborators, active_members, external_members)
         relationship_mapping[repo_name] = mapping
+        
+        time.sleep(1)
     
     output["repositories"] = repositories_list
     output["issues"] = all_issues
     output["commits"] = all_commits
     output["timeline_events"] = all_timeline_events
     output["relationship_mapping"] = relationship_mapping
+    
+    # Merge external members into the overall members list.
+    for login, member in external_members.items():
+        if login not in active_members:
+            output["members"].append(member)
     
     # 8. Save final collected data to a JSON file.
     output_filename = "labtechudf_data.json"

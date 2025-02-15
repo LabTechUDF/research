@@ -9,112 +9,176 @@
     {
       "id": 108633030,
       "node_id": "U_kgDOBnmbxg",
-      "login": "Adleey"
+      "login": "Adleey",
+      "active": true
     },
     {
       "id": 134176815,
       "node_id": "U_kgDOB_9gLw",
-      "login": "AugustoLiberato"
+      "login": "AugustoLiberato",
+      "active": true
     },
     {
       "id": 95926022,
       "node_id": "U_kgDOBbe3Bg",
-      "login": "Benjamin-Nobrega"
+      "login": "Benjamin-Nobrega",
+      "active": true
     },
     {
       "id": 12025215,
       "node_id": "MDQ6VXNlcjEyMDI1MjE1",
-      "login": "danrleypereira"
+      "login": "danrleypereira",
+      "active": true
     },
     {
       "id": 49729245,
       "node_id": "MDQ6VXNlcjQ5NzI5MjQ1",
-      "login": "devmarcosvinicius"
+      "login": "devmarcosvinicius",
+      "active": true
     },
     {
       "id": 104396929,
       "node_id": "U_kgDOBjj4gQ",
-      "login": "duduzgomes"
+      "login": "duduzgomes",
+      "active": true
     },
     {
       "id": 113206971,
       "node_id": "U_kgDOBr9muw",
-      "login": "DutsTate0213"
+      "login": "DutsTate0213",
+      "active": true
     },
     {
       "id": 124085143,
       "node_id": "U_kgDOB2Vjlw",
-      "login": "Gabriel-br07"
+      "login": "Gabriel-br07",
+      "active": true
     },
     {
       "id": 111822772,
       "node_id": "U_kgDOBqpHtA",
-      "login": "GuiMcs00"
+      "login": "GuiMcs00",
+      "active": true
     },
     {
       "id": 183226231,
       "node_id": "U_kgDOCuvPdw",
-      "login": "josue-oliveiraa"
+      "login": "josue-oliveiraa",
+      "active": true
     },
     {
       "id": 48037739,
       "node_id": "MDQ6VXNlcjQ4MDM3NzM5",
-      "login": "leltonborges"
+      "login": "leltonborges",
+      "active": true
     },
     {
       "id": 116047116,
       "node_id": "U_kgDOBuq9DA",
-      "login": "Luanh03"
+      "login": "Luanh03",
+      "active": true
     },
     {
       "id": 138831503,
       "node_id": "U_kgDOCEZmjw",
-      "login": "Lucas-Germano"
+      "login": "Lucas-Germano",
+      "active": true
     },
     {
       "id": 125417279,
       "node_id": "U_kgDOB3m3Pw",
-      "login": "MatheusDuda"
+      "login": "MatheusDuda",
+      "active": true
     },
     {
       "id": 112330068,
       "node_id": "U_kgDOBrIFVA",
-      "login": "mysterious-man01"
+      "login": "mysterious-man01",
+      "active": true
     },
     {
       "id": 114191470,
       "node_id": "U_kgDOBs5sbg",
-      "login": "nicolas00saliba"
+      "login": "nicolas00saliba",
+      "active": true
     },
     {
       "id": 98856558,
       "node_id": "U_kgDOBeRubg",
-      "login": "polyanacunha"
+      "login": "polyanacunha",
+      "active": true
     },
     {
       "id": 91889336,
       "node_id": "U_kgDOBXoeuA",
-      "login": "raypaivac123"
+      "login": "raypaivac123",
+      "active": true
     },
     {
       "id": 70069165,
       "node_id": "MDQ6VXNlcjcwMDY5MTY1",
-      "login": "rogeriochagas79"
+      "login": "rogeriochagas79",
+      "active": true
     },
     {
       "id": 62851066,
       "node_id": "MDQ6VXNlcjYyODUxMDY2",
-      "login": "SuitedRaccoon"
+      "login": "SuitedRaccoon",
+      "active": true
     },
     {
       "id": 129126175,
       "node_id": "U_kgDOB7JPHw",
-      "login": "whiterabbitholes"
+      "login": "whiterabbitholes",
+      "active": true
     },
     {
       "id": 139094436,
       "node_id": "U_kgDOCEpppA",
-      "login": "yurymoura"
+      "login": "yurymoura",
+      "active": true
+    },
+    {
+      "id": 129331216,
+      "node_id": "U_kgDOB7VwEA",
+      "login": "YuriNoriki",
+      "active": false
+    },
+    {
+      "id": 42608628,
+      "node_id": "MDQ6VXNlcjQyNjA4NjI4",
+      "login": "tauisilva",
+      "active": false
+    },
+    {
+      "id": 54951997,
+      "node_id": "MDQ6VXNlcjU0OTUxOTk3",
+      "login": "MartinsArtur",
+      "active": false
+    },
+    {
+      "id": 91034189,
+      "node_id": "MDQ6VXNlcjkxMDM0MTg5",
+      "login": "Bnicole98",
+      "active": false
+    },
+    {
+      "id": 70723324,
+      "node_id": "MDQ6VXNlcjcwNzIzMzI0",
+      "login": "thiagodiasz",
+      "active": false
+    },
+    {
+      "id": 101754138,
+      "node_id": "U_kgDOBhClGg",
+      "login": "juanpbarros20",
+      "active": false
+    },
+    {
+      "id": 147343929,
+      "node_id": "U_kgDOCMhKOQ",
+      "login": "eduardasf",
+      "active": false
     }
   ],
   "repositories": [
@@ -16415,48 +16479,8 @@
         "issues_opened": 3,
         "pull_requests": 3
       },
-      "leltonborges": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "devmarcosvinicius": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "SuitedRaccoon": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "rogeriochagas79": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "raypaivac123": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Benjamin-Nobrega": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "polyanacunha": {
         "commits": 1,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "duduzgomes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Adleey": {
-        "commits": 0,
         "issues_opened": 0,
         "pull_requests": 0
       },
@@ -16465,58 +16489,18 @@
         "issues_opened": 3,
         "pull_requests": 3
       },
-      "mysterious-man01": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "DutsTate0213": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "nicolas00saliba": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Luanh03": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "Gabriel-br07": {
         "commits": 3,
         "issues_opened": 1,
         "pull_requests": 1
       },
-      "MatheusDuda": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "whiterabbitholes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "AugustoLiberato": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Lucas-Germano": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "yurymoura": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "josue-oliveiraa": {
         "commits": 3,
+        "issues_opened": 0,
+        "pull_requests": 0
+      },
+      "YuriNoriki": {
+        "commits": 8,
         "issues_opened": 0,
         "pull_requests": 0
       }
@@ -16527,108 +16511,13 @@
         "issues_opened": 0,
         "pull_requests": 0
       },
-      "leltonborges": {
-        "commits": 0,
+      "tauisilva": {
+        "commits": 54,
         "issues_opened": 0,
         "pull_requests": 0
       },
-      "devmarcosvinicius": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "SuitedRaccoon": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "rogeriochagas79": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "raypaivac123": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Benjamin-Nobrega": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "polyanacunha": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "duduzgomes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Adleey": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "GuiMcs00": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "mysterious-man01": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "DutsTate0213": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "nicolas00saliba": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Luanh03": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Gabriel-br07": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "MatheusDuda": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "whiterabbitholes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "AugustoLiberato": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Lucas-Germano": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "yurymoura": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "josue-oliveiraa": {
-        "commits": 0,
+      "MartinsArtur": {
+        "commits": 1,
         "issues_opened": 0,
         "pull_requests": 0
       }
@@ -16639,73 +16528,8 @@
         "issues_opened": 2,
         "pull_requests": 2
       },
-      "leltonborges": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "devmarcosvinicius": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "SuitedRaccoon": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "rogeriochagas79": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "raypaivac123": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Benjamin-Nobrega": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "polyanacunha": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "duduzgomes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Adleey": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "GuiMcs00": {
         "commits": 4,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "mysterious-man01": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "DutsTate0213": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "nicolas00saliba": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Luanh03": {
-        "commits": 0,
         "issues_opened": 0,
         "pull_requests": 0
       },
@@ -16714,33 +16538,23 @@
         "issues_opened": 0,
         "pull_requests": 0
       },
-      "MatheusDuda": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "whiterabbitholes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "AugustoLiberato": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "Lucas-Germano": {
         "commits": 9,
         "issues_opened": 0,
         "pull_requests": 0
       },
-      "yurymoura": {
-        "commits": 0,
+      "josue-oliveiraa": {
+        "commits": 4,
         "issues_opened": 0,
         "pull_requests": 0
       },
-      "josue-oliveiraa": {
-        "commits": 4,
+      "Bnicole98": {
+        "commits": 5,
+        "issues_opened": 0,
+        "pull_requests": 0
+      },
+      "thiagodiasz": {
+        "commits": 16,
         "issues_opened": 0,
         "pull_requests": 0
       }
@@ -16751,83 +16565,8 @@
         "issues_opened": 0,
         "pull_requests": 0
       },
-      "leltonborges": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "devmarcosvinicius": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "SuitedRaccoon": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "rogeriochagas79": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "raypaivac123": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Benjamin-Nobrega": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "polyanacunha": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "duduzgomes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Adleey": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "GuiMcs00": {
         "commits": 1,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "mysterious-man01": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "DutsTate0213": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "nicolas00saliba": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Luanh03": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Gabriel-br07": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "MatheusDuda": {
-        "commits": 0,
         "issues_opened": 0,
         "pull_requests": 0
       },
@@ -16836,23 +16575,8 @@
         "issues_opened": 0,
         "pull_requests": 0
       },
-      "AugustoLiberato": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Lucas-Germano": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "yurymoura": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "josue-oliveiraa": {
-        "commits": 0,
+      "juanpbarros20": {
+        "commits": 7,
         "issues_opened": 0,
         "pull_requests": 0
       }
@@ -16863,255 +16587,30 @@
         "issues_opened": 0,
         "pull_requests": 0
       },
-      "leltonborges": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "devmarcosvinicius": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "SuitedRaccoon": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "rogeriochagas79": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "raypaivac123": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Benjamin-Nobrega": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "polyanacunha": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "duduzgomes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Adleey": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "GuiMcs00": {
         "commits": 2,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "mysterious-man01": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "DutsTate0213": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "nicolas00saliba": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Luanh03": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Gabriel-br07": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "MatheusDuda": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "whiterabbitholes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "AugustoLiberato": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Lucas-Germano": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "yurymoura": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "josue-oliveiraa": {
-        "commits": 0,
         "issues_opened": 0,
         "pull_requests": 0
       }
     },
     "eventos-angular": {
-      "danrleypereira": {
-        "commits": 0,
+      "eduardasf": {
+        "commits": 1,
         "issues_opened": 0,
         "pull_requests": 0
       },
-      "leltonborges": {
-        "commits": 0,
+      "MartinsArtur": {
+        "commits": 1,
         "issues_opened": 0,
         "pull_requests": 0
       },
-      "devmarcosvinicius": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "SuitedRaccoon": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "rogeriochagas79": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "raypaivac123": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Benjamin-Nobrega": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "polyanacunha": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "duduzgomes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Adleey": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "GuiMcs00": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "mysterious-man01": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "DutsTate0213": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "nicolas00saliba": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Luanh03": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Gabriel-br07": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "MatheusDuda": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "whiterabbitholes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "AugustoLiberato": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Lucas-Germano": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "yurymoura": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "josue-oliveiraa": {
-        "commits": 0,
+      "tauisilva": {
+        "commits": 29,
         "issues_opened": 0,
         "pull_requests": 0
       }
     },
     "teachers-allocation": {
-      "danrleypereira": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "leltonborges": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "devmarcosvinicius": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "SuitedRaccoon": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "rogeriochagas79": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "raypaivac123": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "Benjamin-Nobrega": {
         "commits": 3,
         "issues_opened": 0,
@@ -17127,68 +16626,18 @@
         "issues_opened": 2,
         "pull_requests": 2
       },
-      "Adleey": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "GuiMcs00": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "mysterious-man01": {
         "commits": 5,
         "issues_opened": 1,
         "pull_requests": 1
-      },
-      "DutsTate0213": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
       },
       "nicolas00saliba": {
         "commits": 0,
         "issues_opened": 1,
         "pull_requests": 1
       },
-      "Luanh03": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Gabriel-br07": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "MatheusDuda": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "whiterabbitholes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "AugustoLiberato": {
         "commits": 6,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Lucas-Germano": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "yurymoura": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "josue-oliveiraa": {
-        "commits": 0,
         "issues_opened": 0,
         "pull_requests": 0
       }
@@ -17199,108 +16648,13 @@
         "issues_opened": 0,
         "pull_requests": 0
       },
-      "leltonborges": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "devmarcosvinicius": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "SuitedRaccoon": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "rogeriochagas79": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "raypaivac123": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Benjamin-Nobrega": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "polyanacunha": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "duduzgomes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Adleey": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "GuiMcs00": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "mysterious-man01": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "DutsTate0213": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "nicolas00saliba": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Luanh03": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "Gabriel-br07": {
         "commits": 1,
         "issues_opened": 0,
         "pull_requests": 0
       },
-      "MatheusDuda": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "whiterabbitholes": {
         "commits": 1,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "AugustoLiberato": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Lucas-Germano": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "yurymoura": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "josue-oliveiraa": {
-        "commits": 0,
         "issues_opened": 0,
         "pull_requests": 0
       }
@@ -17308,111 +16662,6 @@
     "crispy-octo-cluster": {
       "danrleypereira": {
         "commits": 1,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "leltonborges": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "devmarcosvinicius": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "SuitedRaccoon": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "rogeriochagas79": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "raypaivac123": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Benjamin-Nobrega": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "polyanacunha": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "duduzgomes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Adleey": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "GuiMcs00": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "mysterious-man01": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "DutsTate0213": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "nicolas00saliba": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Luanh03": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Gabriel-br07": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "MatheusDuda": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "whiterabbitholes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "AugustoLiberato": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Lucas-Germano": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "yurymoura": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "josue-oliveiraa": {
-        "commits": 0,
         "issues_opened": 0,
         "pull_requests": 0
       }
@@ -17423,108 +16672,8 @@
         "issues_opened": 1,
         "pull_requests": 1
       },
-      "leltonborges": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "devmarcosvinicius": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "SuitedRaccoon": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "rogeriochagas79": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "raypaivac123": {
         "commits": 1,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Benjamin-Nobrega": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "polyanacunha": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "duduzgomes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Adleey": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "GuiMcs00": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "mysterious-man01": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "DutsTate0213": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "nicolas00saliba": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Luanh03": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Gabriel-br07": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "MatheusDuda": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "whiterabbitholes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "AugustoLiberato": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Lucas-Germano": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "yurymoura": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "josue-oliveiraa": {
-        "commits": 0,
         "issues_opened": 0,
         "pull_requests": 0
       }
@@ -17535,110 +16684,10 @@
         "issues_opened": 6,
         "pull_requests": 6
       },
-      "leltonborges": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "devmarcosvinicius": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "SuitedRaccoon": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "rogeriochagas79": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "raypaivac123": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Benjamin-Nobrega": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "polyanacunha": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "duduzgomes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Adleey": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
       "GuiMcs00": {
         "commits": 4,
         "issues_opened": 3,
         "pull_requests": 3
-      },
-      "mysterious-man01": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "DutsTate0213": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "nicolas00saliba": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Luanh03": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Gabriel-br07": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "MatheusDuda": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "whiterabbitholes": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "AugustoLiberato": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "Lucas-Germano": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "yurymoura": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
-      },
-      "josue-oliveiraa": {
-        "commits": 0,
-        "issues_opened": 0,
-        "pull_requests": 0
       }
     }
   }
