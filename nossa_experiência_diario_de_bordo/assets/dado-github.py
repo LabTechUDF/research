@@ -4,16 +4,20 @@ Script to collect comprehensive data from the GitHub organization "LabTechUDF"
 for academic research in software management.
 
 Features:
-  - Fetches organization, member, repository, issue/PR, commit, timeline,
-    and collaborator data.
+  - Fetches organization, member, repository, issue/PR, commit, timeline, and collaborator data.
   - Logs GitHub API rate limit details after live calls.
-  - Caches every GET response to a file in the "cache" folder so that
-    subsequent runs can use stored data (avoiding extra API calls).
-  - Blacklists repositories (e.g. forks and specified repos) so that they are skipped.
-  - Retrieves extra member details ("public_repos", "followers", "following", "created_at")
-    and attaches them to each member.
-  
-Set your GitHub personal access token in the environment variable GITHUB_TOKEN.
+  - Caches every GET response in the "cache" folder to avoid repeated API calls.
+  - Blacklists repositories (e.g., forks and specified repos) so they are skipped.
+  - Retrieves extra member details and then filters them so that nested user objects 
+    (assignees, issue user, commit author/committer, etc.) only contain: id, node_id, login.
+  - Filters issues to only keep:
+      url, comments_url, events_url, id, node_id, number, title, user,
+      state, assignee, assignees, comments, created_at, updated_at, closed_at,
+      sub_issues_summary, body, closed_by, pull_request (with its own subset), timeline_url.
+  - Filters commits to only keep:
+      sha, node_id, url, comments_url, commit, author, committer, and parents.
+      
+Set your GitHub personal access token in the GITHUB_TOKEN environment variable.
 """
 
 import os
@@ -45,7 +49,6 @@ if not os.path.exists(CACHE_DIR):
 
 # Define a list of repository names to blacklist.
 REPO_BLACKLIST = [
-    # e.g., "forked-repo-name", "experimental-project", etc.
     "Hi.Events",
     "demo-repository"
 ]
@@ -105,7 +108,6 @@ def api_get(url, params=None, headers=HEADERS, force_update=False):
                   f"Reset: {response.headers.get('X-RateLimit-Reset')}")
         if response.status_code != 200:
             print(f"[Error] GET {url} returned {response.status_code}: {response.text}")
-        # Cache the response
         try:
             cache_content = {
                 "data": response.json(),
@@ -146,7 +148,7 @@ def get_all_pages(url, params=None, headers=HEADERS):
                     next_url = part.split(';')[0].strip()[1:-1]
                     break
             url = next_url
-            params = None  # subsequent pages already include query parameters in the URL.
+            params = None
         else:
             break
     return items
@@ -160,14 +162,64 @@ def remove_template(url):
     return url.split('{')[0]
 
 # ------------------------------------------------------------------------------
+# Filtering functions: Only keep needed fields.
+# ------------------------------------------------------------------------------
+
+def filter_user(user_obj):
+    """Return a dictionary with only id, node_id, and login from a user object."""
+    if not user_obj:
+        return None
+    return {
+        "id": user_obj.get("id"),
+        "node_id": user_obj.get("node_id"),
+        "login": user_obj.get("login")
+    }
+
+def filter_issue(issue):
+    """
+    Filter an issue dictionary to only include the fields needed for analysis.
+    For nested user objects, only keep id, node_id, and login.
+    """
+    filtered = {}
+    keys_to_keep = [
+        "url", "comments_url", "events_url", "id", "node_id", "number",
+        "title", "state", "comments", "created_at", "updated_at", "closed_at",
+        "sub_issues_summary", "body", "timeline_url"
+    ]
+    for key in keys_to_keep:
+        filtered[key] = issue.get(key)
+    filtered["user"] = filter_user(issue.get("user"))
+    filtered["assignee"] = filter_user(issue.get("assignee"))
+    filtered["assignees"] = [filter_user(a) for a in issue.get("assignees", [])]
+    filtered["closed_by"] = filter_user(issue.get("closed_by"))
+    pr = issue.get("pull_request")
+    if pr:
+        # Only keep selected fields in pull_request
+        filtered["pull_request"] = {k: pr.get(k) for k in ["url", "html_url", "diff_url", "patch_url", "merged_at"]}
+    else:
+        filtered["pull_request"] = None
+    return filtered
+
+def filter_commit(commit_obj):
+    """
+    Filter a commit dictionary to only include the fields needed for analysis.
+    For nested user objects (author/committer), only keep id, node_id, and login.
+    """
+    filtered = {}
+    keys_to_keep = ["sha", "node_id", "url", "comments_url"]
+    for key in keys_to_keep:
+        filtered[key] = commit_obj.get(key)
+    filtered["commit"] = commit_obj.get("commit")  # This inner object is kept in full.
+    filtered["author"] = filter_user(commit_obj.get("author"))
+    filtered["committer"] = filter_user(commit_obj.get("committer"))
+    filtered["parents"] = commit_obj.get("parents")  # Parents are kept as provided.
+    return filtered
+
+# ------------------------------------------------------------------------------
 # Data fetching functions
 # ------------------------------------------------------------------------------
 
 def get_organization(org_name):
-    """
-    Fetch organization information and remove template tokens.
-    Returns a dictionary with selected fields.
-    """
     url = f"https://api.github.com/orgs/{org_name}"
     response = api_get(url)
     if response:
@@ -204,12 +256,6 @@ def get_repo_collaborators(collaborators_url):
     return get_all_pages(url)
 
 def build_relationship_mapping(repo, repo_issues, repo_commits, repo_collaborators):
-    """
-    Build a mapping (per collaborator login) of:
-      - Number of commits
-      - Number of issues opened
-      - Number of pull requests
-    """
     mapping = {}
     for collaborator in repo_collaborators:
         login = collaborator.get("login")
@@ -233,22 +279,14 @@ def build_relationship_mapping(repo, repo_issues, repo_commits, repo_collaborato
 def get_member_details(member):
     """
     For a given member dictionary (which must have the "url" field),
-    fetch additional details like public_repos, followers, following, and created_at.
+    fetch additional details and then filter to only id, node_id, and login.
     """
     user_url = member.get("url")
     response = api_get(user_url)
     if response:
         detail = response.json()
-        return {
-            "login": member.get("login"),
-            "id": member.get("id"),
-            "html_url": member.get("html_url"),
-            "public_repos": detail.get("public_repos"),
-            "followers": detail.get("followers"),
-            "following": detail.get("following"),
-            "created_at": detail.get("created_at")
-        }
-    return member  # fallback if no extra details could be fetched
+        return filter_user(detail)
+    return filter_user(member)
 
 # ------------------------------------------------------------------------------
 # Main routine: data collection and saving
@@ -266,7 +304,7 @@ def main():
         return
     output["organization"] = org_data
     
-    # 2. Members Data (with extra details)
+    # 2. Members Data (with extra details, filtered)
     print("Fetching members data...")
     members = get_members(org_data["members_url"])
     detailed_members = []
@@ -317,17 +355,19 @@ def main():
         repositories_list.append(repo_info)
         repo_full_name = repo.get("full_name")
         
-        # 4. Issues
+        # 4. Issues: filter each issue.
         print(f"  Fetching issues for {repo_name}...")
         issues = get_repo_issues(repo.get("issues_url", ""))
-        all_issues[repo_name] = issues
+        filtered_issues = [filter_issue(issue) for issue in issues]
+        all_issues[repo_name] = filtered_issues
         
-        # 5. Commits
+        # 5. Commits: filter each commit.
         print(f"  Fetching commits for {repo_name}...")
         commits = get_repo_commits(repo.get("commits_url", ""))
-        all_commits[repo_name] = commits
+        filtered_commits = [filter_commit(commit) for commit in commits]
+        all_commits[repo_name] = filtered_commits
         
-        # 6. Timeline events (for each issue)
+        # 6. Timeline events: (left unfiltered for now)
         timeline_events_repo = {}
         print(f"  Fetching timeline events for issues in {repo_name}...")
         for issue in issues:
@@ -339,7 +379,7 @@ def main():
         # 7. Relationship Mapping: collaborators vs. contributions.
         print(f"  Fetching collaborators for {repo_name}...")
         collaborators = get_repo_collaborators(repo.get("collaborators_url", ""))
-        mapping = build_relationship_mapping(repo, issues, commits, collaborators)
+        mapping = build_relationship_mapping(repo, filtered_issues, filtered_commits, collaborators)
         relationship_mapping[repo_name] = mapping
     
     output["repositories"] = repositories_list
