@@ -178,7 +178,7 @@ def filter_issue(issue):
     keys_to_keep = [
         "url", "comments_url", "events_url", "id", "node_id", "number",
         "title", "state", "comments", "created_at", "updated_at", "closed_at",
-        "sub_issues_summary", "body", "timeline_url"
+        "sub_issues_summary", "body", "timeline_url", "user", "assignee",
     ]
     for key in keys_to_keep:
         filtered[key] = issue.get(key)
@@ -188,7 +188,7 @@ def filter_issue(issue):
     filtered["closed_by"] = filter_user(issue.get("closed_by"))
     pr = issue.get("pull_request")
     if pr:
-        filtered["pull_request"] = {k: pr.get(k) for k in ["url", "html_url", "diff_url", "patch_url", "merged_at"]}
+        filtered["pull_request"] = {k: pr.get(k) for k in ["url", "merged_at"]}
     else:
         filtered["pull_request"] = None
     return filtered
@@ -199,12 +199,13 @@ def filter_commit(commit_obj):
     For nested user objects, only keep id, node_id, and login.
     """
     filtered = {}
-    keys_to_keep = ["sha", "node_id", "url", "comments_url"]
+    keys_to_keep = ["sha", "node_id", "url", "comments_url", "author", "committer"]
     for key in keys_to_keep:
         filtered[key] = commit_obj.get(key)
     filtered["commit"] = commit_obj.get("commit")
     if filtered["commit"]:
         filtered["commit"].pop("verification", None)  # remove unneeded inner fields
+
     filtered["author"] = filter_user(commit_obj.get("author"))
     filtered["committer"] = filter_user(commit_obj.get("committer"))
     filtered["parents"] = commit_obj.get("parents")
@@ -233,7 +234,7 @@ def filter_timeline_event(event):
     return filtered
 
 # ------------------------------------------------------------------------------
-# Data fetching functions (unchanged)
+# Data fetching functions
 # ------------------------------------------------------------------------------
 
 def get_organization(org_name):
@@ -246,7 +247,7 @@ def get_organization(org_name):
             "url": org_data.get("url"),
             "repos_url": org_data.get("repos_url"),
             "issues_url": org_data.get("issues_url"),
-            "members_url": org_data.get("members_url")
+            "members_url": org_data.get("members_url"),
         }
     return None
 
@@ -258,6 +259,10 @@ def get_repositories(repos_url):
 
 def get_repo_issues(issues_url):
     url = remove_template(issues_url)
+    return get_all_pages(url)
+
+def get_repo_issue_events(issue_events_url):
+    url = remove_template(issue_events_url)
     return get_all_pages(url)
 
 def get_repo_commits(commits_url):
@@ -404,6 +409,7 @@ def main():
     repos = get_repositories(org_data["repos_url"])
     repositories_list = []
     all_issues = {}
+    all_issues_events = {}
     all_commits = {}
     all_timeline_events = {}
     relationship_mapping = {}
@@ -417,25 +423,20 @@ def main():
         print(f"Processing repository: {repo_name}")
         repo_info = {
             "name": repo_name,
-            "html_url": repo.get("html_url"),
             "collaborators_url": remove_template(repo.get("collaborators_url", "")),
             "contributors_url": repo.get("contributors_url"),
             "commits_url": remove_template(repo.get("commits_url", "")),
             "teams_url": repo.get("teams_url"),
-            "issue_events_url": repo.get("issue_events_url"),
-            "subscribers_url": repo.get("subscribers_url"),
+            "issue_events_url": remove_template(repo.get("issue_events_url")),
             "merges_url": repo.get("merges_url"),
             "issues_url": remove_template(repo.get("issues_url", "")),
             "pulls_url": remove_template(repo.get("pulls_url", "")),
-            "language": repo.get("language"),
             "created_at": repo.get("created_at"),
             "updated_at": repo.get("updated_at"),
-            "assignees_url": remove_template(repo.get("assignees_url", "")),
             "branches_url": remove_template(repo.get("branches_url", "")),
             "has_issues": repo.get("has_issues"),
             "has_projects": repo.get("has_projects"),
             "has_downloads": repo.get("has_downloads"),
-            "forks": repo.get("forks"),
             "open_issues": repo.get("open_issues")
         }
         repositories_list.append(repo_info)
@@ -446,6 +447,12 @@ def main():
         issues = get_repo_issues(repo.get("issues_url", ""))
         filtered_issues = [filter_issue(issue) for issue in issues]
         all_issues[repo_name] = filtered_issues
+
+        # 4.5 Issues events: fetch issue events.
+        print(f"  Fetching events for issues in {repo_name}...")
+        issues_events = get_repo_issue_events(repo.get("issue_events_url", ""))
+        filtered_issue_events = [filter_timeline_event(event) for event in issues_events]
+        all_issues_events[repo_name] = filtered_issue_events
         
         # 5. Commits: fetch and filter.
         print(f"  Fetching commits for {repo_name}...")
@@ -469,10 +476,10 @@ def main():
         mapping = build_relationship_mapping(repo, filtered_issues, filtered_commits, collaborators, active_members, external_members)
         relationship_mapping[repo_name] = mapping
         
-        time.sleep(1)
     
     output["repositories"] = repositories_list
     output["issues"] = all_issues
+    output["issues_events"] = all_issues_events
     output["commits"] = all_commits
     output["timeline_events"] = all_timeline_events
     output["relationship_mapping"] = relationship_mapping
