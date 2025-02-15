@@ -8,15 +8,11 @@ Features:
   - Logs GitHub API rate limit details after live calls.
   - Caches every GET response in the "cache" folder to avoid repeated API calls.
   - Blacklists repositories (e.g., forks and specified repos) so they are skipped.
-  - Retrieves extra member details and then filters them so that nested user objects 
-    (assignees, issue user, commit author/committer, etc.) only contain: id, node_id, login.
-  - Filters issues to only keep:
-      url, comments_url, events_url, id, node_id, number, title, user,
-      state, assignee, assignees, comments, created_at, updated_at, closed_at,
-      sub_issues_summary, body, closed_by, pull_request (with its own subset), timeline_url.
-  - Filters commits to only keep:
-      sha, node_id, url, comments_url, commit, author, committer, and parents.
-      
+  - Retrieves extra member details and then filters nested user objects so that only:
+      id, node_id, and login are stored.
+  - Filters issues and commits to keep only the fields required for analysis.
+  - For timeline events, if an event contains an "actor" or "user", it is filtered.
+  
 Set your GitHub personal access token in the GITHUB_TOKEN environment variable.
 """
 
@@ -67,9 +63,7 @@ def get_cache_filename(url, params):
     return os.path.join(CACHE_DIR, f"{key}.json")
 
 class CachedResponse:
-    """
-    A simple class to simulate a requests.Response object from cached data.
-    """
+    """A simple class to simulate a requests.Response object from cached data."""
     def __init__(self, json_data, headers, status_code=200):
         self._json = json_data
         self.headers = headers
@@ -210,9 +204,32 @@ def filter_commit(commit_obj):
     for key in keys_to_keep:
         filtered[key] = commit_obj.get(key)
     filtered["commit"] = commit_obj.get("commit")  # This inner object is kept in full.
+    filtered["commit"].pop("verification", None)  # Remove the 'verification' field.
     filtered["author"] = filter_user(commit_obj.get("author"))
     filtered["committer"] = filter_user(commit_obj.get("committer"))
-    filtered["parents"] = commit_obj.get("parents")  # Parents are kept as provided.
+    filtered["parents"] = commit_obj.get("parents")
+    return filtered
+
+def filter_timeline_event(event):
+    """
+    If a timeline event has an 'actor' or 'user' field, filter that field
+    so it only contains id, node_id, and login.
+    Returns a new event dictionary.
+    """
+    keys_to_remove = ["reactions", "verification"]
+    filtered = event.copy()
+    for key in keys_to_remove:
+        filtered.pop(key, None)
+    if "actor" in event:
+        filtered["actor"] = filter_user(event["actor"])
+    if "user" in event:
+        filtered["user"] = filter_user(event["user"])
+    if "review_requester" in event:
+        filtered["review_requester"] = filter_user(event["review_requester"])
+    if "requested_reviewer" in event:
+        filtered["requested_reviewer"] = filter_user(event["requested_reviewer"])
+    if "assignee" in event:
+        filtered["assignee"] = filter_user(event["assignee"])
     return filtered
 
 # ------------------------------------------------------------------------------
@@ -355,25 +372,27 @@ def main():
         repositories_list.append(repo_info)
         repo_full_name = repo.get("full_name")
         
-        # 4. Issues: filter each issue.
+        # 4. Issues: fetch and filter each issue.
         print(f"  Fetching issues for {repo_name}...")
         issues = get_repo_issues(repo.get("issues_url", ""))
         filtered_issues = [filter_issue(issue) for issue in issues]
         all_issues[repo_name] = filtered_issues
         
-        # 5. Commits: filter each commit.
+        # 5. Commits: fetch and filter each commit.
         print(f"  Fetching commits for {repo_name}...")
         commits = get_repo_commits(repo.get("commits_url", ""))
         filtered_commits = [filter_commit(commit) for commit in commits]
         all_commits[repo_name] = filtered_commits
         
-        # 6. Timeline events: (left unfiltered for now)
+        # 6. Timeline events: for each issue, fetch events and filter user data.
         timeline_events_repo = {}
         print(f"  Fetching timeline events for issues in {repo_name}...")
         for issue in issues:
             issue_number = issue.get("number")
             events = get_timeline_events(repo_full_name, issue_number)
-            timeline_events_repo[issue_number] = events
+            # Filter each timeline event: if it has "actor" or "user", filter them.
+            filtered_events = [filter_timeline_event(event) for event in events]
+            timeline_events_repo[issue_number] = filtered_events
         all_timeline_events[repo_name] = timeline_events_repo
         
         # 7. Relationship Mapping: collaborators vs. contributions.
