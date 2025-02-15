@@ -8,9 +8,10 @@ Features:
   - Logs GitHub API rate limit details after live calls.
   - Caches every GET response in the "cache" folder to avoid repeated API calls.
   - Blacklists repositories (e.g., forks and specified repos) so they are skipped.
-  - Retrieves extra member details for active organization members.
+  - Retrieves extra member details for active organization members, including:
+        public_repos, followers, following, and created_at.
   - For relationship mapping, if a contributor (via commit/issue) is not an active member,
-    fetches and saves their basic user data (id, node_id, login) with an extra flag "active": false.
+    fetches and saves their basic user data with the extra fields and tags them as "active": false.
   - Filters issues, commits, and timeline events to keep only required fields.
   - In relationship mapping, only contributors with non-zero contributions are saved.
   
@@ -201,8 +202,9 @@ def filter_commit(commit_obj):
     keys_to_keep = ["sha", "node_id", "url", "comments_url"]
     for key in keys_to_keep:
         filtered[key] = commit_obj.get(key)
-    filtered["commit"] = commit_obj.get("commit")  # This inner object is kept in full.
-    filtered["commit"].pop("verification", None)  # Remove the 'verification' field.
+    filtered["commit"] = commit_obj.get("commit")
+    if filtered["commit"]:
+        filtered["commit"].pop("verification", None)  # remove unneeded inner fields
     filtered["author"] = filter_user(commit_obj.get("author"))
     filtered["committer"] = filter_user(commit_obj.get("committer"))
     filtered["parents"] = commit_obj.get("parents")
@@ -270,7 +272,6 @@ def get_repo_collaborators(collaborators_url):
     url = remove_template(collaborators_url)
     return get_all_pages(url)
 
-
 # ------------------------------------------------------------------------------
 # Updated Relationship Mapping function
 # ------------------------------------------------------------------------------
@@ -281,7 +282,7 @@ def build_relationship_mapping(repo, repo_issues, repo_commits, repo_collaborato
       - Number of issues opened
       - Number of pull requests
     If a contributor is not among the active organization members,
-    fetch and add their basic user data (if not already present) to external_members,
+    fetch and add their basic user data (including extra fields) to external_members,
     tagging them as "active": False.
     Only include contributors with at least one contribution.
     """
@@ -322,25 +323,51 @@ def build_relationship_mapping(repo, repo_issues, repo_commits, repo_collaborato
                 user_url = f"https://api.github.com/users/{login}"
                 response = api_get(user_url)
                 if response:
-                    user_detail = filter_user(response.json())
+                    # Use get_member_details to fetch extra fields.
+                    user_detail = {
+                        "id": response.json().get("id"),
+                        "node_id": response.json().get("node_id"),
+                        "login": response.json().get("login"),
+                        "public_repos": response.json().get("public_repos"),
+                        "followers": response.json().get("followers"),
+                        "following": response.json().get("following"),
+                        "created_at": response.json().get("created_at")
+                    }
                     user_detail["active"] = False
                     external_members[login] = user_detail
                 else:
-                    external_members[login] = {"id": None, "node_id": None, "login": login, "active": False}
+                    external_members[login] = {"id": None, "node_id": None, "login": login, "active": False,
+                                                "public_repos": None, "followers": None, "following": None, "created_at": None}
     return mapping
 
 def get_member_details(member):
     """
     For a given member dictionary (which must have the "url" field),
-    fetch extra details and return a filtered user object.
+    fetch extra details and return a dictionary containing:
+      id, node_id, login, public_repos, followers, following, created_at.
     """
     user_url = member.get("url")
     response = api_get(user_url)
     if response:
         detail = response.json()
-        return filter_user(detail)
-    return filter_user(member)
-
+        return {
+            "id": detail.get("id"),
+            "node_id": detail.get("node_id"),
+            "login": detail.get("login"),
+            "public_repos": detail.get("public_repos"),
+            "followers": detail.get("followers"),
+            "following": detail.get("following"),
+            "created_at": detail.get("created_at")
+        }
+    return {
+        "id": member.get("id"),
+        "node_id": member.get("node_id"),
+        "login": member.get("login"),
+        "public_repos": None,
+        "followers": None,
+        "following": None,
+        "created_at": None
+    }
 
 # ------------------------------------------------------------------------------
 # Main routine: data collection and saving
@@ -357,7 +384,7 @@ def main():
         return
     output["organization"] = org_data
     
-    # 2. Members Data (active organization members; filtered)
+    # 2. Members Data (active organization members; filtered with extra fields)
     print("Fetching active members data...")
     members = get_members(org_data["members_url"])
     detailed_members = []
