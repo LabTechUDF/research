@@ -1,66 +1,106 @@
+% ------------------------------------------------------------------------
+% abnTeX2: Modelo de Projeto de pesquisa em conformidade com
+% ABNT NBR 15287:2011 Informação e documentação - Projeto de pesquisa -
+% Apresentação
+% ------------------------------------------------------------------------
 \documentclass[
-	12pt,
-	openright,
-	oneside,
-	a4paper,
-	brazil
+	12pt,           % tamanho da fonte
+	openright,      % capítulos começam em pág ímpar
+	oneside,        % para impressão em recto (frente) e verso (atrás) -> nesse caso, "oneside"
+	a4paper,        % tamanho do papel
+	brazil          % o último idioma é o principal do documento
 ]{abntex2}
 
-% ---
+% ----------------------------------------------------------
 % PACOTES
+% ----------------------------------------------------------
+\usepackage{lmodern}            % Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}        % Seleção de códigos de fonte
+\usepackage[utf8]{inputenc}     % Codificação do documento (conversão automática dos acentos)
+\usepackage{indentfirst}        % Indenta o primeiro parágrafo de cada seção
+\usepackage{color}              % Controle das cores
+\usepackage{graphicx}           % Inclusão de gráficos
+\usepackage{microtype}          % Para melhorias de justificação
 % ---
-\usepackage{lmodern}			
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{indentfirst}
-\usepackage{color}
-\usepackage{graphicx}
-\usepackage{microtype}
-\usepackage[brazilian,hyperpageref]{backref}
-\usepackage[alf]{abntex2cite}
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+\usepackage{hyperref}           % Hyperlinks no PDF
+\usepackage{multirow}           % Para tabelas com células que ocupam várias linhas
 
-% Configurações de backref
+% ----------------------------------------------------------
+% CONFIGURAÇÕES DE PACOTES
+% ----------------------------------------------------------
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
 \renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
 \renewcommand{\backref}{}
+% Define os textos da citação
 \renewcommand*{\backrefalt}[4]{
-	\ifcase #1 
-		Nenhuma citação no texto.
+	\ifcase #1 %
+		Nenhuma citação no texto.%
 	\or
-		Citado na página #2.
+		Citado na página #2.%
 	\else
-		Citado #1 vezes nas páginas #2.
-	\fi
-}
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
 
-% ---
-% Informações de PDF
-% ---
 \usepackage{hyperref}
-\hypersetup{
-	pdftitle={Fábrica de Software Acadêmica: Relato da Experiência no Centro Universitário do Distrito Federal}, 
-	pdfauthor={Danrley Pereira e Rayssa Paiva},
-	pdfsubject={Artigo Científico},
-	pdfcreator={LaTeX com abntex2},
-	pdfkeywords={Fábrica de Software Acadêmica, Desenvolvimento Ágil, Educação em TI, Gestão de Projetos, Mentoria Técnica}, 
-	colorlinks=true,        
-	linkcolor=blue,          
-	citecolor=blue,        	
-	filecolor=magenta,   	
-	urlcolor=blue
-}
+
 
 % ---
 % DADOS DE CAPA E FOLHA DE ROSTO
 % ---
 \titulo{Fábrica de Software Acadêmica: Relato da Experiência no Centro Universitário do Distrito Federal}
 \autor{Danrley Pereira \and Rayssa Paiva \and Letícia Zoby \and Kerlla Luz}
-\local{Brasília, DF}
+\local{Brasil}
 \data{2025}
 \instituicao{%
-Centro Universitário do Distrito Federal - UDF\\
+Centro Universitário do Distrito Federal - UDF
+\par
 Departamento de Engenharia, Arquitetura e TI}
 \tipotrabalho{Artigo Científico}
-\preambulo{Artigo Científico desenvolvido no âmbito da Fábrica de Software Acadêmica do UDF, sob orientação da Profa. Dr. Kerlla de Souza e Profa. Dr. Letícia Zoby}
+\preambulo{Relato de experi\^{e}ncia no \^{a}mbito da F\'{a}brica de Software Acad\^{e}mica do UDF, de 2022 \`{a} 2024}
+
+% ---
+% ---
+% Informações de PDF
+% ---
+\makeatletter
+\hypersetup{
+	pdftitle={\@title}, 
+	pdfauthor={\@author},
+	pdfsubject={\imprimirpreambulo},
+	pdfcreator={LaTeX com abntex2},
+	pdfkeywords={Fábrica de Software Acadêmica}{Desenvolvimento Ágil}{Educação em TI}{Gestão de Projetos}{Mentoria Técnica}, 
+	colorlinks=true,        
+	linkcolor=blue,          
+	citecolor=blue,        	
+	filecolor=magenta,   	
+	urlcolor=blue
+}
+\makeatother
+% --- 
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
 
 % ---
 % INÍCIO DO DOCUMENTO
@@ -73,18 +113,59 @@ Departamento de Engenharia, Arquitetura e TI}
 \imprimirfolhaderosto
 
 % ---
-% Lista de figuras (opcional)
+% NOTA DA ABNT NBR 15287:2011, p. 4:
+%  ``Se exigido pela entidade, apresentar os dados curriculares do autor em
+%     folha ou página distinta após a folha de rosto.''
+% ---
+
+% ---
+% inserir lista de ilustrações
 % ---
 \pdfbookmark[0]{\listfigurename}{lof}
 \listoffigures*
 \cleardoublepage
+% ---
 
 % ---
-% SUMÁRIO
+% inserir lista de tabelas
+% ---
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+% ---
+
+% ---
+% inserir lista de abreviaturas e siglas
+% ---
+\begin{siglas}
+  \item[ABNT] Associação Brasileira de Normas Técnicas
+  \item[abnTeX] ABsurdas Normas para TeX
+\end{siglas}
+% ---
+
+% ---
+% inserir lista de símbolos
+% ---
+\begin{simbolos}
+  \item[$ \Gamma $] Letra grega Gama
+  \item[$ \Lambda $] Lambda
+  \item[$ \zeta $] Letra grega minúscula zeta
+  \item[$ \in $] Pertence
+\end{simbolos}
+% ---
+
+% ---
+% inserir o sumario
 % ---
 \pdfbookmark[0]{\contentsname}{toc}
 \tableofcontents*
 \cleardoublepage
+% ---
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
 
 % ----------------------------------------------------------
 % RESUMO
@@ -506,6 +587,90 @@ As questões a seguir servem como guia inicial e serão refinadas após a revis�
 
 Previsivelmente, o programa deverá ser ampliado para abranger outras áreas e estabelecer parcerias externas que viabilizem a disponibilização de soluções para usuários reais. Também se planeja aprofundar a integração entre \emph{backend}, \emph{frontend} e ciência de dados, bem como a criação de novos módulos de extensão. Nesse contexto, o esforço de pesquisa e desenvolvimento visa solidificar a Fábrica de Software como um ambiente de inovação e colaboração, fortalecendo a posição do UDF no ecossistema de TI em Brasília.
 
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
 \bibliography{sbc-template}
+
+% ----------------------------------------------------------
+% Glossário
+% ----------------------------------------------------------
+%
+% Consulte o manual da classe abntex2 para orientações sobre o glossário.
+%
+%\glossary
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices
+% ---
+\begin{apendicesenv}
+
+% Imprime uma página indicando o início dos apêndices
+\partapendices
+
+% ----------------------------------------------------------
+\chapter{Quisque libero justo}
+% ----------------------------------------------------------
+
+\lipsum[50]
+
+% ----------------------------------------------------------
+\chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
+ac pretium ante justo a nulla curabitur tristique arcu eu metus}
+% ----------------------------------------------------------
+\lipsum[55-57]
+
+\end{apendicesenv}
+% ---
+
+
+% ----------------------------------------------------------
+% Anexos
+% ----------------------------------------------------------
+
+% ---
+% Inicia os anexos
+% ---
+\begin{anexosenv}
+
+% Imprime uma página indicando o início dos anexos
+\partanexos
+
+% ---
+\chapter{Morbi ultrices rutrum lorem.}
+% ---
+\lipsum[30]
+
+% ---
+\chapter{Cras non urna sed feugiat cum sociis natoque penatibus et magnis dis
+parturient montes nascetur ridiculus mus}
+% ---
+
+\lipsum[31]
+
+% ---
+\chapter{Fusce facilisis lacinia dui}
+% ---
+
+\lipsum[32]
+
+\end{anexosenv}
+
+%---------------------------------------------------------------------
+% INDICE REMISSIVO
+%---------------------------------------------------------------------
+
+\phantompart
+
+\printindex
 
 \end{document}
