@@ -357,6 +357,114 @@ Do ponto de vista educacional, a experiência evidenciou a complexidade de desen
 
 Contudo, a ausência de um guia estruturado para mensurar a evolução \emph{in loco} dificulta a aferição objetiva desse progresso. Sem registros consistentes de reuniões, metas comportamentais ou feedbacks formalizados, torna-se inviável realizar uma análise longitudinal que correlacione o crescimento em \emph{soft skills} às práticas pedagógicas empregadas. Dessa forma, a experiência reforça a necessidade de instrumentos metodológicos padronizados, capazes de verificar de maneira mais abrangente e confiável o impacto educacional dessas iniciativas.
 
+\section{Análises Quantitativas e Resultados}
+\label{sec:analise_quantitativa}
+
+Nesta seção, apresentamos os principais gráficos gerados a partir dos dados coletados nos repositórios do projeto. Cada figura ilustra um aspecto diferente da colaboração e da distribuição de contribuições ao longo do tempo.
+
+\subsection{Heatmap de Atividade}
+Na Figura~\ref{fig:heatmap_activity}, exibimos um \emph{heatmap} que relaciona o dia da semana (eixo vertical) com a hora do dia (eixo horizontal). A intensidade de cor representa o número de contribuições (commits, issues, PRs, comentários) em cada intervalo de dia/hora.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graficos/github/activity-heatmap.png}
+    \caption{Heatmap (All Contributions by Day/Hour).}
+    \label{fig:heatmap_activity}
+\end{figure}
+
+Observa-se que há concentração de atividade em determinados horários noturnos e no início da semana, possivelmente devido à rotina acadêmica ou profissional dos participantes.
+
+\subsection{Burndown Chart}
+A Figura~\ref{fig:burndown_chart} apresenta um gráfico de burndown que evidencia a quantidade de \emph{issues} abertas ao longo do tempo. Cada \emph{issue} aberta adiciona +1 no dia de criação, e cada \emph{issue} fechada subtrai 1 no dia de fechamento.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graficos/github/burndown-chart.png}
+    \caption{Burndown Chart: Outstanding Open Issues Over Time.}
+    \label{fig:burndown_chart}
+\end{figure}
+
+Pode-se notar períodos de estabilidade, intercalados por saltos de \emph{issues} que podem coincidir com novos \emph{sprints} ou grandes entregas.
+
+\subsection{Rede de Colaboração}
+As Figuras~\ref{fig:network_all_contribs} e \ref{fig:network_no_isolated} ilustram a rede de colaboração entre os membros. Cada nó representa um participante, enquanto cada aresta indica a co-participação em um mesmo repositório ou \emph{issue}.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.65\textwidth]{graficos/github/collaboration-network.png}
+    \caption{Collaboration Network (All Contributions).}
+    \label{fig:network_all_contribs}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.65\textwidth]{graficos/github/collaboration-network-no-isolated.png}
+    \caption{Collaboration Network (No Isolated Nodes).}
+    \label{fig:network_no_isolated}
+\end{figure}
+
+Na primeira visualização (Figura~\ref{fig:network_all_contribs}), observa-se a presença de nós isolados (sem conexões). Já na segunda (Figura~\ref{fig:network_no_isolated}), esses nós foram removidos, destacando o núcleo colaborativo.
+
+\subsection{Distribuição de Commits}
+A distribuição de \emph{commits} por membro foi analisada por meio de um \emph{box plot} (Figura~\ref{fig:commit_boxplot}) e de um histograma (Figura~\ref{fig:commit_histogram}). O primeiro resume a variação de \emph{commits} (mediana, quartis e outliers), enquanto o segundo mostra a frequência de faixas de \emph{commits}.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.55\textwidth]{graficos/github/commit-boxplot.png}
+    \caption{Commit Counts (Box Plot).}
+    \label{fig:commit_boxplot}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{graficos/github/commit-frequency.png}
+    \caption{Commit Frequency Distribution.}
+    \label{fig:commit_histogram}
+\end{figure}
+
+Percebe-se que alguns participantes realizam muitos \emph{commits}, enquanto outros têm atividade mínima, sugerindo a necessidade de estratégias para balancear as contribuições.
+
+\subsection{Contribuições ao Longo do Tempo}
+As Figuras~\ref{fig:contrib_time_all} e \ref{fig:contrib_time_augdec} mostram a evolução das contribuições (issues, PRs, commits etc.) em diferentes repositórios ao longo do tempo. Na primeira, considera-se todo o período analisado, enquanto na segunda filtra-se o intervalo entre agosto e dezembro de 2024.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graficos/github/contributions-per-repo.png}
+    \caption{Contributions Over Time by Repository.}
+    \label{fig:contrib_time_all}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graficos/github/contributions-per-member.png}
+    \caption{Contributions Over Time by Repository (Aug-Dec 2024).}
+    \label{fig:contrib_time_augdec}
+\end{figure}
+
+Observa-se que alguns repositórios (e.g., \emph{interfaces-usuario} e \emph{python-services}) apresentam picos de atividade concentrados, enquanto outros mantêm frequência mais uniforme.
+
+\subsection{Contribuições por Membro e por Repositório}
+Por fim, dois gráficos de barras (Figuras~\ref{fig:contrib_members_new_estab} e \ref{fig:contrib_repo_stacked}) mostram, respectivamente, as contribuições por membro (separando usuários novos e estabelecidos) e a distribuição de diferentes tipos de contribuição (issues, PRs, commits, comentários) por repositório.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graficos/github/contributions-per-member.png}
+    \caption{Contributions per Member -- New vs. Established.}
+    \label{fig:contrib_members_new_estab}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{graficos/github/contributions-per-repo.png}
+    \caption{Contributions per Repository (Stacked).}
+    \label{fig:contrib_repo_stacked}
+\end{figure}
+
+Enquanto o primeiro gráfico (Figura~\ref{fig:contrib_members_new_estab}) evidencia que alguns membros “estabelecidos” lideram em volume de contribuições, a Figura~\ref{fig:contrib_repo_stacked} sugere que a maioria dos repositórios tem uma proporção significativa de \emph{issues}, demonstrando uma alta demanda por melhorias ou correções.
+
+\subsection{Discussão Geral}
+Em conjunto, os gráficos fornecem uma visão ampla do comportamento da equipe e da dinâmica de colaboração. Identificam-se picos de atividade concentrados em horários específicos, períodos de acúmulo de \emph{issues} e membros com atuação destacada como hubs de conhecimento. Tais insights embasam recomendações de melhorias na distribuição de tarefas, no planejamento de sprints e na formalização de processos (por exemplo, revisões de código e padronização de diários de bordo), buscando maior equilíbrio e engajamento de todos os participantes.
+
 % ----------------------------------------------------------------------------
 % TÓPICO 5
 % ----------------------------------------------------------------------------
