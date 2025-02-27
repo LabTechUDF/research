@@ -56,7 +56,7 @@
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
 \titulo{Desenvolvimento de um Dashboard para o Monitoramento e Acompanhamento Contínuo de Projetos em Fábricas de Software Acadêmicas}
-\autor{Danrley Willyan da Silva Pereira (Aluno)}
+\autor{Danrley Willyan da Silva Pereira (RGM 42570166)}
 \orientador{Kerlla de Souza Luz}
 \local{Brasília}
 \data{2025}
@@ -139,7 +139,7 @@
 % ---
 % Capa
 % ---
-\imprimircapa
+% \imprimircapa
 % ---
 
 % ---
@@ -200,9 +200,15 @@
 % inserir lista de abreviaturas e siglas
 % ---
 \begin{siglas}
-  \item[ABNT] Associação Brasileira de Normas Técnicas
-  \item[abnTeX] ABsurdas Normas para TeX
+  \item[TI] Tecnologia da Informação
+  \item[MEC] Ministério da Educação
+  \item[KPIs] Key Performance Indicators
+  \item[API] Application Programming Interface
+  \item[IDE] Ambiente de Desenvolvimento Integrado
+  \item[GPL] GNU General Public License
+  \item[UDF] Universidade do Distrito Federal
 \end{siglas}
+
 % ---
 
 % ---
@@ -232,7 +238,6 @@
 % INTRODUÇÃO
 % ----------------------------------------------------------
 \section[Introdução]{Introdução}
-\addcontentsline{toc}{chapter}{Introdução}
 
 O setor de Tecnologia da Informação (TI) desempenha um papel cada vez mais relevante no desenvolvimento econômico e social, especialmente em polos emergentes como Brasília \cite{ibge2025}, que abriga diversas instituições públicas, privadas e centros de pesquisa. Nesse contexto, a criação de uma \textbf{Fábrica de Software Acadêmica} em ambiente universitário configura uma oportunidade estratégica para integrar teoria e prática, preparando os estudantes para os desafios reais do mercado e promovendo o desenvolvimento de soluções voltadas a demandas concretas da comunidade \cite{dos2021experiencia, neto2017relato}.
 
@@ -249,10 +254,10 @@ Dessa forma, neste projeto de Iniciação Tecnológica propõe-se o desenvolvime
 \subsection{Motiva\c{c}\~{a}o}
 O proponente, juntamente com a orientadora, desempenha papel ativo no LabTech, tendo exercido a função de gerente no primeiro semestre de 2023 e nos dois semestres de 2024. Com base nessa experiência, identificaram-se gargalos no acompanhamento dos alunos, como a falta de métricas de desempenho, a ausência de análises em tempo real do progresso dos projetos e das atividades, e dificuldades no uso das ferramentas pelos integrantes da fábrica. Diante disso, a disponibilidade de um dashboard com métricas em tempo real pode auxiliar no monitoramento dos alunos, na criação de planos de ação, na padronização do nível dos alunos e na identificação de silos de conhecimento.
 
-\subsection*{Objetivo Geral}
+\subsection{Objetivo Geral}
 Criar uma \textbf{solução tecnológica (dashboard)} para o monitoramento e acompanhamento contínuo de projetos de software acadêmicos, possibilitando a visualização de métricas de progresso, capacidade e engajamento das equipes, de modo a potencializar a gestão e o aprendizado em Fábricas de Software Acadêmicas.
 
-\subsubsection*{Objetivos Específicos}
+\subsubsection{Objetivos Específicos}
 \begin{enumerate}
     \item \textbf{Realizar uma revisão de literatura} sobre métodos e métricas adotados em projetos de desenvolvimento de software, com foco nas Fábricas de Software Acadêmicas, a fim de identificar boas práticas para coleta e interpretação de dados e embasar a definição das métricas que serão apresentadas no dashboard.
     \item \textbf{Definir o conjunto de indicadores-chave (KPIs)} que permitam avaliar tanto a parte técnica (\emph{commits}, \emph{issues}, \emph{PRs}, bugs) quanto a parte colaborativa (rede de colaboração, frequência de comunicação).
@@ -277,7 +282,7 @@ Plataformas como o \textbf{Keen IO}\footnote{Keen IO. Disponível em: \url{https
 
 Adicionalmente, ferramentas que agregam dados de múltiplas fontes e plataformas voltadas à análise integrada de métricas, como o \textbf{Worklytics}\footnote{Worklytics. Disponível em: \url{https://www.worklytics.co/}. Acessado em: 26 de fevereiro de 2025.}, demonstram que a consolidação e a visualização clara de indicadores contribuem para uma gestão mais transparente e colaborativa dos projetos.
 
-\subsection{Benchmark de Soluções: Comparação de Preços e Funcionalidades}
+\subsubsection{Comparação de Preços e Funcionalidades}
 
 Para demonstrar a importância do desenvolvimento de um dashboard open source, faz-se necessária a comparação das soluções disponíveis no mercado em termos de funcionalidades e custos. A Tabela~\ref{tab:benchmark} apresenta um resumo dos preços e principais recursos de algumas ferramentas SaaS que agregam métricas de repositórios (como GitHub, GitLab e Bitbucket), bem como alternativas que visam oferecer dashboards interativos.
 
@@ -342,7 +347,7 @@ KPIs (Key Performance Indicators) são medidas quantitativas utilizadas para ava
 \subsubsection{Interface de Programação de Aplicações (API)}
 Uma API (Application Programming Interface) é um conjunto de protocolos e rotinas que possibilita a comunicação e a integração entre diferentes sistemas. No contexto deste projeto, a API do GitHub será empregada para a coleta automática de dados relevantes dos repositórios, como \emph{commits}, \emph{issues} e \emph{pull requests}.
 
-\subsubsection{Versionador e Repositório Remoto}
+\subsubsection{Versionador de C\'{o}digo e Repositório Remoto}
 Um versionador, como o Git, é um sistema de controle de versões que registra todas as alterações realizadas no código-fonte ao longo do tempo, permitindo o rastreamento e a reversão de mudanças. Por sua vez, um repositório remoto, como o GitHub, é um serviço online que hospeda esses arquivos versionados, viabilizando a colaboração entre desenvolvedores e o acesso remoto ao código.
 
 % ----------------------------------------------------------
@@ -438,7 +443,6 @@ Apresentação no Congresso UDF &   &   &   &   &   &   &   &   &   &   &   & \X
 % CONSIDERAÇÕES FINAIS
 % ----------------------------------------------------------
 \section[Considerações Finais]{Considerações Finais}
-\addcontentsline{toc}{chapter}{Considerações Finais}
 
 O projeto de Iniciação Tecnológica propõe o desenvolvimento de um \textbf{dashboard} para o monitoramento de Fábricas de Software Acadêmicas, abordando a lacuna existente na padronização da coleta e visualização de métricas de progresso e colaboração. A solução pretende contribuir para a melhoria da \emph{governança} dos projetos, a detecção precoce de gargalos e o aprimoramento contínuo das equipes, reforçando a formação prática dos estudantes \cite{oliveira2017conduccao, almeida2006liccoes, dos2021experiencia, neto2017relato}.
 
