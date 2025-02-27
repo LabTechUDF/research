@@ -21,8 +21,10 @@
 \usepackage{color}              % Controle das cores
 \usepackage{graphicx}           % Inclusão de gráficos
 \usepackage{microtype}          % Para melhorias de justificação
-\usepackage{lipsum}             % Para geração de dummy text (exemplo)
-\usepackage[brazilian,hyperpageref]{backref}	
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
 \usepackage[alf]{abntex2cite}	% Citações padrão ABNT
 \usepackage{hyperref}           % Hyperlinks no PDF
 \usepackage{multirow}           % Para tabelas com células que ocupam várias linhas
@@ -31,60 +33,188 @@
 % CONFIGURAÇÕES DE PACOTES
 % ----------------------------------------------------------
 
-% BACKREF
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
 \renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
 \renewcommand{\backref}{}
+% Define os textos da citação
 \renewcommand*{\backrefalt}[4]{
-  \ifcase #1
-    Nenhuma citação no texto.
-  \or
-    Citado na página #2.
-  \else
-    Citado #1 vezes nas páginas #2.
-  \fi
-}
-\renewcommand\thesection{\arabic{section}}
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
 
-% HYPERSETUP
-\hypersetup{
-	pdftitle={Projeto de Iniciação Científica: Dashboard para Monitoramento de Fábricas de Software Acadêmicas},
-	pdfauthor={Danrley Pereira e Kerlla Luz},
-	pdfsubject={Projeto de pesquisa submetido ao edital de iniciação científica do UDF},
-	pdfkeywords={Fábrica de Software Acadêmica, Desenvolvimento de software, Educação em TI, Dashboard, Métricas},
-	colorlinks=true,
-	linkcolor=blue,
-	citecolor=blue,
-	filecolor=magenta,
-	urlcolor=blue
-}
+\renewcommand\thesection{\arabic{section}}
 
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
 \titulo{Desenvolvimento de um Dashboard para o Monitoramento e Acompanhamento Contínuo de Projetos em Fábricas de Software Acadêmicas}
-\autor{Danrley Willyan da Silva Pereira \and Kerlla Luz}
+\autor{Danrley Willyan da Silva Pereira (Aluno)}
+\orientador{Kerlla de Souza Luz}
 \local{Brasília}
 \data{2025}
 \instituicao{
   Centro Universitário do Distrito Federal (UDF)\\
   Curso de Ciência da Computação\\
-  Programa de Iniciação Científica
+  Programa de Iniciação Tecnol\`{o}gica
 }
 \tipotrabalho{Projeto de Pesquisa}
 \preambulo{Projeto de pesquisa submetido ao Edital do Programa Institucional de Bolsas de Iniciação Tecnológica \& Inovação de 2025 do Centro Universitário do Distrito Federal (UDF).}
 
+% HYPERSETUP
+\makeatletter
+\hypersetup{
+	pdftitle={\@title},
+	pdfauthor={\@author},
+	pdfsubject={\imprimirpreambulo},
+	pdfkeywords={F\'{a}brica de Software Acad\^{e}mica}{Desenvolvimento de software}{Educa\c{c}\~{a}o em TI}{Dashboard}{M\'{e}tricas},
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+}
+\makeatother
+
 % ---
-% Início do Documento
+% Possibilita criação de Quadros e Lista de quadros.
+% Ver https://github.com/abntex/abntex2/issues/176
+%
+\newcommand{\quadroname}{Quadro}
+\newcommand{\listofquadrosname}{Lista de quadros}
+
+\newfloat[chapter]{quadro}{loq}{\quadroname}
+\newlistof{listofquadros}{loq}{\listofquadrosname}
+\newlistentry{quadro}{loq}{0}
+
+% configurações para atender às regras da ABNT
+\setfloatadjustment{quadro}{\centering}
+\counterwithout{quadro}{chapter}
+\renewcommand{\cftquadroname}{\quadroname\space} 
+\renewcommand*{\cftquadroaftersnum}{\hfill--\hfill}
+
+\setfloatlocations{quadro}{hbtp} % Ver https://github.com/abntex/abntex2/issues/176
 % ---
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ----
+% Início do documento
+% ----
 \begin{document}
+
+% Seleciona o idioma do documento (conforme pacotes do babel)
+%\selectlanguage{english}
 \selectlanguage{brazil}
-\frenchspacing
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
 
 % ----------------------------------------------------------
 % ELEMENTOS PRÉ-TEXTUAIS
 % ----------------------------------------------------------
+% \pretextual
+
+% ---
+% Capa
+% ---
 \imprimircapa
-\imprimirfolhaderosto
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto*
+% ---
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS: RESUMO E ABSTRACT
+% ----------------------------------------------------------
+
+\begin{resumo}
+	O presente projeto propõe o desenvolvimento de um dashboard open source para monitoramento e acompanhamento contínuo de projetos em Fábricas de Software Acadêmicas. A solução visa integrar métricas extraídas de repositórios de código, tais como \emph{commits}, \emph{issues} e \emph{pull requests}, permitindo a visualização em tempo real do progresso e colaboratividade dos projetos. A metodologia adotada envolve a coleta de dados por meio de APIs, definição de indicadores-chave de desempenho (KPIs) e o desenvolvimento de uma interface web intuitiva. Os resultados esperados incluem a melhoria da governança dos projetos, a identificação precoce de gargalos e o fomento de práticas colaborativas, contribuindo para a formação prática dos estudantes e para a eficiência dos processos de desenvolvimento. 
+
+	\textbf{Palavras-chave:} Dashboard; Fábrica de Software Acadêmica; Métricas; KPIs; Ensino de TI.
+\end{resumo}
+
+\begin{resumo}[Abstract]
+    \begin{otherlanguage*}{english}
+	   This project proposes the development of an open source dashboard for continuous monitoring and management of projects in Academic Software Factories. The solution aims to integrate metrics extracted from code repositories, such as commits, issues, and pull requests, enabling real-time visualization of project progress and collaboration. The adopted methodology involves data collection via APIs, definition of key performance indicators (KPIs), and the development of an intuitive web interface. Expected outcomes include improved project governance, early identification of bottlenecks, and the promotion of collaborative practices, thereby enhancing both the practical training of students and the efficiency of development processes.
+       
+    \vspace{\onelineskip}
+    
+    \noindent
+	\textbf{Keywords}: Dashboard. Academic Software Factory. Metrics. KPIs. IT Education.
+    \end{otherlanguage*}
+\end{resumo}
+
+\newpage
+
+% ---
+% inserir lista de ilustrações
+% ---
+% \pdfbookmark[0]{\listfigurename}{lof}
+% \listoffigures*
+% \cleardoublepage
+% ---
+
+% ---
+% inserir lista de quadros
+% ---
+% \pdfbookmark[0]{\listofquadrosname}{loq}
+% \listofquadros*
+% \cleardoublepage
+% ---
+
+% ---
+% inserir lista de tabelas
+% ---
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+% ---
+
+% ---
+% inserir lista de abreviaturas e siglas
+% ---
+\begin{siglas}
+  \item[ABNT] Associação Brasileira de Normas Técnicas
+  \item[abnTeX] ABsurdas Normas para TeX
+\end{siglas}
+% ---
+
+% ---
+% inserir lista de símbolos
+% ---
+% \begin{simbolos}
+%   \item[$ \Gamma $] Letra grega Gama
+%   \item[$ \Lambda $] Lambda
+%   \item[$ \zeta $] Letra grega minúscula zeta
+%   \item[$ \in $] Pertence
+% \end{simbolos}
+% ---
 
 % ----------------------------------------------------------
 % SUMÁRIO
@@ -208,6 +338,16 @@ O desenvolvimento de \emph{dashboards} que consolidem as diversas métricas de f
 \label{sec:tecnico}
 
 Existe uma variedade de ferramentas de hospedagem de repositórios de código-fonte disponíveis na web. Entretanto, é fundamental compreender que os serviços de hospedagem e os sistemas de controle de versão são entidades distintas. Os sistemas de controle de versão são os utilitários utilizados para gerenciar as alterações ocorridas ao longo do ciclo de desenvolvimento de software, registrando as modificações efetuadas nos arquivos de código-fonte – exemplos clássicos são o Git\footnote{Git. Disponível em: \url{https://git-scm.com/}. Acessado em 26 de fevereiro de 2025.} e o SVN\footnote{SVN. Disponível em: \url{https://subversion.apache.org/}. Acessado em: 26 de fevereiro de 2025.}. Por outro lado, os serviços de hospedagem de repositórios são aplicações web que integram e potencializam as funcionalidades dos sistemas de controle de versão, oferecendo recursos adicionais para colaboração e visualização de indicadores, como o GitLab\footnote{GitLab. Disponível em: \url{https://about.gitlab.com/}. Acessado em: 26 de fevereiro de 2025.} e o GitHub. No âmbito desse projeto, o GitHub foi escolhido como repositório para extração de dados, em virtude de sua ampla popularidade na comunidade de desenvolvedores e por ser usado internamente no LabTech.
+
+\subsubsection{Indicadores-Chave de Desempenho (KPIs)}
+KPIs (Key Performance Indicators) são medidas quantitativas utilizadas para avaliar a eficiência e eficácia de um processo ou projeto. Eles fornecem uma visão clara do desempenho e permitem identificar áreas que necessitam de melhorias, facilitando a tomada de decisões baseadas em dados.
+
+\subsubsection{Interface de Programação de Aplicações (API)}
+Uma API (Application Programming Interface) é um conjunto de protocolos e rotinas que possibilita a comunicação e integração entre diferentes sistemas. No contexto deste projeto, a API do GitHub será utilizada para coletar automaticamente dados relevantes dos repositórios, como \emph{commits}, \emph{issues} e \emph{pull requests}.
+
+\subsubsection{Versionador e Repositório Remoto}
+Um versionador, como o Git, é um sistema de controle de versões que registra todas as alterações realizadas no código-fonte ao longo do tempo, possibilitando rastreamento e reversão de mudanças. Por sua vez, um repositório remoto, como o GitHub, é um serviço online que hospeda esses arquivos versionados, permitindo a colaboração entre desenvolvedores e o acesso remoto ao código.
+
 
 % ----------------------------------------------------------
 % CAPÍTULO: METODOLOGIA
