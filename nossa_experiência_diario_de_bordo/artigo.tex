@@ -93,40 +93,30 @@ Departamento de Engenharia, Arquitetura e TI}
 \section*{Resumo}
 \addcontentsline{toc}{section}{Resumo}
 
-Este artigo relata a experiência de gestão e desenvolvimento de software em uma Fábrica de Software Acadêmica. A iniciativa integra teoria e prática, empregando metodologias ágeis, ferramentas modernas de programação e mentoria técnica para desenvolver sistemas. A análise, de natureza qualitativa, considerou relatórios de estágio, diários de bordo de alunos-gerentes, observações diretas e outras fontes. Os resultados evidenciam benefícios no desenvolvimento de hard skills (programação, arquitetura de software) e soft skills (comunicação, trabalho em equipe), confirmando a relevância de Fábricas de Software Acadêmicas para melhorar a formação de profissionais de TI. Por fim, discute-se a carência de padronização metodológica e seu impacto na avaliação de resultados, indicando caminhos para pesquisas futuras.
-
-Palavras-chave: Fábrica de Software Acadêmica; Gestão Acadêmica; Desenvolvimento de software; Educação tecnológica; Projetos Acadêmicos.
-
-\textbf{ABAIXO SE TIVER ANALISE QUANTITATIVA VALIDA}
-
 Este artigo relata a experiência de gestão e desenvolvimento de software em uma Fábrica de Software Acadêmica. A iniciativa integra teoria e prática, empregando metodologias ágeis, ferramentas modernas de programação e mentoria técnica para desenvolver sistemas. A análise, de natureza mista, considerou dados quantitativos (como frequência de \emph{commits} e \emph{pull requests}) e informações qualitativas (relatórios de estágio, diários de bordo de alunos-gerentes, observações diretas), entre outras fontes. Os resultados evidenciam benefícios no desenvolvimento de \emph{hard skills} (programação, arquitetura de software) e \emph{soft skills} (comunicação, trabalho em equipe), confirmando a relevância de Fábricas de Software Acadêmicas para melhorar a formação de profissionais de TI. Por fim, discute-se a carência de padronização metodológica e seu impacto na avaliação de resultados, indicando caminhos para pesquisas futuras.
 
-\textbf{Até que ponto essa análise quantitativa sustentou conclusões relevantes?}
-
-Se os dados quantitativos foram pontuais ou pouco desenvolvidos, inserir no resumo que houve “análise quantitativa” pode criar a expectativa de uma discussão estatística aprofundada que, por vezes, não acontece de fato no artigo. Nesse caso, seria melhor manter a ênfase na vertente qualitativa, ou pelo menos esclarecer que a vertente quantitativa foi limitada.
-
+Palavras-chave: Fábrica de Software Acadêmica; Gestão Acadêmica; Desenvolvimento de software; Educação tecnológica; Projetos Acadêmicos.
 
 \cleardoublepage
 
 
 % ----------------------------------------------------------------------------
 % TÓPICO 1
-% ----------------------------------------------------------------------------
+% ------------------------------------------------------------------------
 \chapter{Introdução}
 \label{sec:introducao}
 
-O setor de Tecnologia da Informação (TI) tem desempenhado um papel cada vez mais relevante no desenvolvimento econômico e social, especialmente em polos emergentes como Brasília, que abriga diversas instituições públicas, privadas e centros de pesquisa. Nesse contexto, a criação de uma Fábrica de Software em ambiente acadêmico surge como oportunidade estratégica para integrar teoria e prática, preparando os estudantes para os desafios reais do mercado ao mesmo tempo em que se desenvolvem soluções voltadas a demandas concretas da comunidade.
+O setor de Tecnologia da Informação (TI) \cite{kerlla} tem desempenhado um papel cada vez mais relevante no desenvolvimento econômico e social do país, a Empresa Brasil de Comunicação (EBC) afirma com base em estudo da FecomercioSP um crescimento de 95\% de empregos ligados a área de tecnologia  \cite{ebctecnologia2024}, especialmente em polos emergentes como Brasília, que abriga diversas instituições públicas, privadas e centros de pesquisa , além de ter o segundo maior PIB (Produto Interno Bruto) do setor de TI do país \cite{agenciapib2020}. Nesse contexto, a criação de uma Fábrica de Software em ambiente acadêmico surge como oportunidade estratégica para integrar teoria e prática, preparando os estudantes para os desafios reais do mercado ao mesmo tempo em que se desenvolvem soluções voltadas a demandas concretas da sociedade civil \cite{bernardi2017learning}.
 
-A Fábrica de Software Acadêmica, portanto, alinha-se à proposta de formação ampliada, em que a sala de aula deixa de ser o único espaço de aprendizagem. Por meio de projetos orientados por metodologias ágeis, ferramentas contemporâneas e acompanhamento de mentores, os participantes desenvolvem tanto competências técnicas (\emph{hard skills}), como arquitetura de sistemas e programação, quanto competências interpessoais (\emph{soft skills}), como comunicação, trabalho em equipe e liderança. 
-
+A Fábrica de Software Acadêmica, portanto, alinha-se à proposta de formação ampliada, em que a sala de aula deixa de ser o único espaço de aprendizagem. \cite{santos2021experiencia} Por meio de projetos orientados (\ref{sec:projetos}) por metodologias ágeis, ferramentas contemporâneas e acompanhamento de mentores, os participantes desenvolvem tanto competências técnicas (\emph{hard skills}), como arquitetura de sistemas e programação, quanto competências interpessoais (\emph{soft skills}), como comunicação, trabalho em equipe e liderança.  \cite{perides2021competencias}
 O presente artigo aborda a experiência de implantação e consolidação desse modelo no Centro Universitário do Distrito Federal (UDF), destacando as motivações institucionais, os benefícios para a formação discente e a contribuição para o ecossistema de TI de Brasília. Além de evidenciar as boas práticas adotadas, o texto discute também os desafios enfrentados ao se conciliar exigências acadêmicas, gestão de projetos reais e desenvolvimento de habilidades em um ambiente controlado, mas conectado às necessidades do mercado. Por fim, apresenta-se uma reflexão acerca dos resultados obtidos e propõem-se caminhos para pesquisas e aprimoramentos futuros, no sentido de tornar a Fábrica de Software um espaço cada vez mais relevante para a formação de profissionais de TI.
 
 Contando com esta introdução, o artigo está estruturado em 5 seções: na Seção~\ref{cap:fundamentacao-teorica}, apresenta-se a Fundamentação Teórica; na Seção~\ref{sec:desenvolvimento}, discute-se a Fábrica de Software Acadêmica da UDF (Projeto LabTech); na Seção~\ref{sec:discussao-resultados}, detalham-se os Resultados e a Discussão; e, por fim, na Seção~\ref{sec:conc-trabalhos-futuros}, são apresentadas as Conclusões e os Trabalhos Futuros.
 
 
-% ----------------------------------------------------------------------------
+% ------------------------------------------------------------------------
 % TÓPICO 2
-% ----------------------------------------------------------------------------
+% ------------------------------------------------------------------------
 \chapter{Fundamenta{\c{c}}{\~a}o Te{\'o}rica}
 \label{cap:fundamentacao-teorica}
 
@@ -190,7 +180,7 @@ Análise e Desenv. de Sist. & 150 & 160 & 696 \\ \hline
 
 Comparando com outros departamentos, os cursos de TI têm se destacado como vetores de crescimento. Atualmente, sabe-se que cerca de 2.000 alunos estejam matriculados em tais cursos, somando todos os períodos.  
 
-A despeito do crescimento, alguns desafios persistem:
+A respeito do crescimento, alguns desafios persistem:
 \begin{itemize}
   \item \textbf{Falta de Experiências Práticas Reais:} Disciplinas teóricas não suprem totalmente a necessidade de projetos de mercado.
   \item \textbf{Adaptação a Metodologias Ágeis e Ferramentas Modernas:} Scrum, Kanban e tecnologias de ponta nem sempre são profundamente explorados.
@@ -210,7 +200,7 @@ De acordo com \citeonline{marconi2022metodologia}:
 Tal defini\c{c}\~ao ressalta a necessidade de procedimentos claros e fundamentados, de modo a garantir a consist\^encia e a confiabilidade das conclus\~oes, sobretudo em um contexto acad\^emico em que diferentes equipes e projetos podem coexistir. O objetivo, portanto, \'e que o m\'etodo adotado seja capaz de:
 \begin{itemize}
     \item Fornecer instrumentos para comparar a evolu\c{c}\~ao de projetos ao longo dos semestres;
-    \item Auxiliar na detec\c{c}\~ao de erros e gargalos de processos;
+    \item Auxiliar na detec\c{c}\~ao de erros e gargalos de processos gerenciais; (ver \ref{sec:aspectos-gerenciais}) 
     \item Orientar tomadas de decis\~ao com base em evid\^encias objetivas.
 \end{itemize}
 
@@ -226,10 +216,10 @@ Optou-se por uma estratégia de pesquisa mista para capturar tanto elementos num
 \subsubsection{Fontes de Dados}
 
 \begin{itemize}
-    \item \textbf{Diários de Bordo dos Alunos-Gerentes:} Descrevem o fluxo de trabalho, bloqueios técnicos e aspectos de comunicação em cada sprint.
+    \item \textbf{Diários de Bordo dos Alunos-Gerentes:} Descrevem o fluxo de trabalho, bloqueios técnicos e aspectos de comunicação em cada itera\c{c}\~{a}o (sprint).
     \item \textbf{Relatórios Semanais/Mensais e Finais:} Elaborados pelos participantes e pelo mentor, indicando progresso, dificuldades e reflexões; todos os alunos entregam um relatório conclusivo ao fim do semestre.
     \item \textbf{Observação Direta:} Inclui participação em reuniões, análise de \emph{issues}, \emph{commits} e \emph{pull requests}.
-    \item \textbf{Planilha de Dados dos Participantes:} Registra matrícula, curso, período, idade, estágio ou não, e papel desempenhado (monitor, estagiário, participante).
+    \item \textbf{Planilha de Dados dos Participantes:} Registra matrícula, curso, período, idade, est\'{a}gio ou n\~{a}o, e papel desempenhado (monitor, estagiário, participante).
 \end{itemize}
 
 \subsubsection{Procedimentos de Análise}
@@ -261,12 +251,14 @@ O projeto visa desenvolver competências técnicas, gerenciais e interpessoais n
 
 É importante notar que a função de Desenvolvedor de Software e Aplicações, Gerentes de Projetos, Especialistas em Big Data, Engenheiro de FinTechs, Especialistas em Inteligência Artificial e Machine Learning, Engenheiro de Dados (Data Warehousing Specialists), UI e UX Designers, Analista e Cientista de Dados, Analista de Segurança da Informação e Engenheiro DevOps estão entre as funções que mais crescem em demanda no mundo. \cite{wef:2025}
 
+Com isso em mente, no \^{a}mbito do LabTech, os papeis assumidos pelos estudantes estão relacionados a diferentes funções citadas pelo \citeonline{wef:2025}:  Desenvolvedor de Software e Aplicações, Gerentes de Projetos, Engenheiro de Dados, UI e UX Designers, Analista e Cientista de Dados, Analista de Segurança da Informação e Engenheiro DevOps.
+
 
 \section{Estrutura Organizacional e Dinâmica}
 
 As equipes de estudantes são constituídas de forma multidisciplinar, com papéis adaptáveis e reuniões periódicas para planejar e revisar as atividades em curso. Ferramentas como GitHub, Trello e Jira sustentam as cerimônias do \emph{framework} SCRUM e o controle de demandas em um quadro \emph{KANBAN}. Além disso, encontros presenciais e virtuais complementam o acompanhamento fornecido pelo professor e pelos gerentes designados, que orientam as entregas e solucionam bloqueios técnicos conforme necessário.
 
-É importante salientar, entretanto, a inexistência de uma metodologia formal padronizada em todo o processo. Não há obrigatoriedade de diários de bordo detalhados, nem relatórios semanais ou coletas de dados frequentes e sistematizadas, de modo que cada equipe acaba decidindo por conta própria as prioridades e a forma de aplicar metodologias ágeis. Tal falta de padronização dificulta significativamente a realização de análises qualitativas e quantitativas mais consistentes (CITAR LIVRO E/OU ARTIGOS SOBRE PESQUISA QUALITATIVA E QUANTITATIVA QUE EMBASE ESSA FATO) cite{artigo}. Sem artefatos comuns e parâmetros uniformes de avaliação, torna-se extremamente complexo comparar o desempenho entre equipes, alunos ou mesmo entre períodos letivos distintos. Em termos de pesquisa educacional, a ausência de um protocolo metodológico compartilhado compromete a possibilidade de triangulação de dados e de conclusões fidedignas (QUE TIPO DE ANÁLISE?) cite{dcn2016}. Assim, a diversidade de abordagens, embora estimule a autonomia dos participantes, restringe a validade e a confiabilidade das análises sobre os resultados alcançados.
+É importante salientar, entretanto, a inexistência de uma metodologia formal padronizada em todo o processo. Não há obrigatoriedade de diários de bordo detalhados, nem relatórios semanais ou coletas de dados frequentes e sistematizadas, de modo que cada equipe acaba decidindo por conta própria as prioridades e a forma de aplicar metodologias ágeis. Tal falta de padronização dificulta significativamente a realização de análises qualitativas e quantitativas mais consistentes. \cite{mineiro2022pesquisa} Sem artefatos comuns e parâmetros uniformes de avaliação, torna-se extremamente complexo comparar o desempenho entre equipes, alunos ou mesmo entre períodos letivos distintos. Em termos de pesquisa educacional, a ausência de um protocolo metodológico compartilhado compromete a possibilidade de triangulação de dados e de conclusões fidedignas (QUE TIPO DE ANÁLISE?) cite{dcn2016}. \cite{mattos2011etnografia}Assim, a diversidade de abordagens, embora estimule a autonomia dos participantes, restringe a validade e a confiabilidade das análises sobre os resultados alcançados.
 
 
 \section{Ferramentas e Práticas Utilizadas}
@@ -326,11 +318,21 @@ Os diários de bordo e relatórios semanais evidenciaram dificuldades recorrente
 Vale ressaltar que, embora alguns alunos mostrem maior desenvoltura em comunicação e trabalho em equipe desde os semestres iniciais, não há uniformidade nesse padrão, visto que essas competências interpessoais dependem de fatores externos e trajetórias individuais. Esse cenário reforça a importância de metodologias mais sistematizadas, capazes de registrar e avaliar o progresso técnico e comportamental ao longo do semestre.
 
 \section{Projetos em Desenvolvimento}
+\label{sec:projetos}
 \begin{itemize}
   \item \textbf{Sistema de Reserva de Salas:} Auxilia no gerenciamento de espaços para aulas e eventos.
   \item \textbf{Sistema de Eventos:} Possibilita a organização de palestras, workshops e minicursos.
   \item \textbf{Sistema de Alocação de Professores:} Suporte à distribuição de docentes em disciplinas.
 \end{itemize}
+
+A arquitetura do sistema, mostrada na Figura~\ref{fig:topologia}, foi disponibilizada no ambiente acadêmico, permitindo a visualização da topologia de microsserviços, autenticação centralizada, integrações com bancos de dados e sistemas de cache.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figuras/topologia.png}
+    \caption{Topologia da Solução da Fábrica de Software (LabTech/UDF).}
+    \label{fig:topologia}
+\end{figure}
 
 % ----------------------------------------------------------------------------
 % TÓPICO 4
@@ -346,7 +348,7 @@ FAZER ANALISE DE PRS, COMMITS, E RELATOS DOS ALUNOS. VALE A PENA FAZER UM FORMUL
 Os registros de diários de bordo indicam que a adoção de \emph{frameworks} modernos, como Spring Boot, Flask e React, contribuiu significativamente para o desenvolvimento de competências técnicas entre os participantes. No entanto, desafios como configuração de ambientes, controle de versão e integração contínua foram recorrentes, exigindo suporte contínuo do professor e dos alunos-gerentes. Ainda assim, essas dificuldades serviram como oportunidades de aprendizagem prática, fortalecendo a autonomia técnica dos estudantes.
 
 \section{Aspectos Gerenciais}
-
+\label{sec:aspectos-gerenciais}
 A falta de papéis formais (por exemplo, \emph{Scrum Master} ou \emph{Product Owner}) demandou um grau maior de autonomia e protagonismo dos alunos-gerentes, especialmente no que diz respeito à mediação de conflitos e à organização do \emph{backlog}. Situações de falha de comunicação ocorreram, em sua maioria, quando algum membro não informava disponibilidade ou bloqueios de maneira tempestiva. Em contrapartida, reuniões semanais e revisões de código (\emph{code reviews}) mitigaram parte desses problemas, criando espaços para alinhamento e feedback. Ainda assim, a ausência de relatórios padronizados e de mecanismos claros de escalonamento de problemas dificulta a identificação precoce de gargalos gerenciais.
 
 \section{Aspectos Educacionais}
