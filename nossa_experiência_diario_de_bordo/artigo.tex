@@ -21,6 +21,13 @@
 \usepackage{color}              % Controle das cores
 \usepackage{graphicx}           % Inclusão de gráficos
 \usepackage{microtype}          % Para melhorias de justificação
+
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+
 % ---
 % Pacotes de citações
 % ---
@@ -112,6 +119,28 @@ Departamento de Engenharia, Arquitetura e TI}
 \imprimircapa
 \imprimirfolhaderosto
 
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS: RESUMO E ABSTRACT
+% ----------------------------------------------------------
+
+\begin{resumo}
+	O estudo investiga o impacto da implantação de uma Fábrica de Software Acadêmica no desenvolvimento de competências técnicas e interpessoais em estudantes de TI, com ênfase na identificação dos desafios metodológicos para a comparação sistemática dos resultados. A pesquisa adota uma abordagem mista, combinando dados quantitativos – como a frequência de \emph{commits}, \emph{pull requests} e outras métricas extraídas de repositórios de código – com dados qualitativos oriundos de diários de bordo, relatórios de estágio e observações em reuniões. Os dados foram triangulados a fim de avaliar o desempenho dos projetos ao longo de diversos semestres. Os resultados indicam que a experiência proporcionada pela Fábrica de Software contribui significativamente para o aprimoramento das \emph{hard skills} (por exemplo, programação e arquitetura de software) e das \emph{soft skills} (como comunicação e trabalho em equipe). No entanto, a ausência de protocolos padronizados compromete a comparação consistente dos resultados entre diferentes equipes e períodos. Assim, os achados sugerem que, embora a Fábrica de Software Acadêmica seja eficaz para aproximar a teoria da prática, a implementação de procedimentos padronizados é essencial para aprimorar a mensuração dos impactos e garantir a replicabilidade dos estudos.
+	
+	\textbf{Palavras-chave:} Fábrica de Software Acadêmica; Desenvolvimento de Software; Competências Técnicas; Competências Interpessoais; Metodologia Mista.
+\end{resumo}
+
+\begin{resumo}[Abstract]
+    \begin{otherlanguage*}{english}
+        This study examines the impact of implementing an Academic Software Factory on the development of technical and interpersonal skills among IT students, with an emphasis on identifying methodological challenges for systematic result comparisons. A mixed-method approach was employed, combining quantitative data—such as commit frequency, pull requests, and other repository metrics—with qualitative insights obtained from project diaries, internship reports, and meeting observations. The data were triangulated to assess project performance over several semesters. Findings indicate that the experience provided by the Academic Software Factory significantly enhances both hard skills (e.g., programming and software architecture) and soft skills (such as communication and teamwork). However, the lack of standardized protocols compromises the consistent comparison of results across different teams and time periods. Thus, the findings suggest that, although the Academic Software Factory effectively bridges theory and practice, the implementation of standardized procedures is crucial to improve impact measurement and ensure the replicability of future studies.
+        
+        \vspace{\onelineskip}
+        
+        \noindent
+        \textbf{Keywords}: Academic Software Factory; Software Development; Technical Skills; Interpersonal Skills; Mixed-Methodology.
+    \end{otherlanguage*}
+\end{resumo}
+
+
 % ---
 % NOTA DA ABNT NBR 15287:2011, p. 4:
 %  ``Se exigido pela entidade, apresentar os dados curriculares do autor em
@@ -166,18 +195,6 @@ Departamento de Engenharia, Arquitetura e TI}
 % ELEMENTOS TEXTUAIS
 % ----------------------------------------------------------
 \textual
-
-% ----------------------------------------------------------
-% RESUMO
-% ----------------------------------------------------------
-\section*{Resumo}
-\addcontentsline{toc}{section}{Resumo}
-
-Este artigo relata a experiência de gestão e desenvolvimento de software em uma Fábrica de Software Acadêmica. A iniciativa integra teoria e prática, empregando metodologias ágeis, ferramentas modernas de programação e mentoria técnica para o desenvolvimento de sistemas. A análise, de natureza mista, considerou dados quantitativos (como frequência de \emph{commits} e \emph{pull requests}) e informações qualitativas (relatórios de estágio, diários de bordo de alunos-gerentes, observações diretas), entre outras fontes. Os resultados evidenciam benefícios no desenvolvimento de \emph{hard skills} (programação, arquitetura de software) e \emph{soft skills} (comunicação, trabalho em equipe), confirmando a relevância das Fábricas de Software Acadêmicas para a formação de profissionais de TI. Por fim, discute-se a carência de padronização metodológica e seu impacto na avaliação de resultados, indicando caminhos para pesquisas futuras.
-
-Palavras-chave: Fábrica de Software Acadêmica; Gestão Acadêmica; Desenvolvimento de software; Educação tecnológica; Projetos Acadêmicos.
-
-\cleardoublepage
 
 % ----------------------------------------------------------------------------
 % TÓPICO 1
@@ -616,7 +633,6 @@ Previsivelmente, o programa deverá ser ampliado para abranger outras áreas e e
 
 % Imprime uma página indicando o início dos apêndices
 \partapendices
-
 % ----------------------------------------------------------
 \chapter{Quisque libero justo}
 % ----------------------------------------------------------
@@ -644,7 +660,6 @@ ac pretium ante justo a nulla curabitur tristique arcu eu metus}
 
 % Imprime uma página indicando o início dos anexos
 \partanexos
-
 % ---
 \chapter{Morbi ultrices rutrum lorem.}
 % ---
