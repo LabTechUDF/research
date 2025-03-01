@@ -4,239 +4,228 @@
 \chapter{Introdução}
 \label{chap:introducao}
 
-A transformação digital e o crescente dinamismo do setor de Tecnologia da Informação (TI) exigem, cada vez mais, que os processos acadêmicos estejam alinhados com as práticas e demandas do mercado. Neste cenário, a implantação de Fábricas de Software Acadêmicas, tais como o LabTech do UDF, representa uma estratégia inovadora para aproximar teoria e prática, promovendo a formação de profissionais aptos a enfrentar desafios reais.
+O presente trabalho tem como objetivo realizar uma análise aprofundada da experiência do LabTech – a Fábrica de Software Acadêmica do Centro Universitário do Distrito Federal (UDF) – com vistas a identificar gargalos, dificuldades e oportunidades de aprimoramento dos processos internos. Essa análise visa, também, a proposição de artefatos que reflitam a realidade observada durante a execução dos projetos, dentre os quais destacam-se:
+\begin{itemize}[label=\textbullet]
+    \item Um edital atualizado, que contemple as práticas reais e a dinâmica operacional do LabTech;
+    \item Um modelo padronizado de diário de bordo para os alunos-gerentes, contendo 10 entradas correspondentes às reuniões obrigatórias, que possibilite o registro sistemático das atividades;
+    \item Uma lista de tipos de atividades com pontuações associadas, permitindo uma avaliação quantitativa da participação dos alunos, condicionando a obtenção do certificado e/ou estágio obrigatório ao alcance de um número mínimo de pontos.
+\end{itemize}
 
-Este trabalho tem como principal objetivo analisar, de forma detalhada e sistêmica, a experiência vivida no LabTech, com ênfase na identificação de gargalos e dificuldades, bem como na proposição de melhorias e atualizações dos artefatos de gestão acadêmica. Para tal fim, utilizou-se como base dois importantes conjuntos de documentos em \LaTeX, que englobam tanto a \textbf{Proposta de Projeto} quanto o \textbf{Relato de Experiência}, além de diversos relatórios recentes que documentam as atividades e eventos realizados em 2023 e 2024. A partir da integração desses materiais, pretende-se construir um panorama robusto que permita:
-\begin{enumerate}[label=\arabic*.]
-    \item Revisar e atualizar o edital que rege o funcionamento do LabTech, refletindo a realidade operacional e as práticas adotadas;
-    \item Desenvolver um modelo padronizado e detalhado de diário de bordo para os alunos-gerentes, com 10 entradas obrigatórias que documentem cada reunião e as decisões tomadas;
-    \item Propor uma lista abrangente de tipos de atividades, cada uma com um valor pontual, que permita avaliar a participação dos alunos de forma objetiva e transparente, vinculando-a à obtenção de certificados e à validação de estágio obrigatório.
-\end{enumerate}
-
-Adicionalmente, o presente trabalho destaca a importância do uso de diversas ferramentas de comunicação e gestão, tais como \textbf{Discord}, \textbf{Trello}, \textbf{Jira}, \textbf{Google Meet}, \textbf{GitHub} e \textbf{Git}. A análise detalhada desses termos e tecnologias contribuirá para uma compreensão mais profunda do ambiente colaborativo e das dinâmicas que permeiam a execução dos projetos no LabTech.
+O trabalho fundamenta-se em dois artigos já elaborados – um relato de experiência e uma proposta de projeto – e incorpora informações detalhadas provenientes de diversos relatórios e diários de bordo (ver \cite{rel_danrley_core_2024, rel_labtech_2024_1, rel_labtech_2023_2, rel_lelton_eventos_2024, rel_polyana_2024}). A partir desses documentos, este TCC visa não somente consolidar as práticas observadas, mas também ampliar a discussão sobre as ferramentas de comunicação, gestão e desenvolvimento utilizadas no ambiente LabTech, tais como \textbf{Discord}, \textbf{Trello}, \textbf{Jira}, \textbf{Google Meet}, \textbf{GitHub} e \textbf{Git}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Capítulo 2: Revisão de Literatura e Fundamentação Teórica
+% Capítulo 2: Fundamentação Teórica e Revisão de Literatura
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Revisão de Literatura e Fundamentação Teórica}
-\label{chap:revisao}
+\chapter{Fundamentação Teórica e Revisão de Literatura}
+\label{chap:fundamentacao_literatura}
 
-O embasamento teórico deste trabalho apoia-se em uma vasta literatura que discute a integração de ambientes acadêmicos com as práticas da indústria de software. Estudos recentes enfatizam que a experiência prática, quando combinada com uma fundamentação teórica sólida, pode promover não só o desenvolvimento de \emph{hard skills} (como codificação, arquitetura de sistemas e testes) mas também de \emph{soft skills} (como comunicação, liderança e trabalho em equipe) \cite{dos2021experiencia, neto2017relato}.
+A evolução das práticas de desenvolvimento de software, aliada à crescente necessidade de integração entre teoria e prática no ensino de Tecnologia da Informação (TI), motivou a criação das Fábricas de Software Acadêmicas. Tais iniciativas têm como premissa a simulação de ambientes industriais de desenvolvimento, visando a preparação dos alunos para os desafios reais do mercado \cite{dos2021experiencia, neto2017relato}.
 
-Além disso, pesquisas têm destacado a importância de se definir e mensurar \textbf{métricas} e \textbf{KPIs} (Key Performance Indicators) que orientem o acompanhamento e a melhoria contínua dos processos de desenvolvimento. A ausência de padronização nos registros – como diários de bordo e relatórios de acompanhamento – tem sido apontada como uma das principais limitações nos ambientes de Fábricas de Software Acadêmicas \cite{romanha2016modelo, oliveira2017conduccao}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Histórico e Conceituação}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+O termo \textit{Software Factory} foi introduzido pela primeira vez em 1969, pela japonesa Hitachi, e só ganhou popularidade nos anos 90. A ideia central consiste em aplicar conceitos e métodos industriais ao desenvolvimento de software, aumentando a produtividade e reduzindo prazos e custos dos projetos \cite{romanha2016modelo}. No contexto acadêmico, o LabTech propõe a implementação desse modelo para fomentar a experiência prática dos alunos, integrando disciplinas teóricas com a execução de projetos reais, os quais visam solucionar problemas da sociedade, do meio empresarial, industrial e comercial.
 
-Com o intuito de fornecer uma visão abrangente e detalhada, este capítulo revisa:
-\begin{itemize}
-    \item \textbf{O conceito de Fábrica de Software Acadêmica:} sua importância para a formação de profissionais e para a integração entre o conhecimento teórico e a prática;
-    \item \textbf{Os desafios e as oportunidades de mensuração dos processos:} destacando a relevância dos KPIs e das métricas quantitativas e qualitativas;
-    \item \textbf{A integração de ferramentas de apoio:} explorando a utilização de plataformas colaborativas e de versionamento que suportam as atividades dos alunos e gestores.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Importância da Padronização e Coleta de Dados}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Uma das lacunas identificadas nos projetos de Fábricas de Software é a ausência de protocolos padronizados para a coleta e análise de dados. A falta de diários de bordo uniformes e de relatórios sistemáticos dificulta a comparação entre diferentes ciclos de desenvolvimento e impede a mensuração objetiva do desempenho técnico e colaborativo dos alunos \cite{oliveira2017conduccao}. Assim, a definição de \textbf{KPIs} (Indicadores-Chave de Desempenho) torna-se fundamental para:
+\begin{itemize}[label=\textbullet]
+    \item Monitorar a evolução dos projetos;
+    \item Identificar gargalos e áreas de melhoria;
+    \item Oferecer feedbacks construtivos tanto para os alunos quanto para os gestores.
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Capítulo 3: Contextualização e Análise do LabTech
+\section{Relevância dos Artefatos Propostos}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Contextualização e Análise do LabTech}
-\label{chap:contexto_labtech}
-
-O LabTech, enquanto Fábrica de Software Acadêmica, foi concebido com o intuito de proporcionar aos alunos uma experiência que simula o ambiente de trabalho da indústria de TI. Conforme os relatos e os documentos analisados, a experiência no LabTech abrange diversos aspectos:
-\begin{itemize}
-    \item \textbf{A dinâmica de grupos:} onde a autonomia dos alunos-gerentes, aliada à flexibilidade dos papéis, permite a experimentação de diferentes estratégias de gestão e colaboração;
-    \item \textbf{O uso intensivo de ferramentas digitais:} que garantem a comunicação em tempo real, o acompanhamento detalhado das atividades e o versionamento do código;
-    \item \textbf{A integração de dados quantitativos e qualitativos:} extraídos tanto dos repositórios (através da API do GitHub) quanto dos diários de bordo e reuniões.
-\end{itemize}
-
-A análise dos relatórios recentes, como os de Danrley Core (2024), LabTech 2023 e 2024, bem como os documentos relativos aos eventos organizados por Lelton e Polyana em 2024, revela um ambiente em constante evolução, onde a busca pela padronização e pela melhoria dos processos é contínua. Tais documentos apresentam dados detalhados sobre:
-\begin{itemize}
-    \item O fluxo de trabalho dos alunos, evidenciado em gráficos de atividades, \emph{heatmaps} de contribuição e redes de colaboração;
-    \item Os desafios enfrentados, como a variabilidade na participação e a necessidade de um acompanhamento mais rigoroso dos registros de reuniões;
-    \item As soluções implementadas para mitigar gargalos, incluindo a adoção de metodologias ágeis e a integração de novas ferramentas de gestão.
+Diante da análise dos documentos e dos relatos de experiência (ver \cite{rel_danrley_core_2024, rel_labtech_2024_1, rel_labtech_2023_2}), este trabalho propõe a atualização do edital, o desenvolvimento de um modelo de diário de bordo padronizado e a criação de uma tabela de atividades com sistema de pontuação. Tais artefatos visam:
+\begin{itemize}[label=\textbullet]
+    \item Estabelecer uma cultura de documentação e rastreabilidade dos processos;
+    \item Promover a transparência e a consistência no acompanhamento das atividades;
+    \item Incentivar o desenvolvimento de habilidades técnicas (\emph{hard skills}) e comportamentais (\emph{soft skills}).
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Capítulo 4: Ferramentas de Comunicação e Gestão
+% Capítulo 3: Ferramentas de Comunicação e Gestão
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Ferramentas de Comunicação e Gestão}
 \label{chap:ferramentas}
 
-A eficiência e a produtividade em ambientes colaborativos dependem fortemente da escolha e do uso adequado de ferramentas digitais. Neste capítulo, detalha-se o funcionamento e a aplicabilidade das principais plataformas utilizadas no LabTech, enfatizando seu papel no suporte à comunicação e na gestão de projetos.
+A integração de diversas ferramentas digitais tem sido crucial para o sucesso do LabTech, permitindo a comunicação eficaz, o gerenciamento ágil de tarefas e a colaboração em tempo real. Neste capítulo, detalhamos as principais ferramentas utilizadas, com ênfase em seus aspectos técnicos e pedagógicos.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Discord}
-O \textbf{Discord} é uma ferramenta de comunicação originalmente desenvolvida para gamers, mas que se mostrou extremamente útil em ambientes acadêmicos e corporativos. Suas funcionalidades incluem:
-\begin{itemize}
-    \item \textbf{Canais de texto e voz:} que permitem a comunicação síncrona e assíncrona entre os membros da equipe;
-    \item \textbf{Integração com bots e serviços externos:} possibilitando a automação de notificações e a integração com outras plataformas (por exemplo, GitHub e Trello);
-    \item \textbf{Organização de tópicos e categorias:} que facilita a segmentação dos assuntos e o acompanhamento de discussões específicas.
-\end{itemize}
-Relatórios recentes apontam que o uso do Discord contribuiu significativamente para a redução dos tempos de resposta e para a resolução rápida de bloqueios técnicos (ver \cite{relatorio-danrley-core-2024}).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+O \textbf{Discord} é empregado como a principal plataforma de comunicação instantânea no LabTech. Sua capacidade de criar canais específicos para diferentes tópicos – desde discussões técnicas até interações sociais – facilita a disseminação de informações e a resolução rápida de dúvidas. Conforme observado nos relatórios, a utilização do Discord contribuiu para uma maior transparência na comunicação, ainda que haja desafios quanto à coordenação e registro das interações (ver \cite{rel_danrley_core_2024}).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Trello e Jira}
-\subsection{Trello}
-O \textbf{Trello} é conhecido por sua abordagem visual e intuitiva. Suas principais características são:
-\begin{itemize}
-    \item \textbf{Quadros Kanban:} que permitem visualizar o progresso das atividades através de cartões que representam tarefas;
-    \item \textbf{Facilidade de uso:} com uma interface simples, que não exige treinamento intensivo para a adoção;
-    \item \textbf{Flexibilidade:} permitindo customizações para atender às necessidades específicas de cada equipe.
-\end{itemize}
-A experiência no LabTech demonstrou que o Trello é particularmente eficaz para a organização das sprints e para a gestão de tarefas diárias.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Para o gerenciamento de tarefas e o acompanhamento do fluxo de trabalho, o LabTech utiliza tanto o \textbf{Trello} quanto o \textbf{Jira}. O Trello, com seu formato de quadros e cartões, possibilita uma visualização intuitiva das tarefas, facilitando o entendimento do status de cada atividade. Em paralelo, o Jira oferece funcionalidades avançadas, como a gestão de sprints, integração com outras ferramentas e análise de desempenho, que são fundamentais para o acompanhamento dos projetos em tempo real \cite{rel_labtech_2024_1}.
 
-\subsection{Jira}
-Já o \textbf{Jira} apresenta uma abordagem mais robusta, adequada para projetos que exigem um controle mais detalhado dos processos. Entre suas funcionalidades destacam-se:
-\begin{itemize}
-    \item \textbf{Rastreamento de issues:} com a possibilidade de registrar, monitorar e priorizar problemas e demandas;
-    \item \textbf{Relatórios customizáveis:} que fornecem insights precisos sobre a evolução dos projetos e sobre o desempenho das equipes;
-    \item \textbf{Integração com outras ferramentas ágeis:} como Confluence, que facilita a documentação e o compartilhamento de conhecimento.
-\end{itemize}
-Os dados extraídos dos relatórios do LabTech apontam que o uso do Jira colaborou para a identificação de gargalos e para a melhoria na comunicação entre os times (conforme demonstrado em \cite{relatorio-labtech-2024-1}).
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Google Meet}
-O \textbf{Google Meet} é amplamente utilizado para a realização de reuniões virtuais. Suas vantagens incluem:
-\begin{itemize}
-    \item \textbf{Facilidade de acesso e uso:} permitindo que os participantes entrem na reunião através de links compartilhados;
-    \item \textbf{Recursos de colaboração:} como compartilhamento de tela e gravação das sessões, que facilitam o acompanhamento e a documentação das discussões;
-    \item \textbf{Integração com o Google Workspace:} possibilitando a conexão com calendários e e-mails para agendamento das reuniões.
-\end{itemize}
-Relatórios dos eventos realizados pelo LabTech, conforme descrito nos documentos de Lelton e Polyana (2024), reforçam a importância do Google Meet para manter a coesão das equipes, mesmo em ambientes remotos.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+O \textbf{Google Meet} é a ferramenta escolhida para as reuniões virtuais, garantindo uma comunicação clara e eficiente entre os membros da equipe. Com recursos que incluem compartilhamento de tela e gravação das sessões, o Google Meet tem sido essencial para o alinhamento das atividades, o esclarecimento de dúvidas e a tomada de decisões durante as fases críticas do projeto, como evidenciado nos encontros relatados (ver \cite{rel_lelton_eventos_2024}).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{GitHub e Git}
-A plataforma \textbf{GitHub}, aliada ao sistema de versionamento \textbf{Git}, é central para a gestão do código-fonte no LabTech. Suas funcionalidades permitem:
-\begin{itemize}
-    \item \textbf{Controle de versões:} garantindo o registro detalhado de todas as alterações realizadas, o que facilita a identificação de contribuições individuais e a reversão de mudanças problemáticas;
-    \item \textbf{Colaboração:} por meio de pull requests, code reviews e issues, que promovem a integração entre os membros e o desenvolvimento colaborativo;
-    \item \textbf{Integração contínua:} possibilitando a automação dos testes e a verificação de qualidade do código.
-\end{itemize}
-Os relatórios de acompanhamento do LabTech indicam que o uso intensivo do GitHub tem permitido uma visão precisa do fluxo de trabalho e a identificação de padrões de contribuição, o que é fundamental para a análise de desempenho dos projetos (\cite{relatorio-labtech-2023-2}).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+O controle de versão é uma prática indispensável para qualquer projeto de desenvolvimento de software. No LabTech, o \textbf{GitHub} é utilizado para hospedar os repositórios de código, permitindo a colaboração entre os integrantes por meio de pull requests, revisões de código e o uso de \textbf{Git}. A metodologia adotada enfatiza o uso de \textit{git flow} e commits convencionais, embora os relatórios indiquem desafios na adoção plena dessas práticas por alguns membros (conforme relatado em \cite{rel_danrley_core_2024} e \cite{rel_labtech_2023_2}). A integração contínua e os testes automatizados têm sido incentivados para assegurar a qualidade do código.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Capítulo 5: Metodologia de Pesquisa
+% Capítulo 4: Metodologia
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Metodologia de Pesquisa}
+\chapter{Metodologia}
 \label{chap:metodologia}
 
-A metodologia adotada para a análise da experiência do LabTech é caracterizada por uma abordagem mista, que integra métodos quantitativos e qualitativos. Essa estratégia permite a triangulação dos dados e a obtenção de uma visão mais completa sobre os processos e desafios enfrentados.
+A metodologia adotada neste trabalho é de natureza mista, integrando análises quantitativas e qualitativas para a compreensão plena dos processos e resultados do LabTech. Essa abordagem permite o cruzamento de dados provenientes da coleta automática (via API do GitHub, por exemplo) com as percepções obtidas por meio de diários de bordo, entrevistas e reuniões.
 
-\section{Coleta de Dados}
-A coleta dos dados foi realizada por meio dos seguintes instrumentos:
-\begin{itemize}
-    \item \textbf{Entrevistas semiestruturadas:} realizadas com professores, alunos-gerentes e membros das equipes, com o intuito de identificar as principais dificuldades e propor melhorias.
-    \item \textbf{Análise documental:} dos diários de bordo, relatórios de reuniões, atas e registros de atividades, os quais foram padronizados e comparados para identificar tendências e divergências.
-    \item \textbf{Extração de métricas:} utilizando a \textbf{API do GitHub} para coletar dados quantitativos referentes a commits, issues, pull requests e comentários. Estes dados foram analisados por meio de ferramentas estatísticas e gráficos de visualização.
-    \item \textbf{Estudos de caso:} através da análise dos relatórios específicos, como os documentos de Danrley Core (2024), LabTech (2023 e 2024) e os relatórios de eventos organizados por Lelton e Polyana (2024), que forneceram subsídios para a compreensão dos desafios enfrentados e das soluções implementadas.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Coleta e Análise de Dados}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Aspectos Quantitativos}
+Os dados quantitativos são extraídos diretamente dos repositórios do LabTech, onde são monitorados:
+\begin{itemize}[label=\textbullet]
+    \item Número de \emph{commits}, \emph{issues} e \emph{pull requests};
+    \item Frequência de contribuições e a distribuição das atividades ao longo do tempo;
+    \item Métricas de desempenho individual e coletivo, que servem de base para a definição dos \textbf{KPIs}.
 \end{itemize}
+Essas métricas possibilitam uma análise objetiva do fluxo de trabalho e ajudam a identificar períodos de alta e baixa produtividade, permitindo a proposição de intervenções específicas.
 
-\section{Análise dos Dados}
-A análise dos dados envolveu a integração dos aspectos quantitativos e qualitativos, permitindo:
-\begin{itemize}
-    \item \textbf{Identificação de padrões de contribuição:} por meio da análise dos gráficos gerados a partir dos dados do GitHub, como \emph{heatmaps}, \emph{burndown charts} e redes de colaboração.
-    \item \textbf{Mapeamento dos gargalos:} identificando os principais pontos de atrito na comunicação, na padronização dos registros e na distribuição das tarefas, com base nos relatos dos alunos e nas evidências documentais.
-    \item \textbf{Proposição de melhorias:} a partir da comparação dos dados e das sugestões colhidas durante as entrevistas, foram definidas estratégias para a atualização do edital, a padronização dos diários de bordo e a implementação de um sistema de pontuação para as atividades.
+\subsection{Aspectos Qualitativos}
+A vertente qualitativa baseia-se na análise de documentos produzidos durante os ciclos do projeto, incluindo:
+\begin{itemize}[label=\textbullet]
+    \item Diários de bordo detalhados (conforme o relato de Danrley \cite{rel_danrley_core_2024});
+    \item Relatórios de atividades dos semestres 2023 e 2024 (ver \cite{rel_labtech_2023_2, rel_labtech_2024_1});
+    \item Registros de encontros e feedbacks coletados durante reuniões presenciais e virtuais (conforme os relatórios de eventos \cite{rel_lelton_eventos_2024} e de alocação de professores \cite{rel_polyana_2024}).
+\end{itemize}
+A análise desses documentos permite identificar dificuldades de comunicação, desafios técnicos e o desempenho dos membros da equipe, fundamentando as propostas de melhoria.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Desenvolvimento dos Artefatos}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Com base nos dados coletados e nas análises realizadas, propõe-se a criação dos seguintes artefatos:
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Edital Atualizado:} Revisão completa do documento atual, incorporando as mudanças observadas na prática, a integração das ferramentas de comunicação e a padronização dos processos de trabalho.
+    \item \textbf{Modelo de Diário de Bordo:} Desenvolvimento de um template que contenha 10 entradas obrigatórias, cada uma correspondente a uma reunião, detalhando tópicos discutidos, bloqueios, ações definidas e feedbacks.
+    \item \textbf{Tabela de Atividades e Sistema de Pontuação:} Criação de uma lista abrangente de atividades, associando a cada uma um valor pontual, que permita a avaliação contínua dos alunos e defina critérios mínimos para a concessão de certificados e validação de estágio.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Integração com Ferramentas e Fluxo de Trabalho}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+A integração entre as ferramentas (Discord, Trello, Jira, Google Meet, GitHub e Git) é um dos pilares que sustentam a metodologia adotada no LabTech. A comunicação centralizada no Discord, aliada ao uso de threads para cada issue criada no GitHub, possibilita um acompanhamento detalhado das discussões e das decisões tomadas pela equipe. O uso simultâneo de Trello ou Jira para o gerenciamento de tarefas contribui para a organização das atividades e para a visualização dos progressos, tornando o fluxo de trabalho mais transparente e eficiente.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Capítulo 5: Relato de Experiência
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Relato de Experiência}
+\label{chap:relato_experiencia}
+
+Este capítulo consolida os relatos extraídos dos documentos de experiência dos ciclos de 2023 e 2024, fornecendo uma visão detalhada dos desafios, aprendizados e feedbacks individuais e coletivos.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experiência Geral do Projeto}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Durante o ano de 2024, o LabTech passou por diversas fases – desde a formação inicial da equipe até a consolidação dos processos e o desenvolvimento de soluções integradas. Conforme descrito no \textit{relatório Danrley Core 2024} \cite{rel_danrley_core_2024}, o projeto teve início com um kickoff que visava inspirar os participantes, esclarecendo os objetivos e a natureza do ambiente de aprendizagem. Essa abordagem, embora flexível, gerou variações significativas no nível de comprometimento entre os membros da equipe.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dinâmica de Trabalho e Soft Skills}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+A experiência demonstrou que as soft skills, como comunicação, trabalho em equipe, autonomia e resiliência, foram determinantes para o sucesso ou fracasso das atividades. Relatos presentes nos documentos indicam que:
+\begin{itemize}[label=\textbullet]
+    \item Alguns membros, como Guilherme e Nicole, demonstraram alta capacidade de aprendizado e colaboração, seguindo orientações e contribuindo significativamente para o desenvolvimento dos sistemas;
+    \item Outros, como Gustavo Saud e Emerson, enfrentaram dificuldades em manter uma comunicação efetiva e em gerir seu tempo, o que impactou negativamente o andamento do projeto;
+    \item A necessidade de motivação externa e de uma estrutura de feedback mais rigorosa foi evidenciada, sobretudo para os integrantes que apresentaram dificuldades técnicas e comportamentais.
+\end{itemize}
+Os relatos detalhados dos diários de bordo (disponíveis em \cite{rel_danrley_core_2024}) ressaltam a importância de registrar não só os avanços técnicos, mas também os desafios emocionais e comunicacionais vivenciados durante o ciclo de desenvolvimento.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Aspectos Técnicos e Desenvolvimento de Soluções}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Os avanços técnicos no LabTech foram notáveis em várias frentes:
+\begin{itemize}[label=\textbullet]
+    \item \textbf{Back-end:} A implementação de serviços em Python (utilizando Flask) permitiu a criação de uma API robusta, com autenticação via token, padrões de arquitetura em camadas e testes unitários. O trabalho conjunto entre Guilherme, Gabriel e o mentor Danrley evidenciou a importância do acompanhamento próximo para a evolução técnica dos alunos (\cite{rel_danrley_core_2024, rel_labtech_2024_1}).
+    \item \textbf{Front-end:} O desenvolvimento em React, embora enfrentasse desafios como a integração com a API e a gestão correta dos estados e rotas (usando React Hook Forms e Context API), avançou significativamente com a contribuição de Nicole e outros membros, que aprenderam a debugar e estruturar componentes de forma adequada (\cite{rel_labtech_2023_2}).
+    \item \textbf{Integração e Fluxo de Trabalho:} A utilização das práticas de versionamento com Git e a implementação de pull requests foram fundamentais para manter a qualidade do código, mesmo que alguns membros ainda necessitem aprimorar o uso do \textit{git flow} e dos conceitos de commits convencionais (\cite{rel_danrley_core_2024}).
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Capítulo 6: Análise dos Relatórios e Eventos Complementares
+\subsection{Relatos de Encontros e Feedbacks Detalhados}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Análise dos Relatórios e Eventos Complementares}
-\label{chap:analise_relatorios}
+Diversos encontros presenciais e virtuais foram documentados, destacando aspectos técnicos e comportamentais. Por exemplo, o \textit{relatório de eventos} \cite{rel_lelton_eventos_2024} descreve em detalhes os encontros realizados, desde a apresentação da solução atual até a discussão sobre a integração das camadas de Controller, Service e Repository. Esses encontros não só possibilitaram o alinhamento técnico, mas também contribuíram para a identificação de gaps no conhecimento dos membros, levando a recomendações específicas, como a necessidade de aprofundamento em conceitos de HTTP, algoritmos e uso do Git.
 
-A partir dos documentos fornecidos – incluindo os relatórios de Danrley Core, LabTech 2023/2024, Lelton Eventos e Polyana 2024 – foi possível aprofundar a compreensão dos aspectos operacionais e dos desafios vivenciados pelo LabTech. Este capítulo apresenta uma análise detalhada dos principais pontos extraídos desses documentos.
-
-\section{Relatório Danrley Core (2024)}
-O relatório em formato Markdown, disponibilizado por Danrley Core, enfatiza a importância da centralização dos dados e da padronização dos registros. Entre os pontos destacados, encontram-se:
-\begin{itemize}
-    \item A necessidade de um sistema de alerta para identificar contribuições anômalas e o desbalanceamento na distribuição das tarefas;
-    \item A importância da integração entre os sistemas de comunicação (como Discord) e os repositórios (GitHub), para garantir um fluxo contínuo de informações;
-    \item A sugestão de adoção de métricas mais refinadas, que permitam avaliar não apenas a quantidade, mas a qualidade das contribuições.
-\end{itemize}
-
-\section{Relatórios LabTech 2023 e 2024}
-Os relatórios referentes aos anos de 2023 e 2024 apresentam dados robustos sobre a evolução dos projetos, incluindo análises quantitativas (por meio de gráficos e tabelas) e qualitativas (através de relatos e feedbacks). Entre as contribuições mais relevantes, destacam-se:
-\begin{itemize}
-    \item A identificação de períodos críticos, marcados por picos de atividade e, simultaneamente, por desafios na comunicação e na resolução de \emph{issues};
-    \item A avaliação do desempenho dos alunos-gerentes, com ênfase na eficácia dos diários de bordo e na clareza dos relatórios semanais;
-    \item A proposição de novos indicadores de desempenho, que combinam dados técnicos (commits, pull requests) e dados comportamentais (engajamento em reuniões e colaboração nas discussões).
-\end{itemize}
-
-\section{Eventos Complementares: Relatórios Lelton e Polyana (2024)}
-Os relatórios de eventos organizados por Lelton e Polyana, ambos de 2024, evidenciam o papel dos eventos complementares na disseminação do conhecimento e no fortalecimento do ecossistema do LabTech. Os principais pontos abordados incluem:
-\begin{itemize}
-    \item A realização de workshops e palestras que contribuíram para a capacitação técnica dos participantes, abordando temas como metodologias ágeis, práticas de code review e integração contínua;
-    \item A importância dos eventos para promover o networking entre os alunos, orientadores e profissionais externos, o que tem gerado novas oportunidades de parcerias e projetos colaborativos;
-    \item A utilização de ferramentas de videoconferência (como Google Meet) e plataformas de gestão (como Trello e Jira) durante os eventos, reforçando a sinergia entre teoria e prática.
-\end{itemize}
+Adicionalmente, o \textit{relatório da equipe Polyana} \cite{rel_polyana_2024} apresenta um feedback individual detalhado, ressaltando as contribuições de cada integrante e sugerindo melhorias específicas, tanto no aspecto técnico quanto na comunicação e organização do trabalho. Esse nível de detalhamento é fundamental para a construção de um ambiente de aprendizagem contínua e para a consolidação dos processos de gestão e desenvolvimento.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Capítulo 7: Propostas de Artefatos e Inovações
+% Capítulo 6: Propostas de Artefatos
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Propostas de Artefatos e Inovações}
-\label{chap:propostas_artefatos}
+\chapter{Propostas de Artefatos e Novos Procedimentos}
+\label{chap:artefatos}
 
-Com base na análise detalhada dos documentos e na integração dos conteúdos teóricos e práticos, são apresentadas as seguintes propostas de artefatos inovadores para o LabTech:
+Com base na análise dos dados e nos relatos de experiência, este trabalho propõe a criação de três artefatos essenciais para o aprimoramento do LabTech.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Edital Atualizado}
-O novo edital deverá contemplar os seguintes pontos:
-\begin{itemize}
-    \item \textbf{Revisão das Diretrizes Institucionais:} Atualização das normas para refletir a realidade dinâmica dos processos de desenvolvimento e as práticas emergentes do mercado;
-    \item \textbf{Inclusão de Protocolos de Registro:} Obrigatoriedade de diários de bordo padronizados e de relatórios semanais detalhados, com indicadores quantitativos e qualitativos;
-    \item \textbf{Integração de Ferramentas Digitais:} Estabelecimento do uso obrigatório de plataformas como Discord, Trello, Jira, Google Meet, GitHub e Git, de modo a promover a transparência e a rastreabilidade das atividades;
-    \item \textbf{Critérios de Avaliação Baseados em Métricas:} Definição de um sistema de pontuação que atribua valores a diferentes tipos de atividades, garantindo que a avaliação dos alunos seja abrangente e objetiva.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+O edital atual se mostra desatualizado frente às práticas reais do LabTech. A proposta de atualização contempla:
+\begin{itemize}[label=\textbullet]
+    \item \textbf{Revisão das Diretrizes:} Inclusão de novos parâmetros que reflitam a realidade da produção e da comunicação na fábrica, enfatizando a obrigatoriedade dos diários de bordo e a utilização das ferramentas digitais.
+    \item \textbf{Definição de Papéis e Responsabilidades:} Estabelecimento claro das funções de cada membro (desenvolvedor, gerente, analista, etc.), com critérios objetivos para avaliação de desempenho.
+    \item \textbf{Integração com Ferramentas:} Padronização do uso de Discord para comunicação, Trello/Jira para gestão de tarefas e GitHub para controle de versão, garantindo a rastreabilidade das atividades.
 \end{itemize}
 
-\section{Modelo Padronizado de Diário de Bordo}
-Propõe-se a criação de um modelo de diário de bordo com as seguintes características:
-\begin{itemize}
-    \item \textbf{Estrutura Detalhada:} Cada diário deve conter 10 entradas obrigatórias, correspondentes às reuniões de acompanhamento, registrando data, horário, tópicos discutidos, bloqueios identificados, ações definidas e feedbacks qualitativos;
-    \item \textbf{Uniformidade de Registros:} Utilização de um template padronizado, que facilite a comparação entre diferentes equipes e períodos;
-    \item \textbf{Integração com Sistemas de Gestão:} Possibilidade de vinculação dos registros aos sistemas de monitoramento do GitHub, de modo a correlacionar dados técnicos com os relatos qualitativos.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Modelo de Diário de Bordo para Alunos-Gerentes}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+O diário de bordo proposto deverá conter 10 entradas obrigatórias, correspondendo a cada reunião de acompanhamento. Cada entrada incluirá:
+\begin{itemize}[label=\textbullet]
+    \item Data, horário e local (virtual ou presencial) da reunião;
+    \item Principais tópicos discutidos, com ênfase nas decisões e nos bloqueios técnicos e de comunicação;
+    \item Ações definidas para o período seguinte, com responsáveis e prazos;
+    \item Comentários sobre o desempenho individual e coletivo, enfatizando aspectos de \textbf{hard skills} e \textbf{soft skills}.
 \end{itemize}
+Essa padronização permitirá uma análise longitudinal mais precisa, facilitando a identificação de padrões e a proposição de melhorias contínuas.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Tabela de Atividades e Sistema de Pontuação}
-A proposta de avaliação contempla:
-\begin{itemize}
-    \item \textbf{Categorias de Atividades:} Definição de categorias como desenvolvimento de código, participação em reuniões, realização de code reviews, contribuição para documentação e proposição de melhorias;
-    \item \textbf{Valor Pontual para Cada Atividade:} Atribuição de pontos conforme a relevância e o impacto da atividade (ex.: 5 pontos para commits significativos, 3 pontos para participação ativa em reuniões, etc.);
-    \item \textbf{Meta de Pontuação:} Estabelecimento de um número mínimo de pontos que os alunos devem atingir para a obtenção do certificado e/ou para a validação do estágio obrigatório.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+A avaliação dos alunos será realizada por meio de uma tabela que relaciona cada tipo de atividade a um valor em pontos. Exemplos de categorias:
+\begin{itemize}[label=\textbullet]
+    \item \textbf{Desenvolvimento de Código:} 5 pontos por commit significativo, considerando critérios de qualidade e aderência aos padrões estabelecidos;
+    \item \textbf{Participação em Reuniões:} 3 pontos por reunião efetivamente participada, com registro no diário de bordo;
+    \item \textbf{Realização de Code Reviews:} 4 pontos por revisão de código que contribua para a melhoria do projeto;
+    \item \textbf{Documentação e Relatórios:} 2 pontos por atualização de documentação, elaboração de casos de uso ou fluxogramas que apoiem o desenvolvimento do projeto;
+    \item \textbf{Propostas de Melhoria e Inovação:} 3 pontos por sugestão que resulte em mudança implementada e comprovada.
 \end{itemize}
+O acúmulo desses pontos deverá atingir um valor mínimo para a validação do estágio e a concessão de certificados, promovendo assim a participação ativa e o engajamento contínuo dos alunos.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Capítulo 8: Discussão dos Resultados e Perspectivas Futuras
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Discussão dos Resultados e Perspectivas Futuras}
-\label{chap:discussao_resultados}
-
-A análise integrada dos dados coletados e dos relatórios estudados permite concluir que a experiência no LabTech apresenta pontos fortes, bem como desafios que precisam ser superados para aprimorar a gestão dos projetos. Entre os aspectos positivos, destacam-se:
-\begin{itemize}
-    \item O engajamento dos alunos e a capacidade de adaptação aos métodos ágeis;
-    \item A utilização eficaz de ferramentas digitais, que facilita a comunicação e a colaboração entre os membros da equipe;
-    \item A riqueza dos dados coletados, que possibilita uma avaliação detalhada do desempenho técnico e comportamental dos participantes.
-\end{itemize}
-
-Entretanto, os desafios identificados apontam para a necessidade de:
-\begin{itemize}
-    \item Adoção de protocolos padronizados para o registro das atividades, garantindo a comparabilidade e a consistência dos dados;
-    \item Implementação de um sistema de avaliação que contemple tanto as contribuições técnicas quanto os aspectos colaborativos e comportamentais;
-    \item Aperfeiçoamento da integração entre as ferramentas de gestão, para que as informações fluam de forma mais harmoniosa entre os diferentes sistemas (ex.: Discord, Trello, Jira e GitHub).
-\end{itemize}
-
-As propostas de artefatos apresentadas neste trabalho visam atender a essas necessidades e estabelecer um novo patamar de qualidade para as Fábricas de Software Acadêmicas. Para o futuro, prevê-se a expansão do programa, com a inclusão de novos módulos de capacitação, maior integração com parceiros externos e a implementação de mecanismos de feedback contínuo, que permitam a melhoria iterativa dos processos.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Capítulo 9: Conclusões e Trabalhos Futuros
+% Capítulo 7: Conclusões e Trabalhos Futuros
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Conclusões e Trabalhos Futuros}
 \label{chap:conclusoes}
 
-A partir da análise aprofundada da experiência no LabTech e da integração dos diversos documentos e relatórios (incluindo os de Danrley Core, LabTech 2023/2024, Lelton e Polyana, todos de 2024), conclui-se que:
-\begin{enumerate}[label=\arabic*.]
-    \item A integração de ferramentas de comunicação e gestão é fundamental para o sucesso dos projetos acadêmicos, mas é imprescindível que haja padronização nos processos e nos registros das atividades;
-    \item O uso de métricas quantitativas e qualitativas, aliado a um sistema de pontuação bem definido, pode proporcionar uma avaliação mais justa e abrangente do desempenho dos alunos;
-    \item A atualização do edital e a definição de novos artefatos (diários de bordo e tabelas de atividades) são medidas essenciais para alinhar as práticas acadêmicas às demandas reais do mercado de TI.
-\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Considerações Finais}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+A análise abrangente da experiência no LabTech permitiu identificar tanto os avanços quanto as dificuldades enfrentadas pela equipe. As principais contribuições deste trabalho são:
+\begin{itemize}[label=\textbullet]
+    \item A necessidade de padronização dos processos de documentação, por meio de diários de bordo e relatórios estruturados;
+    \item A importância da integração e do uso adequado das ferramentas de comunicação e gestão, essenciais para a coordenação de equipes multidisciplinares;
+    \item A definição de critérios claros de avaliação, que considerem tanto aspectos técnicos quanto comportamentais, promovendo o desenvolvimento integral dos alunos.
+\end{itemize}
+Essas considerações evidenciam que, embora o ambiente de aprendizagem do LabTech apresente desafios significativos, ele também oferece oportunidades ímpares para a formação prática e para a consolidação de competências necessárias no mercado de TI.
 
-\bigskip
-
-\textbf{Trabalhos Futuros:}
-\begin{itemize}
-    \item \textbf{Desenvolvimento de um \emph{Dashboard} Integrado:} Implementar uma plataforma que consolide as métricas extraídas do GitHub e integre os dados dos diários de bordo, facilitando o acompanhamento em tempo real dos projetos;
-    \item \textbf{Expansão do Modelo de Avaliação:} Refinar o sistema de pontuação proposto, incorporando feedbacks dos alunos e gestores, e considerando a evolução das competências técnicas e interpessoais;
-    \item \textbf{Pesquisa Longitudinal:} Conduzir estudos longitudinais que permitam comparar o desempenho das equipes ao longo de vários semestres, identificando tendências e impactos das inovações implementadas;
-    \item \textbf{Integração com Ferramentas Externas:} Explorar a integração do sistema de avaliação com outras plataformas educacionais e de gestão, ampliando o alcance e a aplicabilidade dos artefatos propostos.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Trabalhos Futuros}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Como perspectivas para trabalhos futuros, propõe-se:
+\begin{itemize}[label=\textbullet]
+    \item A implementação e o monitoramento contínuo dos artefatos propostos (edital atualizado, modelo de diário de bordo e tabela de atividades), com o acompanhamento dos resultados obtidos em ciclos subsequentes;
+    \item A realização de uma revisão sistemática de literatura para comparar as práticas adotadas no LabTech com outras Fábricas de Software Acadêmicas, visando identificar melhores práticas e oportunidades de inovação;
+    \item A integração de novas ferramentas de análise de dados e visualização (como dashboards dinâmicos) para monitorar em tempo real os \textbf{KPIs} e facilitar a tomada de decisões dos gestores;
+    \item O desenvolvimento de treinamentos específicos para aprimorar as soft skills dos alunos, especialmente em áreas como comunicação, uso de Git e resolução de problemas.
 \end{itemize}
