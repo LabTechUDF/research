@@ -21,6 +21,7 @@
 \usepackage{color}              % Controle das cores
 \usepackage{graphicx}           % Inclusão de gráficos
 \usepackage{microtype}          % Para melhorias de justificação
+\usepackage{fancyhdr}
 % ---
 % Pacotes de citações
 % ---
@@ -63,7 +64,7 @@
 \instituicao{
   Centro Universitário do Distrito Federal (UDF)\\
   Curso de Ciência da Computação\\
-  Programa de Iniciação Tecnol\`{o}gica
+  Programa de Iniciação Tecnol\'{o}gica
 }
 \tipotrabalho{Projeto de Pesquisa}
 \preambulo{Projeto de pesquisa submetido ao Edital do Programa Institucional de Bolsas de Iniciação Tecnológica \& Inovação de 2025 do Centro Universitário do Distrito Federal (UDF).}
@@ -146,7 +147,7 @@
 % Folha de rosto
 % (o * indica que haverá a ficha bibliográfica)
 % ---
-\imprimirfolhaderosto*
+\imprimirfolhaderosto
 % ---
 
 % ----------------------------------------------------------
@@ -159,18 +160,16 @@
 	\textbf{Palavras-chave:} Dashboard; Fábrica de Software Acadêmica; Métricas; KPIs; Ensino de TI.
 \end{resumo}
 
-\begin{resumo}[Abstract]
-    \begin{otherlanguage*}{english}
-	   This project proposes the development of an open source dashboard for continuous monitoring and management of projects in Academic Software Factories. The solution aims to integrate metrics extracted from code repositories, such as commits, issues, and pull requests, enabling real-time visualization of project progress and collaboration. The adopted methodology involves data collection via APIs, definition of key performance indicators (KPIs), and the development of an intuitive web interface. Expected outcomes include improved project governance, early identification of bottlenecks, and the promotion of collaborative practices, thereby enhancing both the practical training of students and the efficiency of development processes.
+% \begin{resumo}[Abstract]
+%     \begin{otherlanguage*}{english}
+% 	   This project proposes the development of an open source dashboard for continuous monitoring and management of projects in Academic Software Factories. The solution aims to integrate metrics extracted from code repositories, such as commits, issues, and pull requests, enabling real-time visualization of project progress and collaboration. The adopted methodology involves data collection via APIs, definition of key performance indicators (KPIs), and the development of an intuitive web interface. Expected outcomes include improved project governance, early identification of bottlenecks, and the promotion of collaborative practices, thereby enhancing both the practical training of students and the efficiency of development processes.
        
-    \vspace{\onelineskip}
+%     \vspace{\onelineskip}
     
-    \noindent
-	\textbf{Keywords}: Dashboard. Academic Software Factory. Metrics. KPIs. IT Education.
-    \end{otherlanguage*}
-\end{resumo}
-
-\newpage
+%     \noindent
+% 	\textbf{Keywords}: Dashboard. Academic Software Factory. Metrics. KPIs. IT Education.
+%     \end{otherlanguage*}
+% \end{resumo}
 
 % ---
 % inserir lista de ilustrações
@@ -191,23 +190,23 @@
 % ---
 % inserir lista de tabelas
 % ---
-\pdfbookmark[0]{\listtablename}{lot}
-\listoftables*
-\cleardoublepage
+% \pdfbookmark[0]{\listtablename}{lot}
+% \listoftables*
+% \cleardoublepage
 % ---
 
 % ---
 % inserir lista de abreviaturas e siglas
 % ---
-\begin{siglas}
-  \item[TI] Tecnologia da Informação
-  \item[MEC] Ministério da Educação
-  \item[KPIs] Key Performance Indicators
-  \item[API] Application Programming Interface
-  \item[IDE] Ambiente de Desenvolvimento Integrado
-  \item[GPL] GNU General Public License
-  \item[UDF] Universidade do Distrito Federal
-\end{siglas}
+% \begin{siglas}
+%   \item[TI] Tecnologia da Informação
+%   \item[MEC] Ministério da Educação
+%   \item[KPIs] Key Performance Indicators
+%   \item[API] Application Programming Interface
+%   \item[IDE] Ambiente de Desenvolvimento Integrado
+%   \item[GPL] GNU General Public License
+%   \item[UDF] Universidade do Distrito Federal
+% \end{siglas}
 
 % ---
 
@@ -237,12 +236,11 @@
 % ----------------------------------------------------------
 % INTRODUÇÃO
 % ----------------------------------------------------------
-\chapter[Introdução]{Introdução}
-\pdfbookmark[1]{Introdução}{introducao}
+\section[Introdução]{Introdução}
 
 O setor de \textbf{Tecnologia da Informação (TI)}\index{TI} desempenha um papel cada vez mais relevante no desenvolvimento econômico e social, especialmente em polos emergentes como Brasília \cite{ibge2025}, que abriga diversas instituições públicas, privadas e centros de pesquisa. Nesse contexto, a criação de uma \textbf{Fábrica de Software Acadêmica}\index{Fábrica de Software Acadêmica} em ambiente universitário configura uma oportunidade estratégica para integrar teoria e prática, preparando os estudantes para os desafios reais do mercado e promovendo o desenvolvimento de soluções voltadas a demandas concretas da comunidade \cite{dos2021experiencia, neto2017relato}.
 
-Instituições de ensino superior identificam a falta de experiência prática dos alunos como uma lacuna a ser preenchida \cite{romanha2016modelo}. A implementação de \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica} surge da necessidade de proporcionar experiência prática, alinhada às diretrizes curriculares do MEC \cite{dcncomputacao2016}; assim, as instituições que oferecem ambientes de aprendizado prático tendem a cumprir a missão de preparar profissionais para o mercado de trabalho. Em outras palavras, a criação de um ambiente de “quase indústria” dentro da universidade contribui para a formação de graduandos mais preparados para os desafios reais da profissão.
+Instituições de ensino superior identificam a falta de experiência prática dos alunos como uma lacuna a ser preenchida \cite{romanha2016modelo}. A implementação de \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica} surge da necessidade de proporcionar experiência prática, alinhada às diretrizes curriculares do Ministério da Educação (MEC) \cite{dcncomputacao2016}; assim, as instituições que oferecem ambientes de aprendizado prático tendem a cumprir a missão de preparar profissionais para o mercado de trabalho. Em outras palavras, a criação de um ambiente de “quase indústria” dentro da universidade contribui para a formação de graduandos mais preparados para os desafios reais da profissão.
 
 Diversas iniciativas acadêmicas adotam projetos de \textbf{Fábrica de Software}\index{Fábrica de Software Acadêmica} com o intuito de proporcionar aos alunos experiências do mercado de trabalho durante a formação universitária \cite{dos2021experiencia}. Esses projetos integradores simulam ambientes profissionais, permitindo que os estudantes apliquem conhecimentos teóricos em projetos de software reais. Um exemplo é a implementação de um programa de “residência em desenvolvimento de software”, no qual o aluno vivencia uma experiência profissional aproximada do ambiente de trabalho do mercado \cite{dos2021experiencia}. Tais ambientes simulados expõem os alunos a práticas, ferramentas e ritmos de trabalho típicos da indústria de software, diminuindo a distância entre a sala de aula e o mundo profissional.
 
@@ -250,150 +248,176 @@ No contexto dessa abordagem, destaca-se o projeto da \emph{Fábrica de Software 
 
 Nesse sentido, o desenvolvimento de metodologias de coleta e análise de dados que suportem o processo de desenvolvimento de software tem sido objeto de constantes pesquisas em \textbf{Fábricas de Software} \index{Fábrica de Software Acadêmica} de Instituições de Ensino Superior (IES) no Brasil \cite{romanha2016modelo, neto2017relato}. Além de tornar o aprendizado mais significativo para os estudantes, a adoção de \textbf{métricas}\index{métricas} claras pode contribuir para a transparência dos resultados e a melhoria contínua dos projetos \cite{oliveira2017conduccao, almeida2006liccoes}.
 
-Dessa forma, neste projeto de Iniciação Tecnológica propõe-se o desenvolvimento de um \textbf{dashboard}\index{dashboard} que colete dados diários (ou semanais) do \textbf{GitHub}\index{GitHub} (repositório de código-fonte, ver \ref{sec:tecnico}), com o objetivo de exibir \textbf{métricas de colaboração e performance}\index{métricas}. A solução visa beneficiar professores, gestores e os próprios estudantes, permitindo um melhor acompanhamento do desenvolvimento dos projetos e fomentando práticas de melhoria contínua nas \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica}.
+Dessa forma, neste projeto de Iniciação Tecnológica propõe-se o desenvolvimento de um \textbf{dashboard}\index{dashboard} que colete dados diários (ou semanais) do \textbf{GitHub}\index{GitHub} (repositório de código-fonte), com o objetivo de exibir \textbf{métricas de colaboração e performance}\index{métricas}. A solução visa beneficiar professores, gestores e os próprios estudantes, permitindo um melhor acompanhamento do desenvolvimento dos projetos e fomentando práticas de melhoria contínua nas \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica}.
 
-\section{Motivação}
+\subsection{Motiva\c{c}\~{a}o}
 O proponente, juntamente com a orientadora, desempenha papel ativo no LabTech, tendo exercido a função de gerente no primeiro semestre de 2023 e nos dois semestres de 2024. Com base nessa experiência, identificaram-se gargalos no acompanhamento dos alunos, como a falta de \textbf{métricas}\index{métricas} de desempenho, a ausência de análises em tempo real do progresso dos projetos e das atividades, e dificuldades no uso das ferramentas pelos integrantes da fábrica. Diante disso, a disponibilidade de um \textbf{dashboard}\index{dashboard} com \textbf{métricas}\index{métricas} em tempo real pode auxiliar no monitoramento dos alunos, na criação de planos de ação, na padronização do nível dos alunos e na identificação de silos de conhecimento.
 
-\section{Objetivo Geral}
+\subsection{Objetivo Geral}
 Criar uma \textbf{solução tecnológica (dashboard)}\index{dashboard} para o monitoramento e acompanhamento contínuo de projetos de software acadêmicos, possibilitando a visualização de \textbf{métricas}\index{métricas} de progresso, capacidade e engajamento das equipes, de modo a potencializar a gestão e o aprendizado em \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica}.
 
-\subsection{Objetivos Específicos}
+\subsubsection{Objetivos Específicos}
+\label{sec:objetivos-especificos}
 \begin{enumerate}
-    \item \textbf{Realizar uma revisão de literatura} sobre métodos e \textbf{métricas}\index{métricas} adotadas em projetos de desenvolvimento de software, com foco nas \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica}, a fim de identificar boas práticas para coleta e interpretação de dados e embasar a definição das \textbf{métricas}\index{métricas} que serão apresentadas no \textbf{dashboard}\index{dashboard}.
-    \item \textbf{Definir o conjunto de indicadores-chave (KPIs)}\index{KPIs} que permitam avaliar tanto a parte técnica (\emph{commits}, \emph{issues}, \emph{PRs}, bugs) quanto a parte colaborativa (rede de colaboração, frequência de comunicação).
-    \item \textbf{Implementar um protótipo inicial} de coleta automática de dados a partir da \textbf{API do GitHub}\index{GitHub@API do GitHub}, por meio do desenvolvimento de \emph{scripts} ou serviços que atualizem um banco de dados central.
-    \item \textbf{Construir o dashboard}\index{dashboard} que apresente as informações em tempo real (ou quase real), classificando os resultados por projeto, equipe e indivíduo, de maneira que gestores e professores possam identificar rapidamente gargalos e boas práticas.
-    \item \textbf{Conduzir testes-piloto} com equipes participantes da \textbf{Fábrica de Software Acadêmica}\index{Fábrica de Software Acadêmica} do UDF (ou de outra instituição parceira), documentando ajustes técnicos e sugerindo melhorias no modelo de visualização de dados.
+    \item \textbf{Realizar uma revisão de literatura}\label{OE1} sobre métodos e \textbf{métricas}\index{métricas} adotadas em projetos de desenvolvimento de software, com foco nas \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica}, a fim de identificar boas práticas para coleta e interpretação de dados e embasar a definição das \textbf{métricas}\index{métricas} que serão apresentadas no \textbf{dashboard}\index{dashboard}.
+    \item \textbf{Definir o conjunto de indicadores-chave (KPIs)}\label{OE2} que permitam avaliar tanto a parte técnica (\emph{commits}, \emph{issues}, \emph{PRs}, bugs) quanto a parte colaborativa (rede de colaboração, frequência de comunicação).
+    \item \textbf{Implementar um protótipo inicial}\label{OE3} de coleta automática de dados a partir da \textbf{Application Programming Interface (API) do GitHub}\index{GitHub@API do GitHub}, por meio do desenvolvimento de \emph{scripts} ou serviços que atualizem um banco de dados central.
+    \item \textbf{Construir o dashboard}\label{OE4} que apresente as informações em tempo real (ou quase real), classificando os resultados por projeto, equipe e indivíduo, de maneira que gestores e professores possam identificar rapidamente gargalos e boas práticas.
+    \item \textbf{Conduzir testes-piloto}\label{OE5} com equipes participantes da \textbf{Fábrica de Software Acadêmica}\index{Fábrica de Software Acadêmica} do UDF, documentando ajustes técnicos e sugerindo melhorias no modelo de visualização de dados.
 \end{enumerate}
 
-Além dessas metas, o projeto prevê a análise dos resultados, a elaboração de um relatório final, a disponibilização do produto sob \textbf{licença GPL3} e a apresentação dos achados no congresso científico do UDF.
+Além dessas metas, o projeto prevê a análise dos resultados, a elaboração de um relatório final, a disponibilização do produto sob \textbf{licença  GNU General Public License 3 (GPL3)} e a apresentação dos achados no congresso científico do UDF.
 
-\section{Dashboard Open Source sob Licença GPL 3: Flexibilidade e Extensibilidade}
-Uma das principais vantagens da proposta é o desenvolvimento do \textbf{dashboard}\index{dashboard} como uma solução open source sob a \textbf{licença GPL3}. A GPL 3 é uma licença copyleft que garante a liberdade de uso, estudo, modificação e distribuição do software, desde que todas as versões derivadas mantenham as mesmas liberdades. Essa característica permite que o código seja estendido e adaptado para atender a diferentes contextos, possibilitando que qualquer fábrica ou equipe de software possa colocar a ferramenta em produção sem custos de licenciamento.
+\subsection{Solução Proposta}
 
-\section{Uso de Dashboards para Gestão de Projetos Acadêmicos: Benchmark de Ferramentas}
-A literatura e o mercado atual oferecem uma variedade de soluções que integram \textbf{métricas}\index{métricas} extraídas de repositórios — como \textbf{GitHub}\index{GitHub}, GitLab e Bitbucket — em \textbf{dashboards}\index{dashboard} dinâmicos, permitindo a visualização em tempo real do progresso dos projetos e a identificação de gargalos. Tais soluções são fundamentais para reduzir a assimetria de informação e promover a colaboração entre as equipes.
+A solução proposta neste projeto consiste no desenvolvimento de um \textbf{dashboard open source} que integra três componentes principais:
 
-Entre as soluções SaaS disponíveis, destaca-se o \textbf{Datadog}\footnote{Datadog. Disponível em: \url{https://www.datadoghq.com/}. Acessado em: 26 de fevereiro de 2025.}, que integra dados de múltiplas fontes (incluindo repositórios) para oferecer uma visão abrangente dos processos de desenvolvimento. De forma similar, o \textbf{New Relic}\footnote{New Relic. Disponível em: \url{https://newrelic.com/}. Acessado em: 26 de fevereiro de 2025.} proporciona monitoramento detalhado e uma interface amigável para acompanhar indicadores-chave, como tempo de ciclo e taxa de resolução de \emph{issues}.
+\begin{itemize}
+    \item \textbf{Dashboard (Frontend):} Uma interface web intuitiva que permite a visualização em tempo real de métricas extraídas de repositórios (como \emph{commits}, \emph{issues} e \emph{pull requests}). Essa ferramenta possibilita a análise visual dos indicadores técnicos e colaborativos, facilitando a identificação de gargalos e o acompanhamento do progresso dos projetos em Fábricas de Software Acadêmicas.
+    \item \textbf{Backend:} Implementado em um servidor Linux (utilizado na Amazon Web Services), o backend é responsável por orquestrar a comunicação entre o dashboard e os dados coletados. Ele gerencia a autenticação, o armazenamento e o processamento dos dados, garantindo que as informações sejam atualizadas de forma contínua.
+    \item \textbf{Pipeline de Extração e Transformação dos Dados (ETL):} Conjunto de scripts e serviços que, por meio da \textbf{API do GitHub}, extraem os dados dos repositórios. Esses dados são então transformados e consolidados em um banco de dados central, viabilizando a geração de indicadores precisos para o dashboard.
+\end{itemize}
 
-Plataformas como o \textbf{Keen IO}\footnote{Keen IO. Disponível em: \url{https://keen.io/}. Acessado em: 26 de fevereiro de 2025.} demonstram a eficácia de \textbf{dashboards}\index{dashboard} customizáveis, que possibilitam a consolidação de \textbf{métricas}\index{métricas} técnicas (por exemplo, número de \emph{commits} e \emph{pull requests}) e colaborativas (como a frequência de interações em \emph{issues}). Outras soluções focadas em repositórios, como o \textbf{iftrue.co}\footnote{iftrue.co. Disponível em: \url{https://www.iftrue.co/}. Acessado em: 26 de fevereiro de 2025.} e o \textbf{ScatterSpoke Metrics for Bitbucket}\footnote{ScatterSpoke Metrics for Bitbucket. Disponível em: \url{https://www.scatterspoke.com/}. Acessado em: 26 de fevereiro de 2025.}, utilizam análises baseadas em inteligência artificial para identificar gargalos e otimizar os fluxos de trabalho.
+Esta arquitetura (\hyperref[fig:arquitetura]{Figura 1}) possibilita que a solução seja completamente customizável e adaptável a diferentes contextos, sem custos de licenciamento, graças à sua natureza open source sob a \textbf{GPL 3}. Dessa forma, tanto o frontend quanto o backend e a pipeline de ETL podem ser aprimorados e ajustados conforme as necessidades específicas das Fábricas de Software Acadêmicas, promovendo uma integração eficiente entre teoria e prática.
 
-Adicionalmente, ferramentas que agregam dados de múltiplas fontes e plataformas voltadas à análise integrada de \textbf{métricas}\index{métricas}, como o \textbf{Worklytics}\footnote{Worklytics. Disponível em: \url{https://www.worklytics.co/}. Acessado em: 26 de fevereiro de 2025.}, demonstram que a consolidação e a visualização clara de indicadores contribuem para uma gestão mais transparente e colaborativa dos projetos.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{arquitetura.png}
+    \caption{Arquitetura do Dashboard.}
+    \label{fig:arquitetura}
+\end{figure}
 
-\subsection{Comparação de Preços e Funcionalidades}
-Para demonstrar a importância do desenvolvimento de um \textbf{dashboard open source}\index{dashboard}, faz-se necessária a comparação das soluções disponíveis no mercado em termos de funcionalidades e custos. A Tabela~\ref{tab:benchmark} apresenta um resumo dos preços e principais recursos de algumas ferramentas SaaS que agregam \textbf{métricas}\index{métricas} de repositórios (como \textbf{GitHub}\index{GitHub}, GitLab e Bitbucket), bem como alternativas que visam oferecer \textbf{dashboards}\index{dashboard} interativos.
+\subsection{Diferencial de Mercado}
+
+A literatura e o mercado atual oferecem diversas soluções que integram \textbf{métricas} extraídas de repositórios — como GitHub, GitLab e Bitbucket — em \textbf{dashboards} dinâmicos, facilitando a visualização em tempo real do progresso dos projetos e a identificação de gargalos. Entre as principais ferramentas SaaS disponíveis, destacam-se três soluções: \textbf{Datadog}\footnote{Datadog. Disponível em: \url{https://www.datadoghq.com/}. Acessado em: 26 de fevereiro de 2025.}, \textbf{New Relic}\footnote{New Relic. Disponível em: \url{https://newrelic.com/}. Acessado em: 26 de fevereiro de 2025.} e \textbf{Keen IO}\footnote{Keen IO. Disponível em: \url{https://keen.io/}. Acessado em: 26 de fevereiro de 2025.}. Essas soluções oferecem recursos para monitoramento, análise de dados e criação de dashboards customizáveis, mas são baseadas em planos de assinatura que podem inviabilizar sua adoção em contextos acadêmicos.
 
 \begin{table}[htbp]
 \centering
-\caption{Comparativo de Soluções de Dashboard para Monitoramento de Repositórios}
-\label{tab:benchmark}
-\begin{tabular}{|p{3cm}||p{3cm}|p{3cm}|p{2cm}|}
+\caption{Comparativo de Soluções: Identificação de Features}
+\label{tab:comparativo}
+\renewcommand{\arraystretch}{1.2} % aumenta o espaçamento entre as linhas
+\begin{tabular}{p{4cm} >{\centering\arraybackslash}p{1.8cm} >{\centering\arraybackslash}p{2.3cm} >{\centering\arraybackslash}p{1.8cm} >{\centering\arraybackslash}p{1.8cm}}
 \hline
-\textbf{Ferramenta} & \textbf{Tipo} & \textbf{Principais Funcionalidades} & \textbf{Preço (a partir de)} \\ \hline
-Datadog\footnote{Datadog. Disponível em: \url{https://www.datadoghq.com/}. Acessado em: 26 de fevereiro de 2025.}  
-  & SaaS & Monitoramento em tempo real, integração com múltiplas fontes (incl. Bitbucket, GitHub) & \$15/host/mês \\ \hline
-New Relic\footnote{New Relic. Disponível em: \url{https://newrelic.com/}. Acessado em: 26 de fevereiro de 2025.} 
-  & SaaS & APM, monitoramento de infraestrutura, \textbf{dashboards}\index{dashboard} customizáveis & Plano gratuito + cobrança por uso \\ \hline
-Keen IO\footnote{Keen IO. Disponível em: \url{https://keen.io/}. Acessado em: 26 de fevereiro de 2025.} 
-  & SaaS & APIs flexíveis para coleta e visualização customizada de \textbf{métricas}\index{métricas} & \$149/mês \\ \hline
-iftrue.co\footnote{iftrue.co. Disponível em: \url{https://www.iftrue.co/}. Acessado em: 26 de fevereiro de 2025.} 
-  & SaaS & \textbf{Métricas}\index{métricas} de experiência do desenvolvedor, análises de DORA & Gratuito para até 10 desenvolvedores; \$90/team/mês \\ \hline
-ScatterSpoke Metrics\footnote{ScatterSpoke Metrics for Bitbucket. Disponível em: \url{https://www.scatterspoke.com/}. Acessado em: 26 de fevereiro de 2025.} 
-  & SaaS & Insights baseados em IA para otimização de workflow & A partir de \$90/team/mês \\ \hline
-Worklytics\footnote{Worklytics. Disponível em: \url{https://www.worklytics.co/}. Acessado em: 26 de fevereiro de 2025.} 
-  & SaaS & Análise de produtividade e bem-estar da equipe & Preço não divulgado \\ \hline
+\textbf{Feature} & \textbf{Datadog} & \textbf{New Relic} & \textbf{Keen IO} & \textbf{Proposta (GPL3)} \\
+\hline
+Monitoramento em tempo real
+  & x
+  & x
+  & x
+  & x \\
+Extração de métricas de \emph{commits}\footnote{\textbf{Observação:} Nas soluções comerciais, pode ser necessário configurar integrações ou desenvolver scripts personalizados para capturar métricas específicas de \emph{commits}.}
+  & x
+  & x
+  & x
+  & x \\
+Visualização de \emph{issues} e \emph{pull requests}\footnote{\textbf{Observação:} Geralmente, essas soluções oferecem visualizações customizadas por meio de integrações com plataformas como GitHub, mas podem demandar ajustes adicionais.}
+  & x
+  & x
+  & x
+  & x \\
+Criação de gráficos interativos
+  & x
+  & x
+  & x
+  & x \\
+Scripts personalizados
+  & x
+  & x
+  & x
+  & x \\
+Acesso ao código-fonte completo
+  & -
+  & -
+  & -
+  & x \\
+Licença Copyleft (GPL)
+  & -
+  & -
+  & -
+  & x \\
+Custo de assinatura
+  & \$15/host/mês
+  & Plano Gratuito + cobrança
+  & \$149/mês
+  & \$0 \\
+Foco em contexto acadêmico
+  & -
+  & -
+  & -
+  & x \\
+\hline
 \end{tabular}
+\begin{flushleft}
+\small \textbf{Legenda:} x = Feature presente; - = Feature não presente.
+\end{flushleft}
 \end{table}
 
-\noindent
-\textbf{Discussão:}  
-Conforme observado, soluções comerciais como \emph{Datadog} e \emph{New Relic} oferecem \textbf{dashboards}\index{dashboard} robustos com monitoramento em tempo real e ampla integração com diversas plataformas. Contudo, os custos — que podem variar desde \$15 por host/mês até modelos de cobrança baseados no volume de dados — podem representar um entrave para equipes com orçamentos limitados, especialmente em contextos acadêmicos. Por outro lado, soluções SaaS como \emph{Keen IO}, \emph{iftrue.co} e \emph{ScatterSpoke Metrics} apresentam preços mais definidos (a partir de \$90 a \$149/mês por equipe) e focam na customização e na análise detalhada dos dados de repositórios.
+Como se observa na \hyperref[tab:comparativo]{Tabela 1}, embora as soluções comerciais (Datadog, New Relic e Keen IO) ofereçam recursos avançados para monitoramento e visualização, seus custos de assinatura — e a necessidade de configurações ou integrações adicionais para extrair certas métricas (como de \emph{commits} ou \emph{issues}) — podem inviabilizar a adoção em ambientes com orçamentos limitados, como é o caso de muitas Fábricas de Software Acadêmicas. Em contrapartida, a \textbf{solução proposta} integra um dashboard open source, um backend robusto e uma pipeline de ETL eficiente, evitando necessidade de customização, dispensa de custos de licenciamento e um melhor alinhamento às demandas de ensino e pesquisa.
 
-Diante desse cenário, o desenvolvimento de um \textbf{dashboard open source}\index{dashboard} sob licença GPL 3 torna-se ainda mais relevante, pois pode oferecer funcionalidades comparáveis — como a consolidação de indicadores técnicos (\emph{commits}, \emph{issues}, \emph{pull requests}) e colaborativos (frequência de comunicação, rede de colaboração) — sem os custos recorrentes das soluções comerciais. Essa abordagem não só reduz o investimento financeiro, mas também permite maior flexibilidade para adaptações específicas ao contexto das \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica}, promovendo a transparência e a melhoria contínua dos projetos.
+% ----------------------------------------------------------
+% CAPÍTULO: REVISÃO DE LITERATURA
+% ----------------------------------------------------------
+\section{Revisão de Literatura}
 
-\chapter{Revisão de Literatura}
-\section{Fábricas de Software Acadêmicas}
+ A fundamentação teórica deste trabalho parte do levantamento dos conceitos essenciais para a compreensão das Fábricas de Software Acadêmicas, das métricas de software e do papel das APIs na integração de sistemas. A revisão de literatura apresenta estudos que destacam as vantagens de ambientes acadêmicos que combinam teoria e prática, possibilitando o desenvolvimento de projetos reais e a experimentação de metodologias ágeis. Além disso, enfatiza a importância de se estabelecer indicadores-chave (KPIs) que reflitam tanto aspectos técnicos quanto colaborativos dos projetos, permitindo uma análise detalhada do desempenho e da evolução dos processos de desenvolvimento. Dessa forma, a literatura revisada sustenta a proposta de criação de um dashboard que consolide essas métricas, contribuindo para a melhoria da governança e do acompanhamento contínuo das iniciativas em Fábricas de Software Acadêmicas. 
+
+\subsection{Fábricas de Software Acadêmicas}
 \textbf{Fábricas de Software}\index{Fábrica de Software Acadêmica} são propostas como ambientes para o desenvolvimento de projetos reais em contexto acadêmico, integrando teoria e prática para o aprimoramento dos estudantes. No contexto brasileiro, diversos estudos destacam suas vantagens na formação de profissionais de TI, ao possibilitar a experimentação de metodologias ágeis, a adoção de ferramentas modernas e o uso de \emph{frameworks} \cite{oliveira2017conduccao, fernandes2004fabrica, romanha2015fabrica, almeida2006liccoes}.
 
 Ademais, vários autores ressaltam que tais iniciativas aproximam os estudantes das demandas do mercado e da comunidade, promovendo um aprendizado ativo e colaborativo \cite{dos2021experiencia, neto2017relato}. Assim, os projetos desenvolvidos em \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica} podem proporcionar uma experiência realista do ciclo de vida de projetos de software, contribuindo para a formação de competências alinhadas às exigências do setor de TI \cite{romanha2016modelo}.
 
-\section{Métricas em Projetos de Software Acadêmicos}
+\subsection{Métricas em Projetos de Software Acadêmicos}
 Apesar das vantagens mencionadas, a falta de padronização nas práticas de medição e acompanhamento ainda representa um desafio. \citeonline{kitchenham2010s} destaca a importância da adoção de métodos científicos para a coleta e análise de dados, que subsidiem a evolução dos projetos nas \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica}. Nesse sentido, estabelecer \emph{KPIs}\index{KPIs} que reflitam tanto o aspecto técnico (ex.: \emph{commits}, \emph{issues}, \emph{bugs}, \emph{merges}, tempo de revisão) \cite{hamer2021using, barbosaIndicadoresConjunto2016}, quanto o aspecto colaborativo (rede de colaboração, frequência de comunicação em \emph{pull requests} e \emph{issues}) pode oferecer um panorama claro do andamento de cada projeto \cite{basili1996validation}.
 
 Conforme \citeonline{wef:2025}, as principais \emph{soft skills} exigidas no mercado de TI incluem pensamento analítico, resiliência, liderança e colaboração. Projetos educacionais podem se beneficiar de \textbf{métricas}\index{métricas} que avaliem essas competências de forma indireta, como o número de revisões de código realizadas, a distribuição das tarefas entre os membros e a regularidade da participação nas discussões técnicas.
 
 Na mesma linha, \citeonline{hamer2021using} e \citeonline{barbosaIndicadoresConjunto2016} ressaltam que a mensuração de elementos quantitativos e qualitativos (por exemplo, a participação em code reviews, o fechamento de \emph{issues} e a comunicação entre membros) possibilita um retorno construtivo aos estudantes, subsidiando \emph{feedbacks} contínuos e servindo de base para ajustes pedagógicos \cite{almeida2006liccoes}.
 
-\section{Uso de Dashboards para Gestão de Projetos Acadêmicos}
+\subsection{Uso de Dashboards para Gestão de Projetos Acadêmicos}
 A literatura sobre ferramentas de apoio à gestão de projetos, como \emph{Jira}, \emph{Trello} e \textbf{dashboards}\index{dashboard} personalizados, evidencia que a visualização clara de indicadores reduz a assimetria de informação, facilita a detecção de gargalos e estimula a colaboração \cite{temitope2020software, dos2020usoTrello, ozkan2019agile}. Em âmbito acadêmico, entretanto, são escassos os estudos que avaliem a eficácia de \textbf{dashboards}\index{dashboard} voltados especificamente para a análise de engajamento e produtividade em \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica}.
 
 O desenvolvimento de \textbf{dashboards}\index{dashboard} que consolidem diversas \textbf{métricas}\index{métricas} de forma interativa pode auxiliar docentes, coordenadores e gerentes a tomar decisões fundamentadas. Ao correlacionar dados de \emph{commits}, \emph{issues} e participação em discussões técnicas, os responsáveis podem identificar necessidades de intervenção, a distribuição ineficiente de tarefas ou lacunas de conhecimento na equipe \cite{kitchenham2010s}.
 
-\section{Detalhes Técnicos}
-\label{sec:tecnico}
-Há uma variedade de ferramentas para hospedagem de código-fonte disponíveis na web. Contudo, é fundamental distinguir que os serviços de hospedagem e os sistemas de controle de versão são entidades distintas. Os sistemas de controle de versão gerenciam as alterações ocorridas durante o ciclo de desenvolvimento de software, registrando as modificações efetuadas nos arquivos de código-fonte – exemplos clássicos incluem o \textbf{Git}\index{Git} \footnote{Git. Disponível em: \url{https://git-scm.com/}. Acessado em: 26 de fevereiro de 2025.} e o \textbf{SVN}\index{SVN} \footnote{SVN. Disponível em: \url{https://subversion.apache.org/}. Acessado em: 26 de fevereiro de 2025.}. Por outro lado, os serviços de hospedagem de repositórios são aplicações web que potencializam as funcionalidades dos sistemas de controle de versão, oferecendo recursos adicionais para colaboração e visualização de indicadores, como o \textbf{GitLab}\index{GitLab} \footnote{GitLab. Disponível em: \url{https://about.gitlab.com/}. Acessado em: 26 de fevereiro de 2025.} e o \textbf{GitHub}\index{GitHub}. No presente projeto, o \textbf{GitHub}\index{GitHub} foi escolhido como repositório para extração de dados, em virtude de sua ampla popularidade na comunidade de desenvolvedores e do seu uso interno no LabTech.
-
-\subsection{Indicadores-Chave de Desempenho (KPIs)}
-\textbf{KPIs}\index{KPIs} (Key Performance Indicators) são medidas quantitativas utilizadas para avaliar a eficiência e a eficácia de um processo ou projeto. Esses indicadores fornecem uma visão clara do desempenho, permitindo identificar áreas que necessitam de melhorias e facilitando a tomada de decisões baseadas em dados.
-
-\subsection{Interface de Programação de Aplicações (API)}
-Uma \textbf{API}\index{API} (Application Programming Interface) é um conjunto de protocolos e rotinas que possibilita a comunicação e a integração entre diferentes sistemas. No contexto deste projeto, a \textbf{API do GitHub}\index{GitHub@API do GitHub} será empregada para a coleta automática de dados relevantes dos repositórios, como \emph{commits}, \emph{issues} e \emph{pull requests}.
-
-\subsection{Versionador de Código e Repositório Remoto}
-Um \textbf{versionador}\index{versionador} como o \textbf{Git}\index{Git} é um sistema de controle de versões que registra todas as alterações realizadas no código-fonte ao longo do tempo, permitindo o rastreamento e a reversão de mudanças. Por sua vez, um \textbf{repositório remoto}\index{repositório remoto} como o \textbf{GitHub}\index{GitHub} é um serviço online que hospeda esses arquivos versionados, viabilizando a colaboração entre desenvolvedores e o acesso remoto ao código.
-
 % ----------------------------------------------------------
-% METODOLOGIA
+% CAPÍTULO: METODOLOGIA
 % ----------------------------------------------------------
-\chapter{Metodologia}
-\section{Tipo de Pesquisa}
+\section{Metodologia}
+
+A metodologia adotada neste projeto segue uma abordagem mista, considerando aspectos qualitativos (observações, relatórios, diários de bordo) e quantitativos (métricas coletadas automaticamente do \textbf{GitHub}\index{GitHub}).
+
+\subsection{Tipo de Pesquisa}
 O trabalho caracteriza-se como pesquisa aplicada, com o objetivo de produzir uma ferramenta (\textbf{dashboard}\index{dashboard}) de uso prático em \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica}. A pesquisa possui natureza \textbf{descritiva} e \textbf{exploratória}, pois busca mapear e sintetizar \textbf{métricas}\index{métricas} relevantes de sucesso em projetos acadêmicos.
 
-\section{Coleta de Dados}
+\subsection{Coleta de Dados}
 A coleta de dados será realizada em duas vertentes:
 \begin{enumerate}
     \item \textbf{Qualitativa:} por meio de entrevistas breves com professores e gestores, além de observações em reuniões do LabTech, a fim de identificar quais \textbf{métricas}\index{métricas} são mais valorizadas e quais necessidades não são atendidas pelas ferramentas existentes.
     \item \textbf{Quantitativa:} utilizando a \textbf{API do GitHub}\index{GitHub@API do GitHub} para extrair dados de \emph{commits}, \emph{issues}, \emph{pull requests}, comentários e dados de rede (como a relação entre revisores e autores, por exemplo).
 \end{enumerate}
 
-\section{Análise e Desenvolvimento}
+\subsection{Análise e Desenvolvimento}
 \begin{itemize}
     \item \textbf{Definição de KPIs:} a partir da revisão de literatura e das entrevistas, serão selecionadas as principais \textbf{métricas}\index{métricas} que reflitam o progresso (ex.: burndown, velocidade de fechamento de \emph{issues}), o engajamento (rede de colaboração, distribuição de \emph{commits}) e aspectos qualitativos.
     \item \textbf{Prototipagem:} desenvolvimento de \emph{scripts} em \textit{Python} ou \textit{JavaScript} para a coleta e consolidação dos dados em um banco de dados, seguido pela criação de uma interface web (por exemplo, com \emph{React} ou \emph{Vue.js}) para a visualização das \textbf{métricas}\index{métricas}.
     \item \textbf{Testes-Piloto:} implementação inicial do \textbf{dashboard}\index{dashboard} para uso pelo LabTech, com a coleta de feedback dos participantes e a realização de ajustes nas funcionalidades e visualizações.
 \end{itemize}
 
-\section{Aspectos Éticos}
+\subsection{Aspectos Éticos}
 Será garantido o anonimato dos participantes nas análises de engajamento (por exemplo, por meio do uso de \emph{hash} de e-mails ou identificadores). Os dados coletados serão utilizados exclusivamente para fins de pesquisa e melhoria de processos, sem divulgação pública de informações sensíveis. O projeto seguirá as diretrizes éticas recomendadas pelo Comitê de Ética em Pesquisa do UDF.
 
 % ----------------------------------------------------------
-% CRONOGRAMA E RECURSOS
+% CAPÍTULO: CRONOGRAMA E RECURSOS
 % ----------------------------------------------------------
-\chapter{Cronograma e Recursos}
-\section{Recursos Necessários}
-\begin{itemize}
-    \item \textbf{Infraestrutura de Desenvolvimento:}  
-    Computador ou notebook com acesso à internet para o pesquisador e para o professor orientador. O UDF disponibiliza internet para docentes e discentes sem custo, e ambos já dispõem de equipamentos próprios.
-    \item \textbf{Ferramentas de Coleta e Armazenamento:}  
-    Acesso à \textbf{API do GitHub}\index{GitHub@API do GitHub} e serviços de banco de dados (MongoDB) em servidor local ou em nuvem. A cota pública da \textbf{API do GitHub}\index{GitHub@API do GitHub} atende às necessidades do projeto, e a MongoDB oferece um banco de dados gratuito adequado para a demanda.
-    \item \textbf{Ferramentas de Programação e Visualização:}  
-    Utilização de \textit{Python} e \textit{JavaScript} para o tratamento e análise dos dados, e bibliotecas ou \textit{frameworks} de \emph{front-end} (como \emph{React} ou \emph{Vue.js}) para a criação do \textbf{dashboard}\index{dashboard}. Adicionalmente, serão empregados os Ambientes de Desenvolvimento Integrados (IDEs) Visual Studio Code e PyCharm, ambos em suas versões gratuitas.
-    \item \textbf{Plataforma de Hospedagem:}  
-    O serviço Firebase Hosting para a publicação do protótipo e a disponibilização final do \textbf{dashboard}\index{dashboard} (frontend), sem custos adicionais. Para o backend, será utilizado um servidor Linux de uma empresa parceira do LabTech, também sem custos para o projeto.
-    \item \textbf{Gestão e Reuniões:}  
-    Reuniões quinzenais entre o orientador e o pesquisador, com a participação da equipe do segundo semestre de 2025 da \textbf{Fábrica de Software Acadêmica}\index{Fábrica de Software Acadêmica}, que atuará como usuários-piloto.
-\end{itemize}
+\section{Cronograma e Recursos}
 
-\section{Cronograma de Execução}
+O período previsto para a execução do projeto inicia-se em abril de 2025 (mês 1) e encerra-se em março de 2026 (mês 12), totalizando 12 meses. A seguir, apresenta-se a sequência de atividades:
+
+\subsection{Cronograma de Execução}
 \label{sec:cronograma}
 
 \newcommand{\X}{\textbullet}
 \begin{table}[ht]
-\centering
-\caption{Cronograma de Execução do Projeto (abr/2025 a mar/2026)}
-\label{tab:cronograma}
-\begin{tabular}{|p{7cm}||c|c|c|c|c|c|c|c|c|c|c|c|}
+\begin{tabular}{|p{6cm}||c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
 \multirow{2}{*}{\textbf{Atividade}} & \multicolumn{12}{c|}{\textbf{Meses (M)}} \\
 \cline{2-13}
@@ -414,25 +438,41 @@ Análise de Resultados e Relatório &   &   &   &   &   &   &   &   &   & \X & \
 Apresentação no Congresso UDF &   &   &   &   &   &   &   &   &   &   &   & \X \\
 \hline
 \end{tabular}
+\centering
+\caption{Cronograma de Execução do Projeto (abr/2025 a mar/2026)}
+\label{tab:cronograma}
 \end{table}
 
 \begin{itemize}
-    \item \textbf{Meses 1--2 (abr/2025 e mai/2025):} Enfoque na revisão de literatura (OE1) e início da definição dos \textbf{KPIs}\index{KPIs}, com a identificação de paralelos entre o presente trabalho e estudos conceituais correlatos.
-    \item \textbf{Mês 3 (jun/2025):} Conclusão da definição das \textbf{métricas}\index{métricas}, estabelecendo quais dados serão coletados e quais gráficos e tabelas comporão o \textbf{dashboard}\index{dashboard}.
-    \item \textbf{Meses 4--5 (jul/2025 e ago/2025):} Implementação da camada de extração de dados por meio da \textbf{API do GitHub}\index{GitHub@API do GitHub} (OE3).
-    \item \textbf{Meses 5--6 (ago/2025 e set/2025):} Construção do \textbf{dashboard}\index{dashboard} inicial (OE4) com base nas \textbf{métricas}\index{métricas} definidas.
-    \item \textbf{Meses 7--9 (out/2025, nov/2025, dez/2025):} Realização dos testes-piloto e consolidação do uso do \textbf{dashboard}\index{dashboard} pelo LabTech (OE5), com a coleta de feedbacks e adaptações necessárias para atender aos usuários.
-    \item \textbf{Meses 10--11 (jan/2026 e fev/2026):} Análise dos resultados, redação do relatório final e disponibilização da solução sob \textbf{licença GPL3}.
-    \item \textbf{Mês 12 (mar/2026):} Apresentação no Congresso UDF e encerramento do projeto.
+    \item \textbf{Revisão de Literatura (OE1):} Realizar a revisão de literatura e iniciar a definição dos \textbf{KPIs}, identificando paralelos entre o presente trabalho e estudos correlatos. (\hyperref[OE1]{Ver OE1})
+    \item \textbf{Definição de KPIs (OE2):} Concluir a definição das métricas, estabelecendo quais dados serão coletados e quais gráficos/tabelas comporão o \textbf{dashboard}. (\hyperref[OE2]{Ver OE2})
+    \item \textbf{Coleta/extração de dados (OE3):} Desenvolver a camada de extração de dados por meio da API do GitHub. (\hyperref[OE3]{Ver OE3})
+    \item \textbf{Construção do Dashboard (OE4):} Implementar a versão inicial do \textbf{dashboard} com base nas métricas definidas. (\hyperref[OE4]{Ver OE4})
+    \item \textbf{Testes-Piloto e Ajustes (OE5):} Realizar testes-piloto com o LabTech, coletar feedbacks e efetuar os ajustes necessários. (\hyperref[OE5]{Ver OE5})
+    \item \textbf{Análise de Resultados e Relatório:} Analisar os resultados obtidos, elaborar o relatório final e disponibilizar a solução sob licença GPL3.
+    \item \textbf{Apresentação no Congresso UDF:} Apresentar os achados no Congresso UDF e encerrar o projeto.
+\end{itemize}
+
+\subsection{Recursos Necessários}
+É importante notar que nenhum dos recursos descritos abaixo necessita de recursos financeiros, exceto o servidor backend que será custeado pela bolsa do aluno pesquisador.
+\begin{itemize}
+    \item \textbf{Computador ou Laptop (R\$0,00):}  
+    Ambos já dispõem de equipamentos próprios.
+    \item \textbf{Ferramentas de Coleta e Armazenamento (R\$0,00):}  
+    Acesso à \textbf{API do GitHub }\index{GitHub@API do GitHub} e serviços de banco de dados (MongoDB) em servidor local ou em nuvem. A cota pública da \textbf{API do GitHub}\index{GitHub@API do GitHub} atende às necessidades do projeto, e a MongoDB oferece um banco de dados gratuito adequado para a demanda.
+    \item \textbf{Ferramentas de Programação e Visualização (R\$0,00):}  
+    Utilização das linguagens de programação \textit{Python} e \textit{JavaScript} para o tratamento e análise dos dados, e bibliotecas ou \textit{frameworks} de \emph{front-end} (como \emph{React} ou \emph{Vue.js}) para a criação do \textbf{dashboard}\index{dashboard}. Adicionalmente, serão empregados os Ambientes de Desenvolvimento Integrados (IDEs) Visual Studio Code e PyCharm, ambos em suas versões gratuitas.
+    \item \textbf{Plataforma de Hospedagem (R\$600,00):}
+    O protótipo e a versão final do \textbf{dashboard}\index{dashboard} (frontend) serão publicados por meio do serviço Firebase Hosting, sem custos adicionais. Para o backend, utilizar-se-á um servidor Linux na Amazon Web Services (AWS), com custo médio estimado em R\$600,00. Há, contudo, a possibilidade de obtenção de créditos gratuitos para pesquisa por meio do Programa de Crédito para Pesquisa da AWS\footnote{Programa de Crédito para Pesquisa da AWS. Disponível em: \url{https://aws.amazon.com/government-education/research-and-technical-computing/cloud-credit-for-research/}. Acessado em: 06 de março de 2025}. Ressalta-se que o servidor backend será utilizado por, no máximo, 5 meses a partir do sexto mês de projeto, e, se necessário, seu custo será custeado por meio da bolsa do aluno pesquisador. 
 \end{itemize}
 
 % ----------------------------------------------------------
 % CONSIDERAÇÕES FINAIS
 % ----------------------------------------------------------
-\chapter{Considerações Finais}
-\pdfbookmark[1]{Considerações Finais}{consideracoes-finais}
+\section[Considerações Finais]{Considerações Finais}
+\fancyhead[L]{Cronograma e Recursos}
 
-O projeto de Iniciação Tecnológica propõe o desenvolvimento de um \textbf{dashboard}\index{dashboard} para o monitoramento de \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica}, visando suprir a lacuna existente na padronização da coleta e visualização de \textbf{métricas}\index{métricas} de progresso e colaboração. A solução pretende contribuir para a melhoria da \emph{governança} dos projetos, a detecção precoce de gargalos e o aprimoramento contínuo das equipes, fortalecendo a formação prática dos estudantes e a integração entre teoria e prática no ensino de \textbf{Tecnologia da Informação (TI)}\index{TI}.
+O projeto de Iniciação Tecnológica propõe o desenvolvimento de um \textbf{dashboard}\index{dashboard} para o monitoramento de \textbf{Fábricas de Software Acadêmicas}\index{Fábrica de Software Acadêmica}, visando suprir a lacuna existente na padronização da coleta e visualização de \textbf{métricas}\index{métricas} de progresso e colaboração. A solução pretende contribuir para a melhoria da \emph{governança} dos projetos, a detecção precoce de gargalos e o aprimoramento contínuo das equipes, fortalecendo a formação prática dos estudantes e a integração entre teoria e prática no ensino de \textbf{TI}\index{TI}.
 
 O cronograma prevê a conclusão do projeto em 12 meses, englobando a revisão bibliográfica, a definição dos \textbf{KPIs}\index{KPIs}, o desenvolvimento de um protótipo e a construção do \textbf{dashboard}\index{dashboard}, além da realização de testes-piloto. Ao final, espera-se disponibilizar os resultados e o código sob \textbf{licença GPL3}, bem como apresentar as conclusões no Congresso UDF.
 
@@ -469,8 +509,8 @@ Diante do exposto, verifica-se a oportunidade de conceber e avaliar um \textbf{d
 %---------------------------------------------------------------------
 % INDICE REMISSIVO
 %---------------------------------------------------------------------
-\phantompart
-\printindex
+% \phantompart
+% \printindex
 %---------------------------------------------------------------------
 
 
