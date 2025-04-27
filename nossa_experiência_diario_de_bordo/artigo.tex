@@ -1,66 +1,113 @@
+% ------------------------------------------------------------------------
+% abnTeX2: Modelo de Projeto de pesquisa em conformidade com
+% ABNT NBR 15287:2011 Informação e documentação - Projeto de pesquisa -
+% Apresentação
+% ------------------------------------------------------------------------
 \documentclass[
-	12pt,
-	openright,
-	oneside,
-	a4paper,
-	brazil
+	12pt,           % tamanho da fonte
+	openright,      % capítulos começam em pág ímpar
+	oneside,        % para impressão em recto (frente) e verso (atrás) -> nesse caso, "oneside"
+	a4paper,        % tamanho do papel
+	brazil          % o último idioma é o principal do documento
 ]{abntex2}
 
-% ---
+% ----------------------------------------------------------
 % PACOTES
-% ---
-\usepackage{lmodern}			
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{indentfirst}
-\usepackage{color}
-\usepackage{graphicx}
-\usepackage{microtype}
-\usepackage[brazilian,hyperpageref]{backref}
-\usepackage[alf]{abntex2cite}
+% ----------------------------------------------------------
+\usepackage{lmodern}            % Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}        % Seleção de códigos de fonte
+\usepackage[utf8]{inputenc}     % Codificação do documento (conversão automática dos acentos)
+\usepackage{indentfirst}        % Indenta o primeiro parágrafo de cada seção
+\usepackage{color}              % Controle das cores
+\usepackage{graphicx}           % Inclusão de gráficos
+\usepackage{microtype}          % Para melhorias de justificação
 
-% Configurações de backref
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+\usepackage{hyperref}           % Hyperlinks no PDF
+\usepackage{multirow}           % Para tabelas com células que ocupam várias linhas
+
+% ----------------------------------------------------------
+% CONFIGURAÇÕES DE PACOTES
+% ----------------------------------------------------------
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
 \renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
 \renewcommand{\backref}{}
+% Define os textos da citação
 \renewcommand*{\backrefalt}[4]{
-	\ifcase #1 
-		Nenhuma citação no texto.
+	\ifcase #1 %
+		Nenhuma citação no texto.%
 	\or
-		Citado na página #2.
+		Citado na página #2.%
 	\else
-		Citado #1 vezes nas páginas #2.
-	\fi
-}
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
 
-% ---
-% Informações de PDF
-% ---
 \usepackage{hyperref}
-\hypersetup{
-	pdftitle={Fábrica de Software Acadêmica: Relato da Experiência no Centro Universitário do Distrito Federal}, 
-	pdfauthor={Danrley Pereira e Rayssa Paiva},
-	pdfsubject={Artigo Científico},
-	pdfcreator={LaTeX com abntex2},
-	pdfkeywords={Fábrica de Software Acadêmica, Desenvolvimento Ágil, Educação em TI, Gestão de Projetos, Mentoria Técnica}, 
-	colorlinks=true,        
-	linkcolor=blue,          
-	citecolor=blue,        	
-	filecolor=magenta,   	
-	urlcolor=blue
-}
+
 
 % ---
 % DADOS DE CAPA E FOLHA DE ROSTO
 % ---
 \titulo{Fábrica de Software Acadêmica: Relato da Experiência no Centro Universitário do Distrito Federal}
 \autor{Danrley Pereira \and Rayssa Paiva \and Letícia Zoby \and Kerlla Luz}
-\local{Brasília, DF}
+\local{Brasil}
 \data{2025}
 \instituicao{%
-Centro Universitário do Distrito Federal - UDF\\
+Centro Universitário do Distrito Federal - UDF
+\par
 Departamento de Engenharia, Arquitetura e TI}
 \tipotrabalho{Artigo Científico}
-\preambulo{Artigo Científico desenvolvido no âmbito da Fábrica de Software Acadêmica do UDF, sob orientação da Profa. Dr. Kerlla de Souza e Profa. Dr. Letícia Zoby}
+\preambulo{Relato de experi\^{e}ncia no \^{a}mbito da F\'{a}brica de Software Acad\^{e}mica do UDF, de 2022 \`{a} 2024}
+
+% ---
+% ---
+% Informações de PDF
+% ---
+\makeatletter
+\hypersetup{
+	pdftitle={\@title}, 
+	pdfauthor={\@author},
+	pdfsubject={\imprimirpreambulo},
+	pdfcreator={LaTeX com abntex2},
+	pdfkeywords={Fábrica de Software Acadêmica}{Desenvolvimento Ágil}{Educação em TI}{Gestão de Projetos}{Mentoria Técnica}, 
+	colorlinks=true,        
+	linkcolor=blue,          
+	citecolor=blue,        	
+	filecolor=magenta,   	
+	urlcolor=blue
+}
+\makeatother
+% --- 
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
 
 % ---
 % INÍCIO DO DOCUMENTO
@@ -72,93 +119,134 @@ Departamento de Engenharia, Arquitetura e TI}
 \imprimircapa
 \imprimirfolhaderosto
 
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS: RESUMO E ABSTRACT
+% ----------------------------------------------------------
+
+\begin{resumo}
+	O estudo investiga o impacto da implantação de uma Fábrica de Software Acadêmica no desenvolvimento de competências técnicas e interpessoais em estudantes de TI, com ênfase na identificação dos desafios metodológicos para a comparação sistemática dos resultados. A pesquisa adota uma abordagem mista, combinando dados quantitativos – como a frequência de \emph{commits}, \emph{pull requests} e outras métricas extraídas de repositórios de código – com dados qualitativos oriundos de diários de bordo, relatórios de estágio e observações em reuniões. Os dados foram triangulados a fim de avaliar o desempenho dos projetos ao longo de diversos semestres. Os resultados indicam que a experiência proporcionada pela Fábrica de Software contribui significativamente para o aprimoramento das \emph{hard skills} (por exemplo, programação e arquitetura de software) e das \emph{soft skills} (como comunicação e trabalho em equipe). No entanto, a ausência de protocolos padronizados compromete a comparação consistente dos resultados entre diferentes equipes e períodos. Assim, os achados sugerem que, embora a Fábrica de Software Acadêmica seja eficaz para aproximar a teoria da prática, a implementação de procedimentos padronizados é essencial para aprimorar a mensuração dos impactos e garantir a replicabilidade dos estudos.
+	
+	\textbf{Palavras-chave:} Fábrica de Software Acadêmica; Desenvolvimento de Software; Competências Técnicas; Competências Interpessoais; Metodologia Mista.
+\end{resumo}
+
+\begin{resumo}[Abstract]
+    \begin{otherlanguage*}{english}
+        This study examines the impact of implementing an Academic Software Factory on the development of technical and interpersonal skills among IT students, with an emphasis on identifying methodological challenges for systematic result comparisons. A mixed-method approach was employed, combining quantitative data—such as commit frequency, pull requests, and other repository metrics—with qualitative insights obtained from project diaries, internship reports, and meeting observations. The data were triangulated to assess project performance over several semesters. Findings indicate that the experience provided by the Academic Software Factory significantly enhances both hard skills (e.g., programming and software architecture) and soft skills (such as communication and teamwork). However, the lack of standardized protocols compromises the consistent comparison of results across different teams and time periods. Thus, the findings suggest that, although the Academic Software Factory effectively bridges theory and practice, the implementation of standardized procedures is crucial to improve impact measurement and ensure the replicability of future studies.
+        
+        \vspace{\onelineskip}
+        
+        \noindent
+        \textbf{Keywords}: Academic Software Factory; Software Development; Technical Skills; Interpersonal Skills; Mixed-Methodology.
+    \end{otherlanguage*}
+\end{resumo}
+
+
 % ---
-% Lista de figuras (opcional)
+% NOTA DA ABNT NBR 15287:2011, p. 4:
+%  ``Se exigido pela entidade, apresentar os dados curriculares do autor em
+%     folha ou página distinta após a folha de rosto.''
+% ---
+
+% ---
+% inserir lista de ilustrações
 % ---
 \pdfbookmark[0]{\listfigurename}{lof}
 \listoffigures*
 \cleardoublepage
+% ---
 
 % ---
-% SUMÁRIO
+% inserir lista de tabelas
+% ---
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+% ---
+
+% ---
+% inserir lista de abreviaturas e siglas
+% ---
+\begin{siglas}
+  \item[TI] Tecnologia da Informação
+  \item[UDF] Centro Universitário do Distrito Federal
+  \item[EBC] Empresa Brasil de Comunicação
+  \item[FecomercioSP] Federação do Comércio de São Paulo
+  \item[WEF] Fórum Econômico Mundial
+  \item[PCN] Projeto Pedagógico de Curso
+  \item[SCRUM] Framework de Gestão Ágil
+  \item[KANBAN] Método de Gerenciamento Visual
+  \item[LabTech] Projeto LabTech: Criando Soluções em Fábrica de Software Acadêmica
+\end{siglas}
+% ---
+
+
+% ---
+% inserir o sumario
 % ---
 \pdfbookmark[0]{\contentsname}{toc}
 \tableofcontents*
 \cleardoublepage
-
+% ---
 
 % ----------------------------------------------------------
-% RESUMO
+% ELEMENTOS TEXTUAIS
 % ----------------------------------------------------------
-\section*{Resumo}
-\addcontentsline{toc}{section}{Resumo}
-
-Este artigo relata a experiência de gestão e desenvolvimento de software em uma Fábrica de Software Acadêmica. A iniciativa integra teoria e prática, empregando metodologias ágeis, ferramentas modernas de programação e mentoria técnica para desenvolver sistemas. A análise, de natureza mista, considerou dados quantitativos (como frequência de \emph{commits} e \emph{pull requests}) e informações qualitativas (relatórios de estágio, diários de bordo de alunos-gerentes, observações diretas), entre outras fontes. Os resultados evidenciam benefícios no desenvolvimento de \emph{hard skills} (programação, arquitetura de software) e \emph{soft skills} (comunicação, trabalho em equipe), confirmando a relevância de Fábricas de Software Acadêmicas para melhorar a formação de profissionais de TI. Por fim, discute-se a carência de padronização metodológica e seu impacto na avaliação de resultados, indicando caminhos para pesquisas futuras.
-
-Palavras-chave: Fábrica de Software Acadêmica; Gestão Acadêmica; Desenvolvimento de software; Educação tecnológica; Projetos Acadêmicos.
-
-\cleardoublepage
-
+\textual
 
 % ----------------------------------------------------------------------------
 % TÓPICO 1
-% ------------------------------------------------------------------------
+% ----------------------------------------------------------------------------
 \chapter{Introdução}
 \label{sec:introducao}
 
-O setor de Tecnologia da Informação (TI) \cite{kerlla} tem desempenhado um papel cada vez mais relevante no desenvolvimento econômico e social do país, a Empresa Brasil de Comunicação (EBC) afirma com base em estudo da FecomercioSP um crescimento de 95\% de empregos ligados a área de tecnologia  \cite{ebctecnologia2024}, especialmente em polos emergentes como Brasília, que abriga diversas instituições públicas, privadas e centros de pesquisa , além de ter o segundo maior PIB (Produto Interno Bruto) do setor de TI do país \cite{agenciapib2020}. Nesse contexto, a criação de uma Fábrica de Software em ambiente acadêmico surge como oportunidade estratégica para integrar teoria e prática, preparando os estudantes para os desafios reais do mercado ao mesmo tempo em que se desenvolvem soluções voltadas a demandas concretas da sociedade civil \cite{bernardi2017learning}.
+O setor de Tecnologia da Informação (TI)\index{Tecnologia da Informação (TI)} \cite{kerlla} tem desempenhado um papel cada vez mais relevante no desenvolvimento econômico e social do país. A Empresa Brasil de Comunicação (EBC) afirma, com base em estudo da FecomercioSP, um crescimento de 95\% de empregos ligados à área de tecnologia \cite{ebctecnologia2024}, especialmente em polos emergentes como Brasília, que abriga diversas instituições públicas, privadas e centros de pesquisa, além de deter o segundo maior PIB do setor de TI do país \cite{agenciapib2020}. Nesse contexto, a criação de uma Fábrica de Software em ambiente acadêmico\index{Fábrica de Software Acadêmica} surge como oportunidade estratégica para integrar teoria e prática, preparando os estudantes para os desafios reais do mercado e desenvolvendo soluções voltadas às demandas da sociedade \cite{bernardi2017learning}.
 
-A Fábrica de Software Acadêmica, portanto, alinha-se à proposta de formação ampliada, em que a sala de aula deixa de ser o único espaço de aprendizagem. \cite{santos2021experiencia} Por meio de projetos orientados (\ref{sec:projetos}) por metodologias ágeis, ferramentas contemporâneas e acompanhamento de mentores, os participantes desenvolvem tanto competências técnicas (\emph{hard skills}), como arquitetura de sistemas e programação, quanto competências interpessoais (\emph{soft skills}), como comunicação, trabalho em equipe e liderança.  \cite{perides2021competencias}
-O presente artigo aborda a experiência de implantação e consolidação desse modelo no Centro Universitário do Distrito Federal (UDF), destacando as motivações institucionais, os benefícios para a formação discente e a contribuição para o ecossistema de TI de Brasília. Além de evidenciar as boas práticas adotadas, o texto discute também os desafios enfrentados ao se conciliar exigências acadêmicas, gestão de projetos reais e desenvolvimento de habilidades em um ambiente controlado, mas conectado às necessidades do mercado. Por fim, apresenta-se uma reflexão acerca dos resultados obtidos e propõem-se caminhos para pesquisas e aprimoramentos futuros, no sentido de tornar a Fábrica de Software um espaço cada vez mais relevante para a formação de profissionais de TI.
+A Fábrica de Software Acadêmica\index{Fábrica de Software Acadêmica} alinha-se à proposta de formação ampliada, na qual a sala de aula deixa de ser o único espaço de aprendizagem \cite{santos2021experiencia}. Por meio de projetos orientados (vide Seção~\ref{sec:projetos}) por \textbf{metodologias ágeis}\index{Metodologias Ágeis}, ferramentas contemporâneas e acompanhamento de mentores, desenvolvem-se competências técnicas (\emph{hard skills}\index{hard skills}) e competências interpessoais (\emph{soft skills}\index{soft skills}), como comunicação, trabalho em equipe e liderança \cite{perides2021competencias}. O presente artigo aborda a experiência de implantação e consolidação deste modelo no Centro Universitário do Distrito Federal (UDF)\index{UDF}, destacando as motivações institucionais, os benefícios para a formação discente e a contribuição para o ecossistema de TI de Brasília. Adicionalmente, são discutidas as boas práticas adotadas e os desafios enfrentados na conciliação de exigências acadêmicas, gestão de projetos reais e desenvolvimento de habilidades, com a finalidade de propor caminhos para pesquisas futuras.
 
-Contando com esta introdução, o artigo está estruturado em 5 seções: na Seção~\ref{cap:fundamentacao-teorica}, apresenta-se a Fundamentação Teórica; na Seção~\ref{sec:desenvolvimento}, discute-se a Fábrica de Software Acadêmica da UDF (Projeto LabTech); na Seção~\ref{sec:discussao-resultados}, detalham-se os Resultados e a Discussão; e, por fim, na Seção~\ref{sec:conc-trabalhos-futuros}, são apresentadas as Conclusões e os Trabalhos Futuros.
+O artigo está estruturado em cinco seções: na Seção~\ref{cap:fundamentacao-teorica}, apresenta-se a Fundamentação Teórica; na Seção~\ref{sec:desenvolvimento}, discute-se a Fábrica de Software Acadêmica\index{Fábrica de Software Acadêmica} da UDF (Projeto LabTech\index{LabTech}); na Seção~\ref{sec:discussao-resultados}, detalham-se os Resultados e a Discussão; e, por fim, na Seção~\ref{sec:conc-trabalhos-futuros}, são apresentadas as Conclusões e os Trabalhos Futuros.
 
-
-% ------------------------------------------------------------------------
+% ----------------------------------------------------------------------------
 % TÓPICO 2
-% ------------------------------------------------------------------------
+% ----------------------------------------------------------------------------
 \chapter{Fundamenta{\c{c}}{\~a}o Te{\'o}rica}
 \label{cap:fundamentacao-teorica}
 
-O principal objetivo de tra\c{c}ar um caminho a ser trilhado \'e inferir, com base em dados adquiridos de maneira sistem\'atica e objetiva, boas pr\'aticas e uma metodologia que impacte beneficamente os resultados de F\'abricas de Software Acad\^emicas. Aproximando o estudo de um conhecimento mais \emph{strictu sensu}, estabelecendo uma metodologia cient\'ifica dentro da f\'abrica de software.
+O principal objetivo consiste em traçar um caminho que, com base em dados adquiridos de maneira sistemática e objetiva, possibilite a identificação de boas práticas e o desenvolvimento de uma \textbf{metodologia}\index{Metodologia} que impacte positivamente os resultados das Fábricas de Software Acadêmicas\index{Fábrica de Software Acadêmica}, aproximando o estudo de um conhecimento com rigor científico.
 
-De acordo com \citeonline[p.~15]{ander-egg1978}:
+Conforme \citeonline[p.~15]{ander-egg1978}:
 \begin{quote}
     ``A Ci\^encia \'e um conjunto de conhecimentos racionais, certos ou prov\'aveis, obtidos metodicamente, sistematizados e verific\'aveis, que fazem referencia a objetos de uma mesma natureza.''
 \end{quote}
 
-Esse enfoque fornece o arcabou\c{c}o para a ado\c{c}\~ao de m\'etodos e t\'ecnicas de pesquisa que auxiliem na padroniza\c{c}\~ao dos processos e na an\'alise cr\'itica dos resultados alcan\c{c}ados em uma F\'abrica de Software Acad\^emica. Dessa forma, busca-se um procedimento de trabalho que seja \textbf{verific\'avel e replic\'avel}, capaz de ser aplicado em qualquer F\'abrica de Software Acad\^emica para avaliar seu sucesso, bem como acompanhar a evolu\c{c}\~ao de seus projetos ao longo de diferentes semestres. Com isso, espera-se conferir maior consist\^encia e credibilidade aos dados coletados, permitindo compara\c{c}\~oes entre equipes e ciclos distintos de desenvolvimento e promovendo o aperfei\c{c}oamento cont\'inuo das pr\'aticas educacionais e de engenharia de software.
-
-
+Esse enfoque justifica a adoção de métodos e técnicas de pesquisa que auxiliem na padronização dos processos e na análise crítica dos resultados alcançados em uma Fábrica de Software Acadêmica\index{Fábrica de Software Acadêmica}. Dessa forma, busca-se um procedimento de trabalho que seja \textbf{verificável e replicável}\index{Metodologia!Verificabilidade} (método científico\index{Método Científico}), passível de aplicação em diferentes contextos para avaliar o desempenho dos projetos ao longo de diversos semestres. Espera-se, com isso, conferir maior consistência e credibilidade aos dados coletados, permitindo comparações entre equipes e ciclos distintos de desenvolvimento e promovendo o aperfeiçoamento contínuo das práticas educacionais e de engenharia de software.
 
 \section{F\'abrica de Software Acad{\^e}mica}
-Uma fábrica de software é um processo estruturado, controlado e melhorado de forma contínua para o desenvolvimento de software \cite{fernandes2004fabrica}, não sendo uma novidade na comunidade acadêmica \cite{cusumano1991japan}. Assim, um projeto de fábrica de software em cursos de graduação de TI visa proporcionar meios para experimentação profissional em ambiente controlado, lançando mão de uma metodologia baseada na vivência prática, na resolução de problemas e na auto regulação da aprendizagem \cite{oliveira2017conduccao}.
+Uma fábrica de software é definida como um processo estruturado, controlado e continuamente aprimorado para o desenvolvimento de software\index{Fábrica de Software Acadêmica} \cite{fernandes2004fabrica}. Trata-se de uma abordagem já reconhecida na comunidade acadêmica \cite{cusumano1991japan}, cuja finalidade é proporcionar um ambiente de experimentação profissional em cursos de graduação de TI. Essa metodologia baseia-se na vivência prática, na resolução de problemas e na autoregulação da aprendizagem \cite{oliveira2017conduccao}.
 
 \section{UDF}
+O Centro Universitário do Distrito Federal (UDF)\index{UDF}, fundado em 1967, destaca-se como uma das pioneiras no ensino superior particular em Brasília. Com cursos em diversas áreas, promove ensino, pesquisa e extensão de excelência na região \cite{udfppc2023}. A instituição passou a ser denominada Centro Universitário em 2004, ampliando sua autonomia para a criação de novos cursos e intensificando projetos de extensão e iniciação científica.
 
-O Centro Universitário do Distrito Federal (UDF)\index{UDF}, criado em 1967, destaca-se como uma das pioneiras no ensino superior particular em Brasília. Com cursos em diversas áreas, promove ensino\index{ensino}, pesquisa\index{pesquisa} e extensão\index{extensão} de excelência na região \cite{udfppc2023}. Tornou-se Centro Universitário em 2004, ampliando sua autonomia para criação de novos cursos e intensificação de projetos de extensão e iniciação científica.
-
-Desde sua fundação, o UDF busca formar cidadãos éticos e inovadores, preparados para contribuir no desenvolvimento socioeconômico do Distrito Federal (DF)\index{DF}. De acordo com seu Projeto Pedagógico de Curso (PCN)\index{PCN} \cite{udfppc2023}, sua missão institucional é:
+Desde sua fundação, o UDF\index{UDF} tem buscado formar cidadãos éticos e inovadores, capacitados a contribuir para o desenvolvimento socioeconômico do Distrito Federal. Segundo o Projeto Pedagógico de Curso (PCN) \cite{udfppc2023}, a missão institucional é:
 \begin{quote}
-    \emph{Oferecer à comunidade ensino superior de excelência, produzir e disseminar o conhecimento científico e tecnológico para formação de profissionais e cidadãos eticamente responsáveis, com postura colaborativa, inclusiva, criativa e inovadora, capazes de contribuir para a transformação sociocultural e ambiental, e para o desenvolvimento sustentável do país e do mundo.}
+    \emph{Oferecer à comunidade ensino superior de excelência, produzir e disseminar o conhecimento científico e tecnológico para a formação de profissionais e cidadãos eticamente responsáveis, com postura colaborativa, inclusiva, criativa e inovadora, capazes de contribuir para a transformação sociocultural e ambiental, e para o desenvolvimento sustentável do país e do mundo.}
 \end{quote}
 
-Com mais de cinco décadas de história, o UDF oferece cursos em áreas como Ciências Administrativas e de Negócios, Ciência da Computação e da Saúde, Ciências Exatas e Tecnológicas e Ciências Humanas, Sociais e Aplicadas. Quase 2.000 alunos estão matriculados nos cursos de TI (dados consolidados de 2024), distribuídos em diferentes modalidades e períodos. A infraestrutura inclui laboratórios especializados e recursos tecnológicos avançados, buscando atender às demandas acadêmicas, de pesquisa e de extensão.
+Com mais de cinco décadas de história, o UDF\index{UDF} oferece cursos em áreas como Ciências Administrativas e de Negócios, Ciência da Computação e da Saúde, Ciências Exatas e Tecnológicas, e Ciências Humanas, Sociais e Aplicadas. Atualmente, aproximadamente 2.000 alunos estão matriculados nos cursos de TI, considerando todas as modalidades.
 
-A Fábrica de Software Acadêmica exemplifica o compromisso do UDF em unir teoria e prática, oferecendo aos estudantes projetos reais e estimulando a inovação. Além disso, outras atividades de extensão reforçam a formação dos alunos, conectando-os às necessidades do mercado e fortalecendo o ecossistema local de tecnologia.
+A Fábrica de Software Acadêmica\index{Fábrica de Software Acadêmica} exemplifica o compromisso do UDF\index{UDF} em integrar teoria e prática, oferecendo aos estudantes projetos reais e estimulando a inovação. Adicionalmente, outras atividades de extensão reforçam a formação dos alunos, conectando-os às necessidades do mercado e fortalecendo o ecossistema local de tecnologia.
 
-Abaixo analisar-se-\'a o perfil acadêmico do departamento de TI, destacando o crescimento e os desafios enfrentados pelos cursos oferecidos, e como esses fatores justificam a iniciativa de se criar um ambiente de desenvolvimento acadêmico estruturado com a implementação da Fábrica de Software.
+A seguir, apresenta-se o perfil acadêmico do departamento de TI, destacando o crescimento e os desafios enfrentados pelos cursos oferecidos, bem como a justificativa para a criação de um ambiente estruturado de desenvolvimento acadêmico por meio da Fábrica de Software Acadêmica\index{Fábrica de Software Acadêmica}.
 
-O Departamento de Engenharia, Arquitetura e TI do UDF engloba cursos como:
+O Departamento de Engenharia, Arquitetura e TI do UDF abrange cursos como:
 \begin{itemize}
   \item \textbf{Engenharia de Software:} Desenvolvimento de soluções escaláveis e aplicação de boas práticas de engenharia.
-  \item \textbf{Ciência da Computação:} Foco em fundamentos teóricos, algoritmos, inteligência artificial e pesquisa.
-  \item \textbf{Sistemas de Informação:} Orientado à gestão de TI, integração de soluções empresariais e análise de processos.
-  \item \textbf{Design (Digital):} Combina criatividade e tecnologia, abordando experiência do usuário e interfaces.
-  \item \textbf{Análise e Desenvolvimento de Sistemas:} Programa prático com ênfase em linguagens de programação e metodologias ágeis.
+  \item \textbf{Ciência da Computação:} Ênfase em fundamentos teóricos, algoritmos, inteligência artificial e pesquisa.
+  \item \textbf{Sistemas de Informação:} Orientação à gestão de TI, integração de soluções empresariais e análise de processos.
+  \item \textbf{Design (Digital):} Combinação de criatividade e tecnologia, com foco em experiência do usuário e interfaces.
+  \item \textbf{Análise e Desenvolvimento de Sistemas:} Formação prática com ênfase em linguagens de programação e metodologias ágeis\index{Metodologias Ágeis}.
 \end{itemize}
 
-Nos últimos dois anos, houve crescimento expressivo nas matrículas dos cursos de TI. A Tabela~\ref{tab:matriculas-ti} ilustra essa evolução:
+Nos últimos dois anos, observou-se crescimento expressivo nas matrículas dos cursos de TI. A Tabela~\ref{tab:matriculas-ti} ilustra essa evolução:
 
 \begin{table}[ht]
 \centering
@@ -178,103 +266,98 @@ Análise e Desenv. de Sist. & 150 & 160 & 696 \\ \hline
 \end{tabular}
 \end{table}
 
-Comparando com outros departamentos, os cursos de TI têm se destacado como vetores de crescimento. Atualmente, sabe-se que cerca de 2.000 alunos estejam matriculados em tais cursos, somando todos os períodos.  
+Comparado a outros departamentos, os cursos de TI destacam-se como vetores de crescimento. Aproximadamente 2.000 alunos estão matriculados nesses cursos, considerando todas as modalidades.
 
-A respeito do crescimento, alguns desafios persistem:
+Quanto ao crescimento, alguns desafios persistem:
 \begin{itemize}
-  \item \textbf{Falta de Experiências Práticas Reais:} Disciplinas teóricas não suprem totalmente a necessidade de projetos de mercado.
-  \item \textbf{Adaptação a Metodologias Ágeis e Ferramentas Modernas:} Scrum, Kanban e tecnologias de ponta nem sempre são profundamente explorados.
-  \item \textbf{Conexão com a Fábrica de Software:} Emergem iniciativas como a Fábrica de Software para viabilizar maior contato com projetos reais e promover vivências práticas.
+  \item \textbf{Falta de Experiências Práticas Reais:} Disciplinas teóricas não atendem completamente à necessidade de projetos com demandas do mercado.
+  \item \textbf{Adaptação a Metodologias Ágeis}\index{Metodologias Ágeis} e Ferramentas Modernas: Scrum\index{Scrum}, Kanban\index{Kanban} e tecnologias de ponta nem sempre são explorados de forma aprofundada.
+  \item \textbf{Integração com a Fábrica de Software Acadêmica}\index{Fábrica de Software Acadêmica}: Iniciativas como a Fábrica de Software visam viabilizar maior contato com projetos reais e promover experiências práticas.
 \end{itemize}
 
 \section{Metodologia}
 \label{sec:metodologia-fundteorica}
 
-Nesta subse\c{c}\~ao, discute-se a import\^ancia de se adotar um m\'etodo cient\'ifico para o desenvolvimento e avalia\c{c}\~ao de F\'abricas de Software Acad\^emicas. 
+Nesta subseção, discute-se a importância de adotar um \textbf{método científico}\index{Método Científico} para o desenvolvimento e a avaliação das Fábricas de Software Acadêmicas\index{Fábrica de Software Acadêmica}.
 
-De acordo com \citeonline{marconi2022metodologia}:
+Conforme \citeonline{marconi2022metodologia}:
 \begin{quote}
     ``O m\'etodo \'e o conjunto das atividades sistem\'aticas e racionais que, com maior seguran\c{c}a e economia, permite alcan\c{c}ar conhecimentos v\'alidos e verdadeiros, tra\c{c}ando o caminho a ser seguido, detectando erros e auxiliando cientistas em suas decis\~oes.''
 \end{quote}
 
-Tal defini\c{c}\~ao ressalta a necessidade de procedimentos claros e fundamentados, de modo a garantir a consist\^encia e a confiabilidade das conclus\~oes, sobretudo em um contexto acad\^emico em que diferentes equipes e projetos podem coexistir. O objetivo, portanto, \'e que o m\'etodo adotado seja capaz de:
+Essa definição ressalta a necessidade de procedimentos claros e fundamentados para garantir a consistência e a confiabilidade das conclusões, especialmente em um contexto acadêmico onde diversas equipes e projetos coexistem. O método adotado visa:
 \begin{itemize}
-    \item Fornecer instrumentos para comparar a evolu\c{c}\~ao de projetos ao longo dos semestres;
-    \item Auxiliar na detec\c{c}\~ao de erros e gargalos de processos gerenciais; (ver \ref{sec:aspectos-gerenciais}) 
-    \item Orientar tomadas de decis\~ao com base em evid\^encias objetivas.
+    \item Fornecer instrumentos para comparar a evolução dos projetos ao longo dos semestres;
+    \item Auxiliar na detecção de erros e gargalos nos processos gerenciais (vide Seção~\ref{sec:aspectos-gerenciais});
+    \item Orientar a tomada de decisões com base em evidências objetivas.
 \end{itemize}
 
+A ausência de um protocolo único de registro, como \textbf{diários de bordo}\index{Diários de Bordo} e atas de reunião padronizados, dificulta a realização de uma análise consistente tanto sob a perspectiva qualitativa quanto quantitativa. Embora cada discente seja obrigado a entregar um relatório ao final do semestre\index{Relatórios}, não há obrigatoriedade quanto ao formato ou ao nível de detalhamento desses registros, comprometendo a comparação sistemática entre diferentes equipes, semestres e, inclusive, entre Fábricas de Software de instituições distintas. Ademais, as soluções desenvolvidas permanecem, em sua maioria, em caráter acadêmico, sem usuários externos ativos, o que restringe a possibilidade de avaliar a efetividade do \emph{software} em ambiente de produção real.
 
-A ausência de padronização nos procedimentos de avaliação, na elaboração de diários de bordo e na formalização de registros de reuniões dificulta a realização de uma análise consistente sob as perspectivas qualitativa e quantitativa. Embora cada discente seja obrigado a entregar um relatório ao final do semestre, não existe obrigatoriedade quanto ao formato de registro das reuniões ou ao nível de detalhe exigido desses relatórios. Desse modo, fica comprometida a comparação sistemática entre diferentes equipes e semestres em anos consecutivos ou, até mesmo, entre Fábricas de Software de diferentes instituições. Além disso, até o momento, as soluções desenvolvidas permanecem em caráter acadêmico, sem usuários externos ativos, o que reduz a possibilidade de avaliar a efetividade do \emph{software} em produção real.
-
-Outro aspecto relevante é que, embora a análise de \emph{commits} e \emph{pull requests} se concentre em dados de 2024, as observações gerais sobre a evolução dos participantes remontam ao início do projeto, em 2022. Ou seja, os \emph{insights} e práticas acumuladas ao longo desses dois anos influenciam diretamente a forma como os dados de 2024 foram interpretados, tornando a padronização metodológica ainda mais necessária para comparações válidas ao longo do tempo.
+Outro aspecto relevante refere-se à análise de \emph{commits}\index{commits} e \emph{pull requests}\index{pull requests}, que concentra dados de 2024. As observações sobre a evolução dos participantes remontam ao início do projeto, em 2022, o que reforça a necessidade de uma padronização metodológica para garantir comparações válidas ao longo do tempo.
 
 \subsection{Abordagem Qualitativa e Quantitativa}
+\index{Análise Quantitativa}\index{Análise Qualitativa}
 
-Optou-se por uma estratégia de pesquisa mista para capturar tanto elementos numéricos quanto interpretativos da dinâmica do LabTech. Os aspectos quantitativos incluem o número de matrículas, a frequência de participação e o nível de atividade nos repositórios (ex., \emph{commits}, \emph{pull requests}). Já a vertente qualitativa abrange a análise de diários de bordo, relatórios de estágio e observações in loco nas reuniões de equipe.
+Optou-se por uma estratégia de pesquisa mista para capturar tanto elementos numéricos quanto interpretativos da dinâmica do LabTech\index{LabTech}. Os aspectos quantitativos incluem o número de matrículas, a frequência de participação e a atividade nos repositórios (ex.: \emph{commits}\index{commits} e \emph{pull requests}\index{pull requests}). A vertente qualitativa compreende a análise de diários de bordo\index{Diários de Bordo}, relatórios\index{Relatórios} de estágio e observações realizadas nas reuniões de equipe.
 
 \subsubsection{Fontes de Dados}
-
 \begin{itemize}
-    \item \textbf{Diários de Bordo dos Alunos-Gerentes:} Descrevem o fluxo de trabalho, bloqueios técnicos e aspectos de comunicação em cada itera\c{c}\~{a}o (sprint).
-    \item \textbf{Relatórios Semanais/Mensais e Finais:} Elaborados pelos participantes e pelo mentor, indicando progresso, dificuldades e reflexões; todos os alunos entregam um relatório conclusivo ao fim do semestre.
-    \item \textbf{Observação Direta:} Inclui participação em reuniões, análise de \emph{issues}, \emph{commits} e \emph{pull requests}.
-    \item \textbf{Planilha de Dados dos Participantes:} Registra matrícula, curso, período, idade, est\'{a}gio ou n\~{a}o, e papel desempenhado (monitor, estagiário, participante).
+    \item \textbf{Diários de Bordo dos Alunos-Gerentes:} Registros do fluxo de trabalho, bloqueios técnicos e aspectos de comunicação em cada iteração (sprint)\index{Diários de Bordo}.
+    \item \textbf{Relatórios Semanais/Mensais e Finais:} Elaborados pelos participantes e pelo mentor, descrevendo progresso, dificuldades e reflexões\index{Relatórios}.
+    \item \textbf{Observação Direta:} Inclui participação em reuniões, análise de \emph{issues}\index{issues}, \emph{commits}\index{commits} e \emph{pull requests}\index{pull requests}.
+    \item \textbf{Planilha de Dados dos Participantes:} Contempla matrícula, curso, período, idade, estágio ou não, e papel desempenhado (monitor, estagiário ou participante).
 \end{itemize}
 
 \subsubsection{Procedimentos de Análise}
 
-Os dados foram \emph{triangulados}, cruzando informações qualitativas (diários de bordo e relatórios) com métricas quantitativas (ex., \emph{commits}, revisões de código, issues fechadas). A análise seguiu três dimensões principais:
-
+Os dados foram \emph{triangulados} ao cruzar informações qualitativas (diários de bordo\index{Diários de Bordo} e relatórios\index{Relatórios}) com métricas quantitativas (ex.: \emph{commits}\index{commits}, revisões de código, \emph{issues}\index{issues} fechadas). A análise considerou três dimensões principais:
 \begin{itemize}
   \item \textbf{Técnica:} Tecnologias adotadas, padrões de projeto e desafios de implementação.
   \item \textbf{Gerencial:} Organização do \emph{backlog}, transparência na comunicação e práticas de gestão ágil.
-  \item \textbf{Educacional:} Desenvolvimento de \emph{hard skills} (linguagens e frameworks) e \emph{soft skills} (colaboração, liderança).
+  \item \textbf{Educacional:} Desenvolvimento de \emph{hard skills}\index{hard skills} (linguagens e frameworks) e \emph{soft skills}\index{soft skills} (colaboração, liderança).
 \end{itemize}
 
 \subsection{Limitações Metodológicas}
 
-A principal limitação observada é a \textbf{falta de um protocolo único de registro}, incluindo diários de bordo e atas de reunião sistematizadas, para embasar comparações mais rigorosas. Em cada grupo, a adoção de ferramentas e processos segue preferências autônomas, o que diminui a uniformidade de dados. Além disso, não há \emph{software} em produção efetiva, dificultando a análise de métricas relacionadas à satisfação ou adoção por parte de usuários reais. Somado a isso, o intervalo de tempo (2022--2024) potencializa a necessidade de repositórios históricos padronizados para estudos longitudinais.
+A principal limitação reside na \textbf{falta de um protocolo único de registro} – incluindo diários de bordo\index{Diários de Bordo} e atas de reunião sistematizados – que compromete a realização de análises comparativas mais rigorosas. Em cada grupo, a adoção de ferramentas e processos segue preferências autônomas, reduzindo a uniformidade dos dados. Ademais, a inexistência de um \emph{software} em produção efetiva dificulta a análise de métricas relacionadas à satisfação ou à adoção pelos usuários. O intervalo de tempo (2022--2024) reforça a necessidade de repositórios históricos padronizados para estudos longitudinais.
 
-Almeja-se, portanto, o desenvolvimento de um \emph{framework} metodológico que estabeleça eixos de avaliação técnicos e comportamentais (ver Tópico~\ref{sec:trabalhos-futuros}). A partir de uma revisão de literatura já em andamento, pretende-se definir perguntas de pesquisa mais precisas para guiar a criação de instrumentos padronizados, aproveitando as experiências prévias, mas buscando maior fidedignidade e comparabilidade nos resultados futuros.
-
+A proposta é desenvolver um \textbf{\emph{framework}}\index{framework} metodológico que estabeleça eixos de avaliação técnicos e comportamentais. A partir de uma revisão de literatura em andamento, serão definidas perguntas de pesquisa mais precisas para orientar a criação de instrumentos padronizados, aproveitando experiências anteriores e assegurando maior fidedignidade e comparabilidade nos resultados.
 
 % ----------------------------------------------------------------------------
-% Topico 3
+% TÓPICO 3
 % ----------------------------------------------------------------------------
 \chapter{(Desenvolvimento) Projeto LabTech}
 \label{sec:desenvolvimento}
 
-A Fábrica de Software Acadêmica do UDF (LabTech)\index{LabTech}, mencionado em documentos da UDF como Projeto \textbf{"LabTech: Criando Soluções"}, surgiu para suprir a demanda por experiências práticas, aproximando teoria e prática e habilitando estudantes a atuarem com metodologias e ferramentas atuais. 
+A Fábrica de Software Acadêmica\index{Fábrica de Software Acadêmica} do UDF\index{UDF} (LabTech\index{LabTech}) foi idealizada para suprir a demanda por experiências práticas, integrando teoria e prática e capacitando os estudantes a atuarem com metodologias e ferramentas atuais.
 
-O projeto visa desenvolver competências técnicas, gerenciais e interpessoais necessárias ao mercado de trabalho. Algumas dessas habilidades são destacadas no relatório de 2025 sobre o futuro do trabalho realizado pelo Fórum Econômico Mundial (WEF) \cite{wef:2025}; as 10 habilidades mais mencionadas citadas por empregadores pelo mundo são: Pensamento Analítico; Resiliência, Flexibilidade e Agilidade; Liderança e Influência Social; Pensamento Criativo; Motivação e Auto Conhecimento; Alfabetização Tecnológica; Empátia e Escuta Ativa; Curiosidade e Aprendizagem ao Longo da Vida; e Gerenciamento do Talento. 
+O projeto visa desenvolver competências técnicas, gerenciais e interpessoais demandadas pelo mercado de trabalho. Algumas dessas habilidades são destacadas no relatório de 2025 sobre o futuro do trabalho, realizado pelo Fórum Econômico Mundial (WEF) \cite{wef:2025}. Entre as 10 habilidades mais mencionadas pelos empregadores globalmente estão: Pensamento Analítico; Resiliência, Flexibilidade e Agilidade; Liderança e Influência Social; Pensamento Criativo; Motivação e Autoconhecimento; Alfabetização Tecnológica; Empatia e Escuta Ativa; Curiosidade e Aprendizagem Contínua; e Gerenciamento do Talento.
 
-É importante notar que a função de Desenvolvedor de Software e Aplicações, Gerentes de Projetos, Especialistas em Big Data, Engenheiro de FinTechs, Especialistas em Inteligência Artificial e Machine Learning, Engenheiro de Dados (Data Warehousing Specialists), UI e UX Designers, Analista e Cientista de Dados, Analista de Segurança da Informação e Engenheiro DevOps estão entre as funções que mais crescem em demanda no mundo. \cite{wef:2025}
-
-Com isso em mente, no \^{a}mbito do LabTech, os papeis assumidos pelos estudantes estão relacionados a diferentes funções citadas pelo \citeonline{wef:2025}:  Desenvolvedor de Software e Aplicações, Gerentes de Projetos, Engenheiro de Dados, UI e UX Designers, Analista e Cientista de Dados, Analista de Segurança da Informação e Engenheiro DevOps.
-
+Nesse contexto, os papéis assumidos pelos estudantes no LabTech\index{LabTech} correspondem a funções tais como Desenvolvedor de Software e Aplicações, Gerente de Projetos, Engenheiro de Dados, UI/UX Designer, Analista e Cientista de Dados, Analista de Segurança da Informação e Engenheiro DevOps, conforme destacados pelo WEF \cite{wef:2025}.
 
 \section{Estrutura Organizacional e Dinâmica}
 
-As equipes de estudantes são constituídas de forma multidisciplinar, com papéis adaptáveis e reuniões periódicas para planejar e revisar as atividades em curso. Ferramentas como GitHub, Trello e Jira sustentam as cerimônias do \emph{framework} SCRUM e o controle de demandas em um quadro \emph{KANBAN}. Além disso, encontros presenciais e virtuais complementam o acompanhamento fornecido pelo professor e pelos gerentes designados, que orientam as entregas e solucionam bloqueios técnicos conforme necessário.
+As equipes são organizadas de forma multidisciplinar, com papéis adaptáveis e reuniões periódicas para planejar e revisar as atividades. Ferramentas como GitHub\index{GitHub}, Trello e Jira sustentam as cerimônias do \emph{framework}\index{framework} SCRUM\index{Scrum} e o controle de demandas por meio de quadros \emph{KANBAN}\index{Kanban}. Reuniões presenciais e virtuais complementam o acompanhamento dos professores e dos alunos-gerentes, que orientam as entregas e solucionam bloqueios técnicos conforme necessário.
 
-É importante salientar, entretanto, a inexistência de uma metodologia formal padronizada em todo o processo. Não há obrigatoriedade de diários de bordo detalhados, nem relatórios semanais ou coletas de dados frequentes e sistematizadas, de modo que cada equipe acaba decidindo por conta própria as prioridades e a forma de aplicar metodologias ágeis. Tal falta de padronização dificulta significativamente a realização de análises qualitativas e quantitativas mais consistentes. \cite{mineiro2022pesquisa} Sem artefatos comuns e parâmetros uniformes de avaliação, torna-se extremamente complexo comparar o desempenho entre equipes, alunos ou mesmo entre períodos letivos distintos. Em termos de pesquisa educacional, a ausência de um protocolo metodológico compartilhado compromete a possibilidade de triangulação de dados e de conclusões fidedignas (QUE TIPO DE ANÁLISE?) cite{dcn2016}. \cite{mattos2011etnografia}Assim, a diversidade de abordagens, embora estimule a autonomia dos participantes, restringe a validade e a confiabilidade das análises sobre os resultados alcançados.
-
+Ressalta-se, entretanto, que não há uma metodologia formal padronizada em todo o processo. Não há obrigatoriedade na elaboração de diários de bordo\index{Diários de Bordo} detalhados ou de relatórios semanais\index{Relatórios}, de modo que cada equipe define, de forma autônoma, as prioridades e a aplicação das metodologias ágeis\index{Metodologias Ágeis}. Essa falta de padronização dificulta a realização de análises qualitativas e quantitativas mais consistentes \cite{mineiro2022pesquisa}. A diversidade de abordagens, embora estimule a autonomia, restringe a validade e a confiabilidade das análises dos resultados.
 
 \section{Ferramentas e Práticas Utilizadas}
-Entre as principais ferramentas, destacam-se Git (controle de versão), Figma (prototipagem), Discord (comunicação) e metodologias ágeis como Scrum e Kanban, adaptadas às necessidade vigentes no semestre. Em alguns projetos, emprega-se Spring Boot, Flask ou React, estimulando o contato com tecnologias modernas.
+
+Entre as principais ferramentas, destacam-se Git\index{Git}, Figma, Discord, e metodologias ágeis como Scrum\index{Scrum} e Kanban\index{Kanban}, adaptadas às necessidades vigentes no semestre. Em alguns projetos, utilizam-se tecnologias como Spring Boot, Flask ou React, permitindo o contato com tecnologias modernas.
 
 \section{Perfil dos Participantes}
-O LabTech engloba alunos de diversos semestres e cursos, alguns utilizando a experiência como estágio ou monitoria, enquanto outros participam voluntariamente para aperfeiçoar habilidades práticas. Uma planilha de dados registra informações como matrícula, curso, período e participação em projetos.
 
-Utilizamos Python para processar a planilha de dados. As bibliotecas usadas incluem:
+O LabTech\index{LabTech} abrange alunos de diversos semestres e cursos, alguns utilizando a experiência como estágio ou monitoria, enquanto outros participam voluntariamente para aprimorar habilidades práticas. Uma planilha de dados registra informações como matrícula, curso, período e participação em projetos.
+
+Para o processamento dos dados, emprega-se Python\index{Python}, com bibliotecas como:
 \begin{itemize}
     \item \textbf{pandas}: para manipulação e análise de dados;
     \item \textbf{matplotlib}: para geração de gráficos;
     \item \textbf{re}: para processamento de texto e identificação de padrões.
 \end{itemize}
 
-Os gráficos gerados a seguir ilustram as características dos participantes.
+Os gráficos a seguir ilustram as características dos participantes.
 
 \begin{figure}[!htbp]
     \centering
@@ -313,19 +396,17 @@ Os gráficos gerados a seguir ilustram as características dos participantes.
 
 \section{Desafios Enfrentados e Aprendizados}
 
-Os diários de bordo e relatórios semanais evidenciaram dificuldades recorrentes na comunicação interna, na ausência de padronização nos registros e na conciliação das atividades do LabTech com a carga horária acadêmica. Em contrapartida, notou-se avanço em \emph{hard skills} (e.g. arquitetura de sistemas e programação) e \emph{soft skills} (como liderança e comunicação). 
-
-Vale ressaltar que, embora alguns alunos mostrem maior desenvoltura em comunicação e trabalho em equipe desde os semestres iniciais, não há uniformidade nesse padrão, visto que essas competências interpessoais dependem de fatores externos e trajetórias individuais. Esse cenário reforça a importância de metodologias mais sistematizadas, capazes de registrar e avaliar o progresso técnico e comportamental ao longo do semestre.
+Os diários de bordo\index{Diários de Bordo} e os relatórios\index{Relatórios} semanais evidenciaram dificuldades na comunicação interna, na ausência de padronização dos registros e na conciliação das atividades do LabTech\index{LabTech} com a carga horária acadêmica. Em contrapartida, observou-se evolução nas \emph{hard skills}\index{hard skills} (por exemplo, arquitetura de sistemas e programação) e nas \emph{soft skills}\index{soft skills} (liderança e comunicação). Nota-se, ainda, que a variabilidade no desempenho dos alunos reforça a importância de metodologias mais sistematizadas, capazes de registrar e avaliar o progresso técnico e comportamental ao longo do semestre.
 
 \section{Projetos em Desenvolvimento}
 \label{sec:projetos}
 \begin{itemize}
-  \item \textbf{Sistema de Reserva de Salas:} Auxilia no gerenciamento de espaços para aulas e eventos.
-  \item \textbf{Sistema de Eventos:} Possibilita a organização de palestras, workshops e minicursos.
+  \item \textbf{Sistema de Reserva de Salas:} Gerenciamento de espaços para aulas e eventos.
+  \item \textbf{Sistema de Eventos:} Organização de palestras, workshops e minicursos.
   \item \textbf{Sistema de Alocação de Professores:} Suporte à distribuição de docentes em disciplinas.
 \end{itemize}
 
-A arquitetura do sistema, mostrada na Figura~\ref{fig:topologia}, foi disponibilizada no ambiente acadêmico, permitindo a visualização da topologia de microsserviços, autenticação centralizada, integrações com bancos de dados e sistemas de cache.
+A arquitetura do sistema, ilustrada na Figura~\ref{fig:topologia}, foi disponibilizada no ambiente acadêmico, permitindo a visualização da topologia de microsserviços, autenticação centralizada, integrações com bancos de dados e sistemas de cache.
 
 \begin{figure}[h!]
     \centering
@@ -337,25 +418,139 @@ A arquitetura do sistema, mostrada na Figura~\ref{fig:topologia}, foi disponibil
 % ----------------------------------------------------------------------------
 % TÓPICO 4
 % ----------------------------------------------------------------------------
-
 \chapter{Resultados e Discussão}
 \label{sec:discussao-resultados}
 
-FAZER ANALISE DE PRS, COMMITS, E RELATOS DOS ALUNOS. VALE A PENA FAZER UM FORMULARIO PARA OS ALUNOS QUE PASSARAM PELO LABTECH?
-
 \section{Aspectos Técnicos}
+\index{Aspectos Técnicos}
 
-Os registros de diários de bordo indicam que a adoção de \emph{frameworks} modernos, como Spring Boot, Flask e React, contribuiu significativamente para o desenvolvimento de competências técnicas entre os participantes. No entanto, desafios como configuração de ambientes, controle de versão e integração contínua foram recorrentes, exigindo suporte contínuo do professor e dos alunos-gerentes. Ainda assim, essas dificuldades serviram como oportunidades de aprendizagem prática, fortalecendo a autonomia técnica dos estudantes.
+Os registros dos diários de bordo\index{Diários de Bordo} indicam que a adoção de \emph{frameworks}\index{framework} modernos, como Spring Boot, Flask e React, contribuiu para o aprimoramento das competências técnicas dos participantes. Desafios como configuração de ambientes, controle de versão e integração contínua foram recorrentes, exigindo suporte contínuo dos orientadores e dos alunos-gerentes. Tais dificuldades, entretanto, representaram oportunidades de aprendizagem, fortalecendo a autonomia técnica dos estudantes.
 
 \section{Aspectos Gerenciais}
 \label{sec:aspectos-gerenciais}
-A falta de papéis formais (por exemplo, \emph{Scrum Master} ou \emph{Product Owner}) demandou um grau maior de autonomia e protagonismo dos alunos-gerentes, especialmente no que diz respeito à mediação de conflitos e à organização do \emph{backlog}. Situações de falha de comunicação ocorreram, em sua maioria, quando algum membro não informava disponibilidade ou bloqueios de maneira tempestiva. Em contrapartida, reuniões semanais e revisões de código (\emph{code reviews}) mitigaram parte desses problemas, criando espaços para alinhamento e feedback. Ainda assim, a ausência de relatórios padronizados e de mecanismos claros de escalonamento de problemas dificulta a identificação precoce de gargalos gerenciais.
+\index{Aspectos Gerenciais}
+
+A ausência de papéis formais (por exemplo, \emph{Scrum Master}\index{Scrum Master} ou \emph{Product Owner}\index{Product Owner}) impôs maior autonomia aos alunos-gerentes, sobretudo na mediação de conflitos e na organização do \emph{backlog}. Problemas de comunicação ocorreram principalmente quando a indisponibilidade ou os bloqueios não eram informados de forma tempestiva. Reuniões semanais e revisões de código (\emph{code reviews}\index{code reviews}) contribuíram para mitigar esses problemas, promovendo alinhamento e feedback. Contudo, a ausência de relatórios\index{Relatórios} padronizados e de mecanismos claros de escalonamento dificultou a identificação precoce dos gargalos gerenciais.
 
 \section{Aspectos Educacionais}
+\index{Aspectos Educacionais}
 
-Do ponto de vista educacional, a experiência evidenciou a complexidade de desenvolver e avaliar \emph{soft skills}, como liderança, comunicação e trabalho em equipe. Curiosamente, alguns alunos em semestres iniciais mostraram maior responsabilidade e competência comunicativa do que certos colegas em períodos mais avançados, evidenciando que o amadurecimento dessas habilidades não se restringe à senioridade acadêmica. Os participantes relataram melhorias na autoconfiança e na capacidade de tomar decisões sob pressão, aproximando-se das exigências do mercado. 
+Do ponto de vista educacional, a experiência demonstrou a complexidade de desenvolver e avaliar \emph{soft skills}\index{soft skills}, como liderança, comunicação e trabalho em equipe. A variabilidade entre os participantes evidencia que o amadurecimento dessas competências não se restringe à senioridade acadêmica. Os participantes relataram melhorias na autoconfiança e na capacidade de tomar decisões sob pressão, aproximando a formação acadêmica das exigências do mercado. A falta de um guia estruturado para mensurar a evolução das \emph{soft skills}\index{soft skills} evidenciou a necessidade de instrumentos metodológicos padronizados para uma análise longitudinal mais precisa.
 
-Contudo, a ausência de um guia estruturado para mensurar a evolução \emph{in loco} dificulta a aferição objetiva desse progresso. Sem registros consistentes de reuniões, metas comportamentais ou feedbacks formalizados, torna-se inviável realizar uma análise longitudinal que correlacione o crescimento em \emph{soft skills} às práticas pedagógicas empregadas. Dessa forma, a experiência reforça a necessidade de instrumentos metodológicos padronizados, capazes de verificar de maneira mais abrangente e confiável o impacto educacional dessas iniciativas.
+\section{Análises Quantitativas e Resultados}
+\label{sec:analise_quantitativa}
+
+Esta seção apresenta os principais gráficos gerados a partir dos dados coletados dos repositórios do projeto, ilustrando aspectos da colaboração e da distribuição das contribuições ao longo do tempo.
+
+\subsection{Heatmap de Atividade}
+\index{Heatmap}
+A Figura~\ref{fig:heatmap_activity} exibe um \emph{heatmap}\index{Heatmap} relacionando o dia da semana (eixo vertical) com a hora do dia (eixo horizontal), onde a intensidade de cor representa o número de contribuições (\emph{commits}\index{commits}, \emph{issues}\index{issues}, \emph{pull requests}\index{pull requests}, comentários) em cada intervalo.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graficos/github/activity-heatmap.png}
+    \caption{Heatmap (Todas as Contribuições por Dia/Hora).}
+    \label{fig:heatmap_activity}
+\end{figure}
+
+Observa-se concentração de atividade em determinados horários noturnos e no início da semana, possivelmente decorrente da rotina acadêmica ou profissional dos participantes.
+
+\subsection{Burndown Chart}
+\index{Burndown Chart}
+A Figura~\ref{fig:burndown_chart} apresenta um gráfico de \textbf{burndown chart}\index{Burndown Chart}, evidenciando a quantidade de \emph{issues}\index{issues} abertas ao longo do tempo. Cada \emph{issue} aberta soma +1 no dia de criação, enquanto cada \emph{issue} fechada subtrai 1 no dia de fechamento.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graficos/github/burndown-chart.png}
+    \caption{Burndown Chart: \emph{Issues} Pendentes ao Longo do Tempo.}
+    \label{fig:burndown_chart}
+\end{figure}
+
+Verificam-se períodos de estabilidade intercalados por picos que podem coincidir com o início de novos \emph{sprints}\index{sprint} ou entregas significativas.
+
+\subsection{Rede de Colaboração}
+\index{Rede de Colaboração}
+As Figuras~\ref{fig:network_all_contribs} e \ref{fig:network_no_isolated} ilustram a \textbf{rede de colaboração}\index{Rede de Colaboração} entre os participantes, em que cada nó representa um membro e cada aresta, a co-participação em repositórios ou \emph{issues}\index{issues}.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.65\textwidth]{graficos/github/collaboration-network.png}
+    \caption{Rede de Colaboração (Todas as Contribuições).}
+    \label{fig:network_all_contribs}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.65\textwidth]{graficos/github/collaboration-network-no-isolated.png}
+    \caption{Rede de Colaboração (Excluindo Nós Isolados).}
+    \label{fig:network_no_isolated}
+\end{figure}
+
+Na primeira visualização, observa-se a presença de nós isolados. Na segunda, estes foram removidos, ressaltando o núcleo colaborativo.
+
+\subsection{Distribuição de Commits}
+\index{Distribuição de Commits}
+A distribuição de \emph{commits}\index{commits} por membro foi analisada por meio de um \emph{box plot}\index{Box Plot} (Figura~\ref{fig:commit_boxplot}) e de um histograma (Figura~\ref{fig:commit_histogram}). Enquanto o \emph{box plot}\index{Box Plot} resume a variação (mediana, quartis e outliers), o histograma apresenta a frequência de faixas de \emph{commits}\index{commits}.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.55\textwidth]{graficos/github/commit-boxplot.png}
+    \caption{Distribuição de Commits (Box Plot).}
+    \label{fig:commit_boxplot}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{graficos/github/commit-frequency.png}
+    \caption{Distribuição de Frequência dos Commits.}
+    \label{fig:commit_histogram}
+\end{figure}
+
+Observa-se que alguns participantes realizam um elevado número de \emph{commits}\index{commits}, enquanto outros apresentam atividade mínima, sugerindo a necessidade de estratégias para balancear as contribuições.
+
+\subsection{Contribuições ao Longo do Tempo}
+\index{Contribuições ao Longo do Tempo}
+As Figuras~\ref{fig:contrib_time_all} e \ref{fig:contrib_time_augdec} mostram a evolução das contribuições (\emph{issues}\index{issues}, \emph{pull requests}\index{pull requests}, \emph{commits}\index{commits} etc.) em diferentes repositórios ao longo do tempo. Na primeira figura, considera-se todo o período analisado; na segunda, filtra-se o intervalo entre agosto e dezembro de 2024.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graficos/github/contributions-per-repo.png}
+    \caption{Contribuições por Repositório ao Longo do Tempo.}
+    \label{fig:contrib_time_all}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{graficos/github/contributions-per-member.png}
+    \caption{Contribuições por Membro por Repositório (Ago-Dez 2024).}
+    \label{fig:contrib_time_augdec}
+\end{figure}
+
+Alguns repositórios apresentam picos concentrados de atividade, enquanto outros mantêm uma frequência mais uniforme.
+
+\subsection{Contribuições por Membro e por Repositório}
+\index{Contribuições por Membro}
+Dois gráficos de barras (Figuras~\ref{fig:contrib_members_new_estab} e \ref{fig:contrib_repo_stacked}) mostram, respectivamente, as contribuições por membro (distinguindo entre usuários novos e estabelecidos) e a distribuição dos tipos de contribuição (\emph{issues}\index{issues}, \emph{pull requests}\index{pull requests}, \emph{commits}\index{commits}, comentários) por repositório.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{graficos/github/contributions-per-member.png}
+    \caption{Contribuições por Membro -- Novos vs. Estabelecidos.}
+    \label{fig:contrib_members_new_estab}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{graficos/github/contributions-per-repo.png}
+    \caption{Contribuições por Repositório (Empilhado).}
+    \label{fig:contrib_repo_stacked}
+\end{figure}
+
+O primeiro gráfico evidencia que alguns membros estabelecidos concentram maior volume de contribuições, enquanto o segundo sugere que a maioria dos repositórios apresenta uma proporção significativa de \emph{issues}\index{issues}, indicando uma demanda por melhorias ou correções.
+
+\subsection{Discussão Geral}
+\index{Discussão}
+De forma conjunta, os gráficos fornecem uma visão abrangente do comportamento da equipe e da dinâmica de colaboração. Picos de atividade, acúmulo de \emph{issues}\index{issues} e a atuação destacada de certos membros evidenciam a necessidade de melhorias na distribuição de tarefas, no planejamento de \emph{sprints}\index{sprint} e na padronização dos registros (por exemplo, diários de bordo\index{Diários de Bordo}), a fim de promover maior equilíbrio e engajamento dos participantes.
 
 % ----------------------------------------------------------------------------
 % TÓPICO 5
@@ -364,71 +559,111 @@ Contudo, a ausência de um guia estruturado para mensurar a evolução \emph{in 
 \label{sec:conc-trabalhos-futuros}
 
 \section{Conclus{\~a}o}
-Este artigo apresentou um relato de experiência acerca da Fábrica de Software Acadêmica no UDF, contextualizando a instituição, os cursos de TI e as demandas que justificam a criação desse ambiente de aprendizagem prática. Os resultados evidenciam ganhos em competências técnicas e interpessoais, aproximando a formação acadêmica das exigências reais do mercado de trabalho.
+\index{Conclusão}
+O artigo apresentou um relato de experiência acerca da Fábrica de Software Acadêmica\index{Fábrica de Software Acadêmica} no UDF\index{UDF}, contextualizando a instituição, os cursos de TI e as demandas que justificam a criação desse ambiente de aprendizagem prática. Os resultados demonstram ganhos em competências técnicas e interpessoais, aproximando a formação acadêmica das exigências do mercado de trabalho.
 
-A falta de um guia estruturado para diários de bordo foi identificada como limitação metodológica, direcionando propostas de trabalhos futuros que visam padronizar registros, comparar resultados e expandir o programa para novos projetos e parcerias. Espera-se que tais esforços fortaleçam ainda mais a formação de profissionais qualificados para o setor de TI no Distrito Federal.
-
-Diante dos desafios evidenciados, propõe-se, em trabalhos futuros, a realização de uma revisão sistemática de literatura, bem como o delineamento de um framework metodológico que fortaleça a padronização e a comparabilidade dos resultados na Fábrica de Software Acadêmica.
-
+A ausência de um guia estruturado para diários de bordo\index{Diários de Bordo} foi identificada como limitação metodológica, direcionando propostas de trabalhos futuros voltados à padronização dos registros, à comparação dos resultados e à expansão do programa para novos projetos e parcerias. Espera-se que tais esforços contribuam para a formação de profissionais de TI cada vez mais qualificados.
 
 \section{Trabalhos Futuros}
 \label{sec:trabalhos-futuros}
+\index{Trabalhos Futuros}
 
 \subsection{Revis\~ao Sistem\'atica de Literatura (2024--2025)}
-O primeiro passo para consolidar as melhorias no modelo adotado pelo UDF consiste em realizar um mapeamento de outras F\'abricas de Software Acad\^emicas, identificando pr\'aticas bem-sucedidas, m\'etricas de avalia\c{c}\~ao e lacunas no estado da arte. A partir desse panorama, pretende-se comparar metodologias e extrair subs\'idios para a elabora\c{c}\~ao de um processo mais robusto e alinhado \`as demandas institucionais.
+\index{Revisão Sistemática de Literatura}
+Inicialmente, pretende-se realizar um mapeamento de outras Fábricas de Software Acadêmicas\index{Fábrica de Software Acadêmica}, identificando práticas bem-sucedidas, métricas de avaliação e lacunas na literatura. A partir desse levantamento, serão comparadas metodologias e extraídos subsídios para a elaboração de um processo mais robusto e alinhado às demandas institucionais.
 
 \subsection{Proposta de Metodologia Pr\'opria}
-Para garantir que o arcabou\c{c}o metodol\'ogico proposto seja, de fato, \emph{replic\'avel} e \emph{verific\'avel} em diferentes contextos de F\'abrica de Software Acad\^emica, fundamentamo-nos em pressupostos de sistematiza\c{c}\~ao cient\'ifica. Nesse sentido, vale salientar a perspectiva de \citeonline[p.~19]{bunge1997epistemologia}, para quem:
+\index{Proposta de Metodologia}
+Para assegurar a replicabilidade e a verificabilidade do arcabouço metodológico em diferentes contextos, fundamenta-se a proposta em pressupostos de sistematização científica. Conforme \citeonline[p.~19]{bunge1997epistemologia}:
 \begin{quote}
     ``M\'etodo \'e um procedimento regular, expl\'icito e pass\'ivel de ser repetido para conseguir-se alguma coisa, seja material ou conceitual.''
 \end{quote}
 
-\noindent Portanto, essa proposta busca delinear um conjunto de processos que:
+Dessa forma, a proposta objetiva delinear processos que:
 \begin{enumerate}
-    \item Sejam descritos de forma clara e detalhada, facilitando sua reprodu\c{c}\~ao por diferentes equipes e em diferentes semestres;
-    \item Permitam o monitoramento e registro sistem\'atico de atividades, resultados e reflex\~oes, possibilitando a an\'alise comparativa entre projetos e per\'iodos distintos;
-    \item Forne\c{c}am bases para a mensura\c{c}\~ao de indicadores de sucesso, considerando tanto aspectos t\'ecnicos (ex.: produtividade, qualidade de c\'odigo) quanto aspectos educacionais (ex.: desenvolvimento de \emph{soft skills} e \emph{hard skills}).
+    \item Sejam descritos de forma clara e detalhada, facilitando a sua reprodução por diferentes equipes e em distintos semestres;
+    \item Permitam o monitoramento e o registro sistemático das atividades, possibilitando análises comparativas entre projetos e períodos;
+    \item Forneçam bases para a mensuração de indicadores de sucesso, considerando aspectos técnicos (por exemplo, produtividade, qualidade do código) e educacionais (desenvolvimento de \emph{hard skills}\index{hard skills} e \emph{soft skills}\index{soft skills}).
 \end{enumerate}
 
-Como se pode notar, a id\'eia \'e estabelecer uma ponte entre a fundamenta\c{c}\~ao te\'orica apresentada e a pr\'atica, assegurando que a execu\c{c}\~ao do projeto siga padr\~oes cientificamente reconhecidos. 
-
-Com base nos \emph{insights} obtidos, ser\'a estruturado um projeto de pesquisa em conson\^ancia com o que destaca \citeonline{matias2016manual}:
+A ideia é estabelecer uma ponte entre a fundamentação teórica e a prática, assegurando que a execução do projeto siga padrões cientificamente reconhecidos. Com base nos \emph{insights}\index{framework} obtidos, será estruturado um projeto de pesquisa em consonância com \citeonline{matias2016manual}:
 \begin{quote}
-    ``O planejamento de pesquisa \'e constitu\'ido por quatro grandes momentos ou grupos de a\c{c}\~ao: prepara\c{c}\~ao da pesquisa, fases da pesquisa, execu\c{c}\~ao da pesquisa e relat\'orio. A estrutura\c{c}\~ao de um projeto de pesquisa \'e uma a\c{c}\~ao t\'ipica da etapa de prepara\c{c}\~ao.''
+    ``O planejamento de pesquisa é constituído por quatro grandes momentos ou grupos de ação: preparação da pesquisa, fases da pesquisa, execução da pesquisa e relatório. A estruturação de um projeto de pesquisa é uma ação típica da etapa de preparação.''
 \end{quote}
 
-Nesse sentido, busca-se formalizar um \textbf{\emph{framework}} de mentoria e processos, contemplando:
-
+Nesse sentido, busca-se formalizar um \textbf{\emph{framework} de mentoria e processos}\index{framework}, que contemple:
 \begin{itemize}
-    \item \textbf{Guia Estruturado de Di\'arios de Bordo:} Defini\c{c}\~ao de eixos de avalia\c{c}\~ao, periodicidade e formato, permitindo maior uniformidade na coleta de dados e acompanhamento do progresso individual e coletivo.
-    \item \textbf{Padroniza\c{c}\~ao de Relat\'orios:} Cria\c{c}\~ao de \emph{templates} que re\'unam indicadores de progresso, bloqueios e retrospectivas, contribuindo para compara\c{c}\~oes sistem\'aticas ao longo do tempo e entre diferentes equipes.
-    \item \textbf{An\'alise Integrada de Reposit\'orios:} Proje\c{c}\~ao de um \emph{software} ou \emph{pipeline} que se conecte ao GitHub para extrair m\'etricas de \emph{pull requests}, \emph{issues}, revis\~oes de c\'odigo e coment\'arios, possibilitando uma avalia\c{c}\~ao quantitativa mais consistente. Essa ferramenta dever\'a permitir cruzar dados t\'ecnicos (ex.: frequ\^encia de \emph{commits}, tempo de revis\~ao) com aspectos educacionais (ex.: atividade colaborativa, n\'ivel de engajamento).
+    \item \textbf{Guia Estruturado de Diários de Bordo:} Definição de eixos de avaliação, periodicidade e formato, permitindo maior uniformidade na coleta dos dados e no acompanhamento do progresso.
+    \item \textbf{Padronização de Relatórios:} Criação de \emph{templates} que reúnam indicadores de progresso, bloqueios e retrospectivas, facilitando análises sistemáticas ao longo do tempo e entre diferentes equipes.
+    \item \textbf{Análise Integrada de Repositórios:} Desenvolvimento de um \emph{pipeline} que se conecte ao GitHub\index{GitHub} para extrair métricas (como \emph{pull requests}\index{pull requests}, \emph{issues}\index{issues}, revisões de código e comentários), possibilitando uma avaliação quantitativa mais robusta e o cruzamento desses dados com aspectos educacionais (por exemplo, engajamento e colaboração).
 \end{itemize}
 
-A experi\^encia descrita ao longo deste trabalho evidenciou a import\^ancia de se adotar uma abordagem metodol\'ogica bem estruturada para o desenvolvimento e a avalia\c{c}\~ao de F\'abricas de Software Acad\^emicas. No entanto, o presente estudo ainda n\~ao consolida um m\'etodo fechado; em vez disso, ele lan\c{c}a as bases para que, em pesquisas futuras, possa ser concebida uma proposta metodol\'ogica robusta. Tal proposta dever\'a ser embasada em uma revis\~ao sistem\'atica de literatura, de modo a garantir n\~ao apenas a replicabilidade e a comparabilidade dos resultados, mas tamb\'em a melhoria cont\'inua das pr\'aticas adotadas. Dessa forma, espera-se que investiga\c{c}\~oes subsequentes forne\c{c}am um arcabou\c{c}o te\'orico e pr\'atico mais consistente, favorecendo tanto a padroniza\c{c}\~ao dos processos quanto a produ\c{c}\~ao de evid\^encias mais robustas no contexto acad\^emico.
-
-
-
+A experiência descrita evidencia a importância de uma abordagem metodológica bem estruturada para o desenvolvimento e a avaliação das Fábricas de Software Acadêmicas\index{Fábrica de Software Acadêmica}. Embora o presente estudo não apresente um método fechado, ele estabelece as bases para a concepção, em pesquisas futuras, de uma proposta metodológica robusta que, além de garantir a replicabilidade e a comparabilidade dos resultados, contribua para o aprimoramento contínuo das práticas adotadas.
 
 \subsection{Perguntas de Pesquisa}
+\index{Perguntas de Pesquisa}
 
-As questões a seguir servem como \emph{guia inicial}, fundamentado na experiência atual do LabTech, mas serão refinadas após a revisão sistemática de literatura. Dessa forma, evitamos ignorar as vivências empíricas acumuladas até o momento, ao mesmo tempo em que asseguramos uma base teórica mais sólida no delineamento final:
-
+As questões a seguir servem como guia inicial e serão refinadas após a revisão sistemática de literatura\index{Revisão Sistemática de Literatura}, de forma a integrar as experiências empíricas já acumuladas e a fundamentação teórica:
 \begin{itemize}
-    \item Como mensurar objetivamente o impacto na formação de \emph{hard} e \emph{soft skills} em uma Fábrica de Software Acadêmica?
-    \item Que estratégias de mentoria elevam o engajamento e a autonomia dos estudantes?
-    \item Quais métricas de produtividade e qualidade são mais apropriadas em um contexto acadêmico de desenvolvimento de software?
-    \item De que forma a adoção de ferramentas integradas aos repositórios (ex.: GitHub) pode potencializar a análise comparativa entre equipes e semestres?
+    \item Como mensurar de forma objetiva o impacto na formação de \emph{hard skills}\index{hard skills} e \emph{soft skills}\index{soft skills} em uma Fábrica de Software Acadêmica\index{Fábrica de Software Acadêmica}?
+    \item Quais estratégias de mentoria promovem maior engajamento e autonomia dos estudantes?
+    \item Quais métricas de produtividade e qualidade são mais adequadas para um contexto acadêmico de desenvolvimento de software?
+    \item De que forma a integração de ferramentas aos repositórios (ex.: GitHub\index{GitHub}) pode potencializar a análise comparativa entre equipes e semestres?
 \end{itemize}
 
-\noindent Essas indagações inauguram o processo de \emph{planejamento da pesquisa}, orientando a elaboração de protocolos que permitam avaliar e comparar equipes em diferentes ciclos letivos, bem como sustentar investigações futuras no campo de Fábricas de Software Acadêmicas.
+\subsection{Expansão do Programa}
+\index{Expansão do Programa}
+Previsivelmente, o programa deverá ser ampliado para abranger outras áreas e estabelecer parcerias externas que viabilizem a disponibilização de soluções para usuários reais. Também se planeja aprofundar a integração entre \emph{backend}, \emph{frontend} e ciência de dados, bem como a criação de novos módulos de extensão. Nesse contexto, o esforço de pesquisa e desenvolvimento visa solidificar a Fábrica de Software como um ambiente de inovação e colaboração, fortalecendo a posição do UDF\index{UDF} no ecossistema de TI.
 
-\section{Expansão do Programa}
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
 
-Por fim, prevê-se a ampliação dos projetos para abranger outras áreas, bem como o estabelecimento de parcerias externas que viabilizem a disponibilização de soluções a usuários reais. Também se planeja aprofundar a integração entre \emph{backend}, \emph{frontend} e ciência de dados, além da possível criação de novos módulos de extensão. Nesse contexto, o esforço de \emph{pesquisa e desenvolvimento} contribuirá para solidificar a Fábrica de Software como um ambiente de inovação e colaboração, fortalecendo a posição do UDF no ecossistema de TI em Brasília.
-
-
-
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
 \bibliography{sbc-template}
+
+% ----------------------------------------------------------
+% Glossário
+% ----------------------------------------------------------
+%
+% Consulte o manual da classe abntex2 para orientações sobre o glossário.
+%
+%\glossary
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices
+% ---
+\begin{apendicesenv}
+
+% Imprime uma página indicando o início dos apêndices
+\partapendices
+% ----------------------------------------------------------
+\chapter{Código fonte para extração de dados}
+% ----------------------------------------------------------
+
+\lipsum[50]
+
+% ----------------------------------------------------------
+\chapter{Código fonte para geração de gráficos}
+% ----------------------------------------------------------
+\lipsum[55-57]
+
+\end{apendicesenv}
+% ---
+
+%---------------------------------------------------------------------
+% INDICE REMISSIVO
+%---------------------------------------------------------------------
+
+\phantompart
+
+\printindex
 
 \end{document}
