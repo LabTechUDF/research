@@ -7,12 +7,21 @@ Bem-vindo ao repositório **Research**! Este é um projeto privado focado em pes
 ### Pastas e Arquivos
 
 - **📔 nossa_experiência_diario_de_bordo/**  
-  Contém arquivos que documentam nosso diário de bordo, registrando a experiência prática e as observações feitas durante o desenvolvimento da pesquisa.  
+  Contém arquivos que documentam nosso diário de bordo, registrando a experiência prática e as observações feitas durante o desenvolvimento da pesquisa.
+
   - **Objetivo:** Documentar o dia a dia da equipe, desafios enfrentados e soluções encontradas.
 
-- **📚 revisao_bibliografica_fabricas_de_software/**  
-  Contém arquivos e documentos relacionados à revisão bibliográfica sobre fábricas de software, com base em fontes acadêmicas e artigos científicos.  
+- **📚 revisao_sistematica_de_literatura/**  
+  Contém arquivos e documentos relacionados à revisão sistemática de literatura sobre fábricas de software, com base em fontes acadêmicas e artigos científicos.
+
   - **Objetivo:** Compilar e sintetizar a literatura existente sobre o tema, abordando diferentes abordagens, práticas e estudos de caso.
+
+- **📁 TCC/**  
+  Contém arquivos relacionados ao Trabalho de Conclusão de Curso (TCC), com foco em práticas reais e dinâmicas operacionais do LabTech.
+  - **Objetivo:**
+    - Um edital atualizado, que contemple as práticas reais e a dinâmica operacional do LabTech.
+    - Um modelo padronizado de diário de bordo para os alunos-gerentes, contendo 10 entradas correspondentes às reuniões obrigatórias, que possibilite o registro sistemático das atividades.
+    - Uma lista de tipos de atividades com pontuações associadas, permitindo uma avaliação quantitativa da participação dos alunos, condicionando a obtenção do certificado e/ou estágio obrigatório ao alcance de um número mínimo de pontos.
 
 ## 🎯 Objetivo do Projeto
 
@@ -26,6 +35,4 @@ Este repositório é privado e, atualmente, destinado ao uso exclusivo da equipe
 2. 📝 Abra um _pull request_ detalhando as mudanças propostas.
 3. ⏳ Aguarde a revisão e o feedback da equipe de manutenção do repositório.
 
-
 > ⚠️ **Nota:** Este projeto é privado, e todas as informações nele contidas são confidenciais e de uso exclusivo dos membros autorizados.
-

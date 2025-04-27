@@ -1,5 +1,5 @@
-- [ ] Adicionar artigos de revisão bibliográfica no fichamento
-- [ ] Começar a filtrar e renomear os artigos atuais
-- [ ] Adicionar artigos filtrados ao fichamento
-- [ ] Adicionar artigos de revisão bibliográfica ao fichamento
-- [ ] Cefinir objetivo geral e específicos
+- [ ] Adicionar artigos de revisão sistemática de literatura no fichamento;
+- [ ] Começar a filtrar e renomear os artigos atuais;
+- [x] Adicionar artigos filtrados ao fichamento da experiência/diário de bordo;
+- [x] Definir objetivo geral e específicos;
+- [x] Finalizar Proposta PIBIT (dashboard);

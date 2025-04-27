@@ -1,0 +1,4 @@
+- **Objetivo:**
+  - Um edital atualizado, que contemple as práticas reais e a dinâmica operacional do LabTech.
+  - Um modelo padronizado de diário de bordo para os alunos-gerentes, contendo 10 entradas correspondentes às reuniões obrigatórias, que possibilite o registro sistemático das atividades.
+  - Uma lista de tipos de atividades com pontuações associadas, permitindo uma avaliação quantitativa da participação dos alunos, condicionando a obtenção do certificado e/ou estágio obrigatório ao alcance de um número mínimo de pontos.
