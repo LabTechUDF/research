@@ -1,0 +1,51 @@
+\documentclass[oneside]{estilo}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{abntex2cite}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=black,
+    urlcolor=blue,
+    pdftitle={Pipeline RAG para o SEEU},
+    pdfauthor={Gabriel Oliveira Faria, Pedro Samuel, Zandor Duarte},
+}
+
+\usepackage[a4paper, top=3cm, bottom=2cm, left=3cm, right=2cm]{geometry}
+\setlength{\parindent}{1.5cm}
+\setlength{\parskip}{0.2cm}
+\frenchspacing
+
+\begin{document}
+
+\pretextual
+\include{01-elementos-pre-textuais/capa}
+\include{01-elementos-pre-textuais/folhaRosto}
+\include{01-elementos-pre-textuais/folhaAprovacao}
+\include{01-elementos-pre-textuais/dedicatoria}
+\include{01-elementos-pre-textuais/agradecimentos}
+\include{01-elementos-pre-textuais/epigrafe}
+\include{01-elementos-pre-textuais/resumoPt}
+\include{01-elementos-pre-textuais/resumoEn}
+\sumario
+
+\textual
+\include{02-elementos-textuais/introducao}
+\include{02-elementos-textuais/fundamentacao}
+\include{02-elementos-textuais/tecnologias}
+\include{02-elementos-textuais/metodologia}
+\include{02-elementos-textuais/resultados}
+
+\postextual
+\bibliography{referencias}
+
+\end{document}
