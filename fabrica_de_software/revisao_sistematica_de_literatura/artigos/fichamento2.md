@@ -6,6 +6,10 @@ Pesquisa feita através do Google Scholar
 
 ![pesquisa avançada](./pesquisa-avancada.png)
 
+![como fazer fichamento](./fichamento-como-fazer.jpg)
+
+![tipos de fichamento](./tipos-de-fichamento.jpeg)
+
 #### Resultado
 
 Para este termo acima de pesquisa foram encontrados 644 artigos.
