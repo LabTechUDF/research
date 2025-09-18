@@ -160,7 +160,7 @@ Experi{\^e}ncias com \textbf{ETL} a partir da API do GitHub mostram a constru{\c
 
 \subsection{Síntese de KPIs a partir da literatura}
 
-A Tabela~\ref{tab:kpis-literatura} resume \textbf{KPIs} alinhados aos objetivos deste estudo (dimensões técnicas e colaborativas) e destaca indicadores derivados dos \textbf{Apêndices A e B} (marcados como “derivado dos Apêndices”), todos operacionalizáveis com dados da API do GitHub.
+A literatura sobre \textbf{co-desenvolvimento} acadêmico-industrial \cite{jarvela2018collaboration,bjerregaard2021lessons} enfatiza a importância de métricas que capturem não apenas progresso técnico, mas também \textbf{dinâmicas de colaboração} e \textbf{coordenação temporal} \cite{franssen2019cogs}. Em contextos acadêmicos, isto se traduz na necessidade de indicadores que reflitam tanto aprendizagem individual quanto formação de competências colaborativas. A Tabela~\ref{tab:kpis-literatura} resume \textbf{KPIs} alinhados aos objetivos deste estudo (dimensões técnicas e colaborativas) e destaca indicadores derivados dos \textbf{Apêndices A e B} (marcados como "derivado dos Apêndices"), todos operacionalizáveis com dados da API do GitHub.
 
 \begin{table}[htbp]
 \centering
@@ -207,7 +207,21 @@ Adota-se uma arquitetura em camadas para o pipeline de dados, com três \emph{ti
     \item \textbf{Gold (métricas/KPIs)}: camadas analíticas agregadas e prontas para o \emph{dashboard} (p.\,ex., throughput de \emph{issues}, \emph{lead time} de PR, \emph{code churn} semanal, participação em \emph{reviews}).
 \end{itemize}
 
-\noindent Esse desenho atende a (i) \textbf{reprodutibilidade e auditoria} (linhagem clara desde a origem) e (ii) \textbf{abertura à colaboração}. Sob \textbf{licença copyleft (GPL3)}, outras Fábricas de Software podem reutilizar o pipeline e, sobretudo, \emph{consumir diretamente as camadas Bronze/Silver}. Ao manter nessas camadas dados \emph{mais crus e menos cruzados}, abrimos espaço para: (1) \textbf{análises avançadas e multi-relacionadas} pela comunidade (grafos autor~$\leftrightarrow$~revisor, centralidades, comunidades) sem engessar o modelo analítico do Gold; (2) \textbf{adaptações locais} (novas métricas, janelas, segmentações) com compatibilidade; (3) \textbf{transparência} dos KPIs, já que qualquer interessado pode recomputá-los a partir do Silver.
+\noindent Esse desenho atende a (i) \textbf{reprodutibilidade e auditoria} (linhagem clara desde a origem) e (ii) \textbf{abertura à colaboração}. Sob \textbf{licença copyleft (GPL3)}, outras Fábricas de Software podem reutilizar o pipeline e, sobretudo, \emph{consumir diretamente as camadas Bronze/Silver}. 
+
+\textbf{Filosofia open source e democratização.} A arquitetura proposta busca \textbf{democratizar} o acesso a analytics avançados em contextos acadêmicos, removendo barreiras técnicas e financeiras. Diferentemente de soluções comerciais, a abordagem \textbf{GitHub Actions + Firebase Hosting} elimina a necessidade de infraestrutura própria, permitindo que qualquer fábrica acadêmica implemente o sistema com recursos mínimos. A estratégia de \textbf{três camadas} preserva flexibilidade: (1) \textbf{Bronze/Silver abertas} para análises avançadas e multi-relacionadas pela comunidade (grafos autor~$\leftrightarrow$~revisor, centralidades, comunidades) sem engessar o modelo analítico; (2) \textbf{adaptações locais} (novas métricas, janelas, segmentações) mantendo compatibilidade; (3) \textbf{transparência e reprodutibilidade} completas, já que qualquer interessado pode recomputar os KPIs do Gold a partir do Silver, auditando e validando os resultados.
+
+\subsection{Implementação atual: métricas e visualizações}
+
+O \textbf{protótipo atual} já implementa um conjunto abrangente de métricas, organizadas em \textbf{20 visualizações} que cobrem as dimensões técnicas, colaborativas e comportamentais identificadas na literatura \cite{software2022metrics,gitmetrics2021students}:
+
+\textbf{Métricas técnicas:} commits por usuário/repositório/tempo; \textit{issues} criadas/atribuídas/fechadas; \textit{PRs} abertos/revisados; \textit{cycle time} para \textit{issues}/\textit{PRs}; \textit{burndown}; \textit{code churn} e frequência de commits.
+
+\textbf{Métricas colaborativas:} rede de colaboração (com e sem nós isolados); \textit{cross-collaboration} entre repositórios; participação em \textit{reviews}/comentários; centralidade e identificação de papéis (\textit{integrador} vs. \textit{especialista}).
+
+\textbf{Métricas comportamentais:} \textit{activity heatmaps} (padrões temporais dia/hora); \textit{maturity score} baseado em idade de conta, repositórios públicos e seguidores; perfil de membro (novo vs. estabelecido).
+
+Esta implementação já demonstra a viabilidade técnica da \textbf{Arquitetura Medalhão} proposta, com coleta automatizada via API do GitHub, processamento em camadas Bronze→Silver→Gold, e geração de visualizações analíticas que suportam tanto governança pedagógica quanto pesquisa avançada.
 
 \subsection{Achados qualitativos (Apêndices A e B) e implicações para KPIs}
 Os \textbf{Apêndices A e B} registram evidências úteis para projetar e interpretar os indicadores:
@@ -259,6 +273,55 @@ Anonimização de participantes (hash de e-mails/identificadores). Dados usados 
 Entrevistas/observações mediante consentimento e anonimização; relatos organizados como \textbf{Apêndice A} (LAPPIS) e \textbf{Apêndice B} (LABTECH). Integração com os dados quantitativos em duas frentes: (i) hipóteses/leituras para séries (aceitar \emph{ramp-up} inicial); (ii) consultas sobre o \emph{Silver} (grafos autor~$\leftrightarrow$~revisor, inclinação semanal, \emph{clones}). Processamento na arquitetura medalhão com publicação \textbf{semanal}.
 
 % ----------------------------------------------------------
+% ARQUITETURA E IMPLEMENTAÇÃO
+% ----------------------------------------------------------
+\section{Arquitetura e Implementação}
+
+A solução proposta implementa uma \textbf{arquitetura serverless} baseada em GitHub Actions, Firebase Hosting e React/D3.js, que elimina a necessidade de infraestrutura própria e democratiza o acesso a analytics avançados para fábricas acadêmicas.
+
+\subsection{Topologia da solução}
+A arquitetura (Figura~\ref{fig:arquitetura-geral}) organiza-se em quatro camadas principais:
+\begin{itemize}
+    \item \textbf{Stakeholders}: docentes, estudantes e pesquisadores acessam via web
+    \item \textbf{Frontend}: aplicação React/D3.js servida via Firebase Hosting  
+    \item \textbf{Processamento}: GitHub Actions executam ETL diário de forma automatizada
+    \item \textbf{Armazenamento}: dados organizados em Bronze/Silver/Gold no próprio repositório
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{arquitetura-geral.png}
+\caption{Arquitetura geral da solução serverless integrando GitHub Actions, Firebase Hosting e React/D3.js}
+\label{fig:arquitetura-geral}
+\end{figure}
+
+\subsection{Fluxo ETL e transformação de dados}
+O processo ETL (Figura~\ref{fig:sequencia-etl}) opera em quatro fases principais:
+\begin{enumerate}
+    \item \textbf{Extração}: coleta via GitHub API com rate limiting e cache inteligente
+    \item \textbf{Transformação Bronze→Silver}: normalização em modelos dim/fact  
+    \item \textbf{Agregação Silver→Gold}: cálculo de KPIs e métricas derivadas
+    \item \textbf{Consumo}: dashboard acessa dados via GitHub API, pesquisadores têm acesso direto
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{sequencia_etl.png}
+\caption{Diagrama de sequência do processo ETL automatizado via GitHub Actions}
+\label{fig:sequencia-etl}
+\end{figure}
+
+\subsection{Pipeline de dados (Arquitetura Medalhão)}
+A Figura~\ref{fig:dag-medalhao} ilustra o fluxo completo de dados da arquitetura medalhão implementada, desde as fontes GitHub API até as visualizações finais, passando pelas transformações Bronze→Silver→Gold.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{dag-medalhao.png}
+\caption{DAG da Arquitetura Medalhão: fluxo Bronze→Silver→Gold com todas as transformações de dados}
+\label{fig:dag-medalhao}
+\end{figure}
+
+% ----------------------------------------------------------
 % METODOLOGIA (versão final, iterativa e alinhada à medalhão)
 % ----------------------------------------------------------
 \section{Metodologia}
@@ -298,6 +361,53 @@ O conjunto parte dos eixos: \emph{atividade de código}, \emph{fluxo de mudança
 \subsection{Aspectos Éticos}
 Anonimização de identificadores pessoais, uso exclusivo para pesquisa e melhoria de processos e guarda de linhagem/auditoria para reprodutibilidade. Evidências qualitativas registradas nos \textbf{Apêndices A e B}.
 
+
+% ----------------------------------------------------------
+% RESULTADOS
+% ----------------------------------------------------------
+\section{Resultados}
+
+\subsection{KPIs implementados e visualizações}
+
+O protótipo atual implementa \textbf{20 visualizações} organizadas nas seguintes categorias:
+
+\textbf{Métricas de throughput e atividade:}
+\begin{itemize}
+    \item Contribuições por membro e por repositório  
+    \item Distribuição de contribuições (geral, novos membros, membros estabelecidos)
+    \item Frequência e boxplot de commits
+    \item Contribuições ao longo do tempo (geral e filtrado por período)
+\end{itemize}
+
+\textbf{Métricas de colaboração e rede:}
+\begin{itemize}
+    \item Rede de colaboração (completa e sem nós isolados)
+    \item Colaboração cruzada entre repositórios (histograma)
+    \item Centralidade e papéis de rede (integrador vs. especialista)
+\end{itemize}
+
+\textbf{Métricas comportamentais e temporais:}
+\begin{itemize}
+    \item Activity heatmaps (padrões dia/hora)
+    \item GitHub usage heatmap
+    \item Maturidade vs. contribuições
+    \item Repositórios públicos vs. seguidores
+\end{itemize}
+
+\textbf{Métricas de gestão de projetos:}
+\begin{itemize}
+    \item Estados de issues (abertas vs. fechadas)
+    \item Burndown chart de issues
+    \item Histogramas de cycle time (issues e PRs)
+\end{itemize}
+
+\subsection{Arquitetura serverless implementada}
+
+A solução elimina barreiras de infraestrutura através da arquitetura \textbf{GitHub Actions + Firebase + React/D3.js}, permitindo que qualquer fábrica acadêmica replique o sistema com recursos mínimos. Os dados Bronze/Silver permanecem acessíveis para análises avançadas, enquanto a camada Gold oferece KPIs prontos para consumo via dashboard.
+
+\subsection{Validação qualitativa}
+
+Os achados dos \textbf{Apêndices A e B} confirmam a adequação da abordagem: (i) atualização semanal é suficiente para governança pedagógica; (ii) métricas de clones iniciais sinalizam intenção de participação; (iii) grafos de colaboração distinguem perfis integrador/especialista; (iv) ramp-up inicial deve ser considerado na interpretação das séries.
 
 % ----------------------------------------------------------
 % CONCLUSÃO

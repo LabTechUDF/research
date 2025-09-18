@@ -1,0 +1,42 @@
+
+    ╔══════════════════════════════════════════════════════════════════════════════════╗
+    ║                           📊 FLUXO ETL DETALHADO                                ║
+    ╚══════════════════════════════════════════════════════════════════════════════════╝
+
+    ⏰ TRIGGER (Daily: 0 6 * * *)
+    │
+    ├─► 🔄 GitHub Actions Workflow
+        │
+        ├─► 🐍 Python ETL Scripts
+            │
+            ┌─► 📡 FASE 1: EXTRAÇÃO (Bronze)
+            │   ├─► Get Organization Data
+            │   ├─► Get Repositories  
+            │   ├─► Get Issues/PRs
+            │   ├─► Get Commits/Events
+            │   └─► Store Raw JSON ──► 🥉 Bronze Layer
+            │
+            ├─► ⚙️ FASE 2: TRANSFORMAÇÃO (Silver)
+            │   ├─► Parse JSON payloads
+            │   ├─► Normalize to dim/fact tables
+            │   ├─► Add lineage columns
+            │   └─► Store structured data ──► 🥈 Silver Layer
+            │
+            ├─► 📈 FASE 3: AGREGAÇÃO (Gold)
+            │   ├─► Calculate KPIs
+            │   ├─► Generate metrics
+            │   ├─► Create visualizations data
+            │   └─► Store dashboard-ready data ──► 🥇 Gold Layer
+            │
+            └─► ✅ CONSUMO
+                ├─► Dashboard reads Gold via GitHub API
+                └─► Researchers access Silver/Bronze directly
+
+    ══════════════════════════════════════════════════════════════════════════════════════
+                                   🛡️ ERROR HANDLING
+
+    • 🚦 Rate Limiting: Intelligent backoff and retry
+    • 💾 Caching: Avoid unnecessary API calls  
+    • 📝 Logging: Comprehensive audit trail
+    • 🔔 Notifications: GitHub Issues for failures
+    

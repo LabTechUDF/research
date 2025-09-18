@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.6.3)  4 SEP 2025 05:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.6.3)  18 SEP 2025 20:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -879,169 +879,268 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 122.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 122.
- [2]
-Underfull \hbox (badness 2990) in paragraph at lines 154--155
-[]|\T1/lmr/m/n/12 (+20) Reforça pla-nos de me-di-ção cla-ros (ob-je-tivo,
- []
-
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
-58.
+33.
+
 (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Underfull \hbox (badness 10000) in paragraph at lines 170--171
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 133.
+
+Overfull \hbox (22.19429pt too wide) in paragraph at lines 133--134
+\T1/lmr/m/n/12 (-20) com ca-che in-te-li-gente, rate li-mi-ting e fil-tros de q
+ua-li-dade. Gera ar-quivo \T1/lmtt/m/n/12 github-data.json
+ []
+
+[2]
+Overfull \hbox (2.93301pt too wide) in paragraph at lines 155--157
+[]\T1/lmr/bx/n/12 (-20) Democratização via ar-qui-te-tura ser-ver-less. \T1/lmr
+/m/n/12 (-20) A de-fi-ni-ção da ar-qui-te-tura \T1/lmr/bx/n/12 (-20) GitHub
+ []
+
+
+Overfull \hbox (6.27423pt too wide) in paragraph at lines 157--158
+[]\T1/lmr/bx/n/12 (-20) Elimina cus-tos de in-fra-es-tru-tura\T1/lmr/m/n/12 (-2
+0) : tudo exe-cuta em pla-ta-for-mas gra-tui-tas/freemium 
+ []
+
+[3]
+Underfull \hbox (badness 2990) in paragraph at lines 178--179
+[]|\T1/lmr/m/n/12 (+20) Reforça pla-nos de me-di-ção cla-ros (ob-je-tivo,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 194--195
 []|\T1/lmr/bx/n/12 (+20) Contribuições para
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 176--177
+Underfull \hbox (badness 10000) in paragraph at lines 200--201
 []|\T1/lmr/bx/n/12 (+20) Contribuições para
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 180--180
+Underfull \hbox (badness 10000) in paragraph at lines 204--204
 []|\T1/lmr/m/n/12 (+20) ([][]SILVA C L
  []
 
 
-Underfull \hbox (badness 1102) in paragraph at lines 180--181
+Underfull \hbox (badness 1102) in paragraph at lines 204--205
 []|\T1/lmr/m/n/12 (+20) Base para di-ci-o-ná-rio de KPIs
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 182--182
+Underfull \hbox (badness 10000) in paragraph at lines 206--206
 []|\T1/lmr/m/n/12 (+20) ([][]BARBOSA;
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 182--183
+Underfull \hbox (badness 10000) in paragraph at lines 206--207
 []|\T1/lmr/m/n/12 (+20) ETL e vi-ews se-mân-ti-cas
  []
 
 
-Underfull \hbox (badness 2529) in paragraph at lines 182--183
+Underfull \hbox (badness 2529) in paragraph at lines 206--207
 \T1/lmr/m/n/12 (+20) para KPIs de ati-vi-dade/fluxo
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 184--184
+Underfull \hbox (badness 10000) in paragraph at lines 208--208
 []|\T1/lmr/m/n/12 (+20) ([][]OLIVEIRA;
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 184--184
+Underfull \hbox (badness 10000) in paragraph at lines 208--208
 \T1/lmr/m/n/12 (+20) FER-NAN-DES;
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 184--184
+Underfull \hbox (badness 10000) in paragraph at lines 208--208
 []|\T1/lmr/m/n/12 (+20) Plataforma de co-
  []
 
 
-Underfull \hbox (badness 6575) in paragraph at lines 184--185
+Underfull \hbox (badness 6575) in paragraph at lines 208--209
 []|\T1/lmr/m/n/12 (+20) Facilita in-ges-tão e per-sis-tên-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 184--185
+Underfull \hbox (badness 10000) in paragraph at lines 208--209
 \T1/lmr/m/n/12 (+20) cia; ali-menta nor-ma-li-za-ção
  []
 
 
-Underfull \hbox (badness 6332) in paragraph at lines 186--186
+Underfull \hbox (badness 6332) in paragraph at lines 210--210
 \T1/lmr/m/n/12 (+20) com in-te-gra-ção multi-
  []
 
 
-Underfull \hbox (badness 7925) in paragraph at lines 188--188
+Underfull \hbox (badness 7925) in paragraph at lines 212--212
 []|\T1/lmr/m/n/12 (+20) ([][]HAMER et al.[][],
  []
 
 
-Underfull \hbox (badness 6332) in paragraph at lines 188--189
+Underfull \hbox (badness 6332) in paragraph at lines 212--213
 \T1/lmr/m/n/12 (+20) tri-bui-ção e cen-tra-li-dade (Sil-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 190--190
+Underfull \hbox (badness 10000) in paragraph at lines 214--214
 []|\T1/lmr/m/n/12 (+20) ([][]KITCHENHAM[][],
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 190--191
+Underfull \hbox (badness 10000) in paragraph at lines 214--215
 []|\T1/lmr/m/n/12 (+20) Diretrizes de va-li-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 192--192
+Underfull \hbox (badness 10000) in paragraph at lines 216--216
 []|\T1/lmr/m/n/12 (+20) ([][]ÖZKAN;
  []
 
 
-Underfull \hbox (badness 2221) in paragraph at lines 192--192
+Underfull \hbox (badness 2221) in paragraph at lines 216--216
 []|\T1/lmr/m/n/12 (+20) Ferramentas de ges-tão
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 194--194
+Underfull \hbox (badness 10000) in paragraph at lines 218--218
 []|\T1/lmr/m/n/12 (+20) ([][]TEMITOPE[][],
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 196--196
+Underfull \hbox (badness 10000) in paragraph at lines 220--220
 []|\T1/lmr/m/n/12 (+20) Fábricas
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 196--197
+Underfull \hbox (badness 10000) in paragraph at lines 220--221
 []|\T1/lmr/m/n/12 (+20) Demanda por vi-si-bi-li-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 196--197
+Underfull \hbox (badness 10000) in paragraph at lines 220--221
 \T1/lmr/m/n/12 (+20) dade/indicadores; lei-tura pe-
  []
 
-[3] [4] (./relatorio-parcial.bbl (./relatorio-parcial.brf)
+[4] [5]
+Overfull \hbox (26.28189pt too wide) in paragraph at lines 238--241
+[]\T1/lmr/bx/n/12 (-20) Migração dos pro-tó-ti-pos\T1/lmr/m/n/12 (-20) : trans-
+for-mar os ar-te-fa-tos atu-ais (\T1/lmtt/m/n/12 extrair-dados-github.py
+ []
+
+[6]
+<arquitetura-geral.png, id=117, 3854.4pt x 2154.0475pt>
+File: arquitetura-geral.png Graphic file (type png)
+<use arquitetura-geral.png>
+Package pdftex.def Info: arquitetura-geral.png  used on input line 261.
+(pdftex.def)             Requested size: 409.49722pt x 228.82755pt.
+<dag-medalhao.png, id=119, 3729.935pt x 3854.4pt>
+File: dag-medalhao.png Graphic file (type png)
+<use dag-medalhao.png>
+Package pdftex.def Info: dag-medalhao.png  used on input line 268.
+(pdftex.def)             Requested size: 409.49722pt x 423.16193pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 269--269
+[][]\T1/lmr/m/n/12 (+20) DAG da Ar-qui-te-tura Me-da-lhão de-ta-lhando o fluxo 
+com-pleto
+ []
+
+
+Underfull \hbox (badness 3029) in paragraph at lines 269--269
+\T1/lmr/m/n/12 (+20) Bronze\TS1/lmr/m/n/12 (+20) ^^Y\T1/lmr/m/n/12 (+20) Silver
+\TS1/lmr/m/n/12 (+20) ^^Y\T1/lmr/m/n/12 (+20) Gold. As fon-tes GitHub API ali-m
+en-tam da-dos raw
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<sequencia_etl.png, id=120, 2585.66pt x 3854.4pt>
+File: sequencia_etl.png Graphic file (type png)
+<use sequencia_etl.png>
+Package pdftex.def Info: sequencia_etl.png  used on input line 275.
+(pdftex.def)             Requested size: 409.49722pt x 610.42358pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<collaboration-network.png, id=121, 578.16pt x 578.16pt>
+File: collaboration-network.png Graphic file (type png)
+<use collaboration-network.png>
+Package pdftex.def Info: collaboration-network.png  used on input line 284.
+(pdftex.def)             Requested size: 364.00139pt x 363.99571pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<contributions-over-time.png, id=122, 722.7pt x 433.62pt>
+File: contributions-over-time.png Graphic file (type png)
+<use contributions-over-time.png>
+Package pdftex.def Info: contributions-over-time.png  used on input line 291.
+(pdftex.def)             Requested size: 364.00139pt x 218.40404pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<activity-heatmap.png, id=123, 867.24pt x 433.62pt>
+File: activity-heatmap.png Graphic file (type png)
+<use activity-heatmap.png>
+Package pdftex.def Info: activity-heatmap.png  used on input line 298.
+(pdftex.def)             Requested size: 364.00139pt x 182.00006pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<pie-contributions.png, id=124, 462.528pt x 346.896pt>
+File: pie-contributions.png Graphic file (type png)
+<use pie-contributions.png>
+Package pdftex.def Info: pie-contributions.png  used on input line 305.
+(pdftex.def)             Requested size: 364.00139pt x 273.01265pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+(./relatorio-parcial.bbl (./relatorio-parcial.brf)
 \tf@brf=\write5
 \openout5 = `relatorio-parcial.brf'.
 
- [5]
+ [7
+
+ <./arquitetura-geral.png>] [8 <./dag-medalhao.png>] [9 <./sequencia_etl.png>] 
+[10 <./collaboration-network.png>] [11 <./contributions-over-time.png> <./activ
+ity-heatmap.png>] [12 <./pie-contributions.png>]
 bibitemlist
-) [6
+) [13
 
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\uppercase' on input line 227.
+(hyperref)                removing `\uppercase' on input line 320.
 
-[7
+[14
 
 
-] [8
+] [15
 
-] [9] [10
+] [16] [17
 
 ]
-Overfull \hbox (14.07716pt too wide) in paragraph at lines 326--327
+Overfull \hbox (14.07716pt too wide) in paragraph at lines 419--420
 []\T1/lmr/bx/n/12 (-20) Técnicas: \T1/lmr/m/n/12 (-20) com-mits por usuá-rio/re
 positório/tempo; \T1/lmr/m/it/12 (-20) is-sues \T1/lmr/m/n/12 (-20) cri-a-das/a
 tribuídas/fechadas;
  []
 
-[11
+[18
 
-] [12] [13] (./relatorio-parcial.aux)
+] [19] [20] (./relatorio-parcial.aux)
 Package rerunfilecheck Info: File `relatorio-parcial.brf' has not changed.
-(rerunfilecheck)             Checksum: BEF197F4E21BF60FB1E0081D53885CE1;670.
+(rerunfilecheck)             Checksum: D27B0C3A68F142357A340BA31714AE2C;670.
  ) 
 Here is how much of TeX's memory you used:
- 17573 strings out of 478031
- 281819 string characters out of 5840163
+ 17668 strings out of 478031
+ 283636 string characters out of 5840163
  1869330 words of memory out of 5000000
- 37175 multiletter control sequences out of 15000+600000
- 587869 words of font info for 172 fonts, out of 8000000 for 9000
+ 37228 multiletter control sequences out of 15000+600000
+ 588910 words of font info for 181 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
  90i,12n,90p,1189b,730s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texmf/fonts/enc/d
@@ -1054,11 +1153,11 @@ ype1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/
 share/texmf/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/publ
 ic/lm/lmss12.pfb></usr/share/texmf/fonts/type1/public/lm/lmss17.pfb></usr/share
 /texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm
-/lmtt12.pfb>
-Output written on relatorio-parcial.pdf (13 pages, 283076 bytes).
+/lmtk10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
+Output written on relatorio-parcial.pdf (20 pages, 2249132 bytes).
 PDF statistics:
- 289 PDF objects out of 1000 (max. 8388607)
- 243 compressed objects within 3 object streams
- 84 named destinations out of 1000 (max. 500000)
- 43569 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 358 PDF objects out of 1000 (max. 8388607)
+ 289 compressed objects within 3 object streams
+ 101 named destinations out of 1000 (max. 500000)
+ 44116 words of extra memory for PDF output out of 51595 (max. 10000000)
 

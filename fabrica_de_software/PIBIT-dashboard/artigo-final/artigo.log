@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.6.3)  4 SEP 2025 05:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.6.3)  18 SEP 2025 19:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -861,16 +861,16 @@ Package babel Info: Importing basic data for english
 
 ] (./artigo.toc
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 34.
+(Font)              <14.4> on input line 43.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 34.
+(Font)              <10> on input line 43.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 34.
-) [4
+(Font)              <7> on input line 43.
+ [4
 
-] [5
+]) [5] [6
 
-]
+] [7]
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 172.
 
@@ -993,7 +993,7 @@ Underfull \hbox (badness 1584) in paragraph at lines 192--193
 [][]\T1/lmr/m/n/10 (+20) 2010[][][]; [][]HA-MER et
  []
 
-[6] [7]
+[8]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
 05.
  (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
@@ -1014,40 +1014,61 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [8] [9]
-Overfull \hbox (12.63228pt too wide) in paragraph at lines 251--252
+ [9]
+Overfull \hbox (64.11104pt too wide) in paragraph at lines 218--219
+[]\T1/lmr/bx/n/12 (-20) Métricas téc-ni-cas: \T1/lmr/m/n/12 (-20) com-mits por 
+usuá-rio/repositório/tempo; \T1/lmr/m/it/12 (-20) is-sues \T1/lmr/m/n/12 (-20) 
+cri-a-das/atribuídas/fechadas;
+ []
+
+[10]
+Overfull \hbox (12.63228pt too wide) in paragraph at lines 265--266
 []\T1/lmr/bx/n/12 (-20) Prototipagem: \T1/lmr/m/it/12 (-20) scripts \T1/lmr/m/n
 /12 (-20) em \T1/lmr/m/it/12 (-20) Python\T1/lmr/m/n/12 (-20) /\T1/lmr/m/it/12 
 (-20) JavaScript \T1/lmr/m/n/12 (-20) para co-leta e con-so-li-da-ção (Bronze $
 \OMS/lmsy/m/n/12 !$ \T1/lmr/m/n/12 (-20) Sil-
  []
 
-[10]
-Overfull \hbox (13.66228pt too wide) in paragraph at lines 284--285
+[11]
+
+LaTeX Warning: Reference `fig:topologia' on page 12 undefined on input line 283
+.
+
+
+LaTeX Warning: Reference `fig:sequencia-etl' on page 12 undefined on input line
+ 292.
+
+[12]
+
+LaTeX Warning: Reference `fig:dag-medalhao' on page 13 undefined on input line 
+301.
+
+[13]
+Overfull \hbox (13.66228pt too wide) in paragraph at lines 326--327
 \T1/lmr/m/n/12 (-20) Cada ci-clo se-ma-nal \T1/lmr/bx/n/12 (-20) li-bera Bronze
 /Silver \T1/lmr/m/n/12 (-20) para usuá-rios avan-ça-dos (pes-qui-sa-do-res/moni
 tores)
  []
 
-[11] [12] (./artigo.bbl (./artigo.brf)
+[14] [15] (./artigo.bbl (./artigo.brf)
 \tf@brf=\write5
 \openout5 = `artigo.brf'.
 
- [13]
+ [16]
 bibitemlist
-[14
+[17
 
-]) [15]
+]) [18]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\uppercase' on input line 319.
+(hyperref)                removing `\uppercase' on input line 408.
 
-[16
+[19
 
 
-] [17
+] [20
 
-] [18] [19
+] [21] [22
 
 ]
 \tf@toc=\write6
@@ -1055,17 +1076,22 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
  (./artigo.aux)
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were undefined references.
 
-Package rerunfilecheck Info: File `artigo.brf' has not changed.
-(rerunfilecheck)             Checksum: 1D2506B4ECF891474572EB239B90F755;3788.
+
+Package rerunfilecheck Warning: File `artigo.brf' has changed.
+(rerunfilecheck)                Rerun to get bibliographical references right.
+
+Package rerunfilecheck Info: Checksums for `artigo.brf':
+(rerunfilecheck)             Before: A44B5216246E3A38FE3B52F23EFB0166;4187
+(rerunfilecheck)             After:  5A40DEA0CFA86E5B1FDAAE694877E368;4189.
  ) 
 Here is how much of TeX's memory you used:
- 17820 strings out of 478031
- 286248 string characters out of 5840163
- 1868330 words of memory out of 5000000
- 37323 multiletter control sequences out of 15000+600000
- 604252 words of font info for 224 fonts, out of 8000000 for 9000
+ 17909 strings out of 478031
+ 287966 string characters out of 5840163
+ 1870330 words of memory out of 5000000
+ 37383 multiletter control sequences out of 15000+600000
+ 604698 words of font info for 228 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
  90i,12n,90p,1327b,709s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
@@ -1079,10 +1105,10 @@ b></usr/share/texmf/fonts/type1/public/lm/lmss12.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmss17.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb><
 /usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1
 /public/lm/lmtt12.pfb>
-Output written on artigo.pdf (19 pages, 371858 bytes).
+Output written on artigo.pdf (22 pages, 384764 bytes).
 PDF statistics:
- 504 PDF objects out of 1000 (max. 8388607)
- 450 compressed objects within 5 object streams
- 85 named destinations out of 1000 (max. 500000)
- 51969 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 589 PDF objects out of 1000 (max. 8388607)
+ 531 compressed objects within 6 object streams
+ 106 named destinations out of 1000 (max. 500000)
+ 52041 words of extra memory for PDF output out of 61914 (max. 10000000)
 

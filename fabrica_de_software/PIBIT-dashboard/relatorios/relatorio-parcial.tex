@@ -126,17 +126,41 @@ Este relatório parcial apresenta os avanços do projeto de um \textit{dashboard
 \end{enumerate}
 
 \section*{5.\ Resultados obtidos até o momento}
-\textbf{Pipeline de dados.} 
-\emph{Bronze}: coleta diária via API do GitHub (organização, membros, repositórios, commits, issues, PRs, reviews/comentários; quando disponível, \emph{traffic/clones}); filtros de qualidade (remoção de \emph{forks} e \emph{blacklists}); \emph{append-only}. \\
-\emph{Silver}: normalização de JSONs em \texttt{dim}/\texttt{fact} (\texttt{dim\_users}, \texttt{dim\_repos}, \texttt{fact\_commits}, \texttt{fact\_issues}, \texttt{fact\_prs}, \texttt{fact\_reviews}); chaves consistentes; padronização temporal semanal; colunas de linhagem/auditoria; relações autor$\leftrightarrow$revisor. \\
-\emph{Gold}: KPIs iniciais publicados semanalmente (atividade de código, fluxo de mudanças, revisões, colaboração, regularidade, concentração), incluindo \textbf{Slope\_8w}, \textbf{Clones\_W1--W2}, \textbf{centralidade} em grafos e \emph{cycle time}.
 
-\textbf{Visualizações exploratórias.} 20 gráficos úteis para leitura de padrões de engajamento, colaboração e fluxo (lista no \textbf{Apêndice C}). 
+\textbf{Protótipos implementados até o momento.} 
+Foram desenvolvidos dois artefatos principais que demonstram a viabilidade técnica da abordagem:
+\begin{itemize}
+    \item \textbf{Script de extração (\texttt{extrair-dados-github.py})}: coleta dados via API do GitHub com cache inteligente, rate limiting e filtros de qualidade. Gera arquivo \texttt{github-data.json} com dados da organização LabTechUDF.
+    \item \textbf{Notebook de análise (\texttt{gerar\_graficos\_github.ipynb})}: processa o JSON coletado e gera \textbf{20 visualizações} abrangendo métricas técnicas, colaborativas e comportamentais.
+\end{itemize}
+
+\textbf{Arquitetura serverless especificada.} Com base na experiência dos protótipos, foi definida arquitetura \textbf{GitHub Actions + Firebase + React/D3.js} para democratizar acesso. A Figura~\ref{fig:arquitetura-geral} ilustra a solução completa, enquanto a Figura~\ref{fig:dag-medalhao} detalha o pipeline de dados e a Figura~\ref{fig:sequencia-etl} mostra o processo ETL automatizado. Os diagramas demonstram:
+\begin{itemize}
+    \item \textbf{Integração stakeholders}: docentes, estudantes e pesquisadores acessam via web
+    \item \textbf{Processamento automatizado}: GitHub Actions executam ETL diário sem infraestrutura
+    \item \textbf{Armazenamento em camadas}: Bronze (raw) → Silver (normalized) → Gold (KPIs)
+    \item \textbf{Frontend serverless}: React/D3.js servido via Firebase Hosting
+    \item \textbf{Acesso diferenciado}: dashboard para usuários gerais, APIs diretas para pesquisadores
+\end{itemize}
+
+\textbf{Estado atual dos dados.} O arquivo \texttt{github-data.json} contém dados reais da organização LabTechUDF, servindo como \textbf{Bronze layer} da arquitetura proposta. As transformações Silver e Gold estão implementadas no notebook, mas precisam ser organizadas em pipeline automatizado.
+
+\textbf{Visualizações exploratórias.} 20 gráficos úteis para leitura de padrões de engajamento, colaboração e fluxo (lista no \textbf{Apêndice C}). As Figuras~\ref{fig:collaboration-network}, \ref{fig:contributions-over-time}, \ref{fig:activity-heatmap} e \ref{fig:pie-contributions} ilustram exemplos representativos das visualizações geradas. 
 
 \textbf{Achados provisórios.} \emph{Ramp-up} de engajamento na primeira metade do semestre; \emph{clones} iniciais como sinal de adesão; distinção de perfis \emph{integrador} vs.\ \emph{especialista} por grafos; suficiência de atualização semanal para o uso pedagógico.
 
 \section*{6.\ Análises e discussões}
 As evidências qualitativas (Apêndices A e B) contextualizam as séries: (i) baixas iniciais de atividade não devem ser penalizadas antes do \emph{ramp-up}; (ii) \emph{clones} iniciais ajudam a estimar adesão; (iii) grafos autor$\leftrightarrow$revisor revelam papéis. A publicação \textbf{semanal} (Gold) dá previsibilidade para docentes/gestores, enquanto \textbf{Bronze/Silver} permanecem abertos a análises avançadas por usuários experientes.
+
+\textbf{Democratização via arquitetura serverless.} A definição da arquitetura \textbf{GitHub Actions + Firebase + React/D3.js} representa um avanço significativo na democratização de analytics acadêmicos. Diferentemente de soluções que demandam infraestrutura complexa (servidores próprios, bancos de dados, manutenção), nossa abordagem:
+\begin{itemize}
+    \item \textbf{Elimina custos de infraestrutura}: tudo executa em plataformas gratuitas/freemium
+    \item \textbf{Reduz complexidade operacional}: sem servidores para manter ou configurar
+    \item \textbf{Facilita replicação}: qualquer fábrica pode fazer fork e adaptar
+    \item \textbf{Garante escalabilidade}: GitHub Actions e Firebase escalam automaticamente
+    \item \textbf{Preserva abertura}: dados Bronze/Silver permanecem acessíveis para pesquisa avançada
+\end{itemize}
+Esta escolha alinha-se com a filosofia \textbf{open source} e \textbf{co-desenvolvimento} acadêmico identificada na literatura, removendo barreiras técnicas e financeiras para adoção.
 
 \section*{7.\ Fichamentos da revisão bibliográfica e impacto nos KPIs}
 \label{sec:fichamentos}
@@ -202,10 +226,18 @@ Fábricas Acadêmicas\textsuperscript{*} & Experiências e modelos pedagógicos 
 \noindent \textbf{Resultado:} o conjunto inicial de KPIs inclui: atividade (\emph{commits/semana}, PRs), fluxo (\emph{lead time} de PR, tempo até 1ª resposta), backlog (issues abertas/fechadas, \emph{aging}), colaboração (participação em \emph{reviews}, grafos), regularidade (semanas ativas) e concentração (desigualdade). Indicadores motivados pelos relatos (\textbf{Slope\_8w}, \textbf{Clones\_W1--W2}, \textbf{centralidade}) foram \emph{adicionados} por pertinência pedagógica.
 
 \section*{8.\ Próximas atividades (próxima iteração)}
-\textbf{Dados}: ampliar cobertura Bronze e ajustes de chaves/dicionário Silver. \\
-\textbf{KPIs e painel}: incorporar métricas priorizadas em \textit{feedback} (Gold), com páginas por time/repo/indivíduo e módulo de grafos. \\
-\textbf{Stakeholders}: conduzir 1--2 ciclos de \textit{feedback} com gestores e docentes. \\
-\textbf{Pilotos}: iniciar \textbf{testes-piloto} após as iterações iniciais, com protocolo de avaliação (usabilidade, utilidade, aderência).
+\textbf{Organização dos artefatos}: o próximo passo é estruturar um repositório \textbf{open source} com licença \textbf{GPL3} contendo:
+\begin{itemize}
+    \item Scripts Python organizados em pipeline ETL automatizado
+    \item Estrutura de pastas para dados Bronze/Silver/Gold  
+    \item GitHub Actions workflows para coleta diária
+    \item Frontend React/D3.js para dashboard interativo
+    \item Documentação para replicação por outras fábricas acadêmicas
+\end{itemize}
+
+\textbf{Migração dos protótipos}: transformar os artefatos atuais (\texttt{extrair-dados-github.py} e notebook) em pipeline estruturado seguindo a Arquitetura Medalhão especificada. \\
+\textbf{Stakeholders}: conduzir 1--2 ciclos de \textit{feedback} com gestores e docentes usando as visualizações já geradas. \\
+\textbf{Pilotos}: iniciar \textbf{testes-piloto} após organização do repositório, com protocolo de avaliação (usabilidade, utilidade, aderência).
 
 \section*{9.\ Cronograma atualizado (alto nível)}
 \begin{itemize}
@@ -213,6 +245,67 @@ Fábricas Acadêmicas\textsuperscript{*} & Experiências e modelos pedagógicos 
     \item \textbf{Nov/2025}: KPIs priorizados (Gold), módulo de grafos, painel v0.3, 2ª rodada de \textit{feedback}.
     \item \textbf{Dez/2025}: consolidação de análises e preparação dos \textbf{testes-piloto} (jan/2026).
 \end{itemize}
+
+% ----------------------------------------------------------
+% FIGURAS - DIAGRAMAS DE ARQUITETURA E VISUALIZAÇÕES
+% ----------------------------------------------------------
+\clearpage
+\section*{Figuras}
+
+\subsection*{Diagramas de Arquitetura}
+
+Os diagramas a seguir ilustram a arquitetura serverless proposta, demonstrando como a solução elimina barreiras de infraestrutura e democratiza o acesso a analytics avançados para fábricas acadêmicas.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{arquitetura-geral.png}
+\caption{Arquitetura geral da solução serverless (GitHub Actions + Firebase + React/D3.js). O diagrama mostra a integração entre stakeholders acadêmicos, processamento automatizado via GitHub Actions, armazenamento em camadas (Bronze/Silver/Gold) e frontend React servido via Firebase Hosting.}
+\label{fig:arquitetura-geral}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{dag-medalhao.png}
+\caption{DAG da Arquitetura Medalhão detalhando o fluxo completo Bronze→Silver→Gold. As fontes GitHub API alimentam dados raw (Bronze), que são normalizados em tabelas dimensionais/fatos (Silver) e agregados em KPIs prontos para dashboard (Gold).}
+\label{fig:dag-medalhao}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{sequencia_etl.png}
+\caption{Diagrama de sequência do processo ETL automatizado. Ilustra as quatro fases principais: extração via GitHub API, transformação Bronze→Silver, agregação Silver→Gold e consumo pelo dashboard.}
+\label{fig:sequencia-etl}
+\end{figure}
+
+\subsection*{Visualizações de Dados Geradas}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{collaboration-network.png}
+\caption{Rede de colaboração da organização LabTechUDF. O grafo mostra as interações entre membros através de commits, issues e pull requests, permitindo identificar \emph{hubs} de colaboração e padrões de conectividade.}
+\label{fig:collaboration-network}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{contributions-over-time.png}
+\caption{Evolução das contribuições ao longo do tempo por membro. A série temporal evidencia padrões de engajamento e permite identificar períodos de maior atividade colaborativa.}
+\label{fig:contributions-over-time}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{activity-heatmap.png}
+\caption{Heatmap de atividade por dia da semana e hora do dia. Revela padrões temporais de uso da plataforma GitHub pelos membros da organização.}
+\label{fig:activity-heatmap}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{pie-contributions.png}
+\caption{Distribuição de contribuições por classes de membros da organização. O gráfico de pizza mostra a concentração relativa de atividades, útil para identificar desequilíbrios de carga de trabalho.}
+\label{fig:pie-contributions}
+\end{figure}
 
 % ----------------------------------------------------------
 % REFERÊNCIAS BIBLIOGRÁFICAS
@@ -303,7 +396,7 @@ Fábricas Acadêmicas\textsuperscript{*} & Experiências e modelos pedagógicos 
 \label{apendiceC}
 
 \section*{Contexto}
-Este apêndice resume a exploração do diretório \texttt{/assets} e a execução do script \texttt{extrair-dados-github.py} para coleta e análise de dados da organização \texttt{LabTechUDF} no GitHub, servindo como base empírica do artigo.
+Este apêndice resume a exploração de scripts e sua execução para coleta e análise de dados da organização \texttt{LabTechUDF} no GitHub, servindo como base para construção do software.
 
 \section*{Como os dados foram capturados}
 A pipeline implementa um \textbf{ETL} completo com:
@@ -364,7 +457,7 @@ A pipeline implementa um \textbf{ETL} completo com:
 
 \section*{Reprodutibilidade e ética}
 \begin{itemize}
-    \item Artefatos em \texttt{/assets} e \texttt{extrair-dados-github.py}; logs de \textit{rate limit} e \textit{cache};
+    \item Artefatos até o momento são alguns scripts python e arquivos de log para \textit{rate limit} e \textit{cache};
     \item Linhagem preservada (colunas de auditoria no Silver); KPIs recomputáveis;
     \item Anonimização de identificadores para divulgação acadêmica, conforme diretrizes éticas do projeto.
 \end{itemize}
