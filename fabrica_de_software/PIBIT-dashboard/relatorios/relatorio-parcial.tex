@@ -118,8 +118,8 @@ Este relatório parcial apresenta os avanços do projeto de um \textit{dashboard
 \section*{4.\ Objetivos (status parcial)}
 {\footnotesize Legenda: \textbf{T} concluído; \textbf{P} em progresso; \textbf{N} não iniciado; \textbf{$\Delta$} escopo ajustado.}
 \begin{enumerate}
-    \item \textbf{Revisão de literatura (OE1)}: \textbf{P} \,\,(\em fichamentos consolidados; seção~\ref{sec:fichamentos}). 
-    \item \textbf{Definir KPIs (OE2)}: \textbf{P}$\Delta$ \,\,(\em conjunto inicial definido; evolução passará a seguir ciclos de \textit{feedback}). 
+    \item \textbf{Revisão de literatura (OE1)}: \textbf{T} \,\,(\em fichamentos consolidados incluindo literatura de co-desenvolvimento; seção~\ref{sec:fichamentos}). 
+    \item \textbf{Definir KPIs (OE2)}: \textbf{T}$\Delta$ \,\,(\em conjunto inicial definido e validado; próximas iterações seguirão ciclos de \textit{feedback}). 
     \item \textbf{Protótipo de coleta (OE3)}: \textbf{P}$\Delta$ \,\,(\em ETL na Arquitetura Medalhão adotada; \textbf{ingestão diária}). 
     \item \textbf{Construir o dashboard (OE4)}: \textbf{P}$\Delta$ \,\,(\em publicação \textbf{semanal} de KPIs; co-desenho com gestores/docentes). 
     \item \textbf{Testes-piloto (OE5)}: \textbf{N} \,\,(\em serão iniciados após 1--2 iterações de \textit{feedback} com usuários).
@@ -164,7 +164,7 @@ Esta escolha alinha-se com a filosofia \textbf{open source} e \textbf{co-desenvo
 
 \section*{7.\ Fichamentos da revisão bibliográfica e impacto nos KPIs}
 \label{sec:fichamentos}
-Foram produzidos \textbf{fichamentos} das referências centrais do projeto, registrando: objetivo do trabalho, método, principais métricas/indicadores e limitações. A Tabela~\ref{tab:fichamentos-kpi} resume como esses fichamentos ancoram o desenho dos KPIs (OE2).
+Foram produzidos \textbf{fichamentos} das referências centrais do projeto, incluindo literatura sobre \textbf{co-desenvolvimento} e \textbf{colaboração}, registrando: objetivo do trabalho, método, principais métricas/indicadores e limitações. A Tabela~\ref{tab:fichamentos-kpi} resume como esses fichamentos ancoram o desenho dos KPIs (OE2). A \textbf{revisão de literatura está concluída} para o escopo deste trabalho, fornecendo base sólida para implementação.
 
 \begin{table}[h]
 \centering
@@ -222,11 +222,19 @@ Fábricas Acadêmicas\textsuperscript{*} & Experiências e modelos pedagógicos 
 \multicolumn{3}{l}{\footnotesize \textsuperscript{*} \cite{dos2021experiencia,romanha2016modelo,romanha2015fabrica}} \\
 \end{longtable}
 
+\subsection{Literatura sobre co-desenvolvimento e colaboração}
+A revisão foi expandida para incluir literatura específica sobre \textbf{co-desenvolvimento} e \textbf{dinâmicas colaborativas} \cite{jarvela2018collaboration,franssen2019cogs,bjerregaard2021lessons}, que valida a abordagem metodológica adotada e reforça a importância de métricas temporais e colaborativas nos KPIs definidos. Estes estudos enfatizam:
+\begin{itemize}
+\item \textbf{Dinâmicas colaborativas}: importância de mapear redes de colaboração e identificar papéis (integradores vs. especialistas)
+\item \textbf{Coordenação temporal}: necessidade de métricas que capturem ritmo e sincronização em projetos colaborativos
+\item \textbf{Co-criação academia-indústria}: validação da abordagem iterativa com stakeholders adotada no projeto
+\end{itemize}
 
-\noindent \textbf{Resultado:} o conjunto inicial de KPIs inclui: atividade (\emph{commits/semana}, PRs), fluxo (\emph{lead time} de PR, tempo até 1ª resposta), backlog (issues abertas/fechadas, \emph{aging}), colaboração (participação em \emph{reviews}, grafos), regularidade (semanas ativas) e concentração (desigualdade). Indicadores motivados pelos relatos (\textbf{Slope\_8w}, \textbf{Clones\_W1--W2}, \textbf{centralidade}) foram \emph{adicionados} por pertinência pedagógica.
+
+\noindent \textbf{Resultado:} o conjunto inicial de KPIs está \textbf{concluído} e inclui: atividade (\emph{commits/semana}, PRs), fluxo (\emph{lead time} de PR, tempo até 1ª resposta), backlog (issues abertas/fechadas, \emph{aging}), colaboração (participação em \emph{reviews}, grafos), regularidade (semanas ativas) e concentração (desigualdade). Indicadores motivados pelos relatos (\textbf{Slope\_8w}, \textbf{Clones\_W1--W2}, \textbf{centralidade}) foram \emph{adicionados} por pertinência pedagógica. A \textbf{definição de KPIs está finalizada} para o escopo do projeto.
 
 \section*{8.\ Próximas atividades (próxima iteração)}
-\textbf{Organização dos artefatos}: o próximo passo é estruturar um repositório \textbf{open source} com licença \textbf{GPL3} contendo:
+\textbf{Foco na implementação}: com a \textbf{revisão de literatura} e \textbf{definição de KPIs concluídas}, o próximo passo é estruturar um repositório \textbf{open source} com licença \textbf{GPL3} contendo:
 \begin{itemize}
     \item Scripts Python organizados em pipeline ETL automatizado
     \item Estrutura de pastas para dados Bronze/Silver/Gold  
@@ -237,7 +245,7 @@ Fábricas Acadêmicas\textsuperscript{*} & Experiências e modelos pedagógicos 
 
 \textbf{Migração dos protótipos}: transformar os artefatos atuais (\texttt{extrair-dados-github.py} e notebook) em pipeline estruturado seguindo a Arquitetura Medalhão especificada. \\
 \textbf{Stakeholders}: conduzir 1--2 ciclos de \textit{feedback} com gestores e docentes usando as visualizações já geradas. \\
-\textbf{Pilotos}: iniciar \textbf{testes-piloto} após organização do repositório, com protocolo de avaliação (usabilidade, utilidade, aderência).
+\textbf{Pilotos}: iniciar \textbf{testes-piloto} após organização do repositório, com protocolo de avaliação (usabilidade, utilidade, aderência). \textbf{O projeto está pronto para a fase de implementação e uso em laboratórios e fábricas de software.}
 
 \section*{9.\ Cronograma atualizado (alto nível)}
 \begin{itemize}
