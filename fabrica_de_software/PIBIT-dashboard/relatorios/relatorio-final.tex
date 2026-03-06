@@ -16,7 +16,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{indentfirst}
-\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
 \usepackage{graphicx}
 \usepackage{microtype}
 \usepackage{fancyhdr}
@@ -27,6 +27,8 @@
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
+% Font for header (Times New Roman)
+\newcommand{\headertimes}{\fontfamily{ptm}\selectfont}
 
 % ----------------------------------------------------------
 % CONFIGURAÇÕES DE PACOTES
@@ -38,6 +40,100 @@
 	\or Citado na página #2.%
 	\else Citado #1 vezes nas páginas #2.%
 	\fi}
+
+% ----------------------------------------------------------
+% COR UDF e CABEÇALHO INSTITUCIONAL
+% ----------------------------------------------------------
+\definecolor{udfblue}{HTML}{001F5F}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L]{%
+  \raisebox{-0.5\height}{\includegraphics[height=1.6cm]{udf.png}}%
+}
+\fancyhead[C]{%
+  \headertimes\scriptsize\color{udfblue}%
+  \begin{tabular}{c}
+    \textbf{Campus Reitor Rezende Ribeiro de Rezende}\\
+    SGA SUL 903, Conjunto D, Lote 79, Asa Sul\\
+    70390 030 Brasília DF\\
+    \textbf{T} 55 61 3704 8884
+  \end{tabular}%
+}
+\fancyhead[R]{%
+  \headertimes\scriptsize\color{udfblue}%
+  \begin{tabular}{r}
+    \underline{\textbf{www.udf.edu.br}}\\[4pt]
+    \textbf{Campus Sede}\\
+    SEP SUL EQ 704/904 Conj A\\
+    70390 045 Brasília DF\\
+    \textbf{T} 55 61 3704 8888
+  \end{tabular}%
+}
+\setlength{\headheight}{2.2cm}
+\setlength{\headsep}{0.5cm}
+
+% Apply header to ALL abntex2 page styles
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyhead[L]{%
+    \raisebox{-0.5\height}{\includegraphics[height=1.6cm]{udf.png}}%
+  }
+  \fancyhead[C]{%
+    \headertimes\scriptsize\color{udfblue}%
+    \begin{tabular}{c}
+      \textbf{Campus Reitor Rezende Ribeiro de Rezende}\\
+      SGA SUL 903, Conjunto D, Lote 79, Asa Sul\\
+      70390 030 Brasília DF\\
+      \textbf{T} 55 61 3704 8884
+    \end{tabular}%
+  }
+  \fancyhead[R]{%
+    \headertimes\scriptsize\color{udfblue}%
+    \begin{tabular}{r}
+      \underline{\textbf{www.udf.edu.br}}\\[4pt]
+      \textbf{Campus Sede}\\
+      SEP SUL EQ 704/904 Conj A\\
+      70390 045 Brasília DF\\
+      \textbf{T} 55 61 3704 8888
+    \end{tabular}%
+  }
+  \setlength{\headheight}{2.2cm}
+}
+
+% Override abntex2 'abntheadings' pagestyle (set by \textual)
+\fancypagestyle{abntheadings}{%
+  \fancyhf{}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyhead[L]{%
+    \raisebox{-0.5\height}{\includegraphics[height=1.6cm]{udf.png}}%
+  }
+  \fancyhead[C]{%
+    \headertimes\scriptsize\color{udfblue}%
+    \begin{tabular}{c}
+      \textbf{Campus Reitor Rezende Ribeiro de Rezende}\\
+      SGA SUL 903, Conjunto D, Lote 79, Asa Sul\\
+      70390 030 Brasília DF\\
+      \textbf{T} 55 61 3704 8884
+    \end{tabular}%
+  }
+  \fancyhead[R]{%
+    \headertimes\scriptsize\color{udfblue}%
+    \begin{tabular}{r}
+      \underline{\textbf{www.udf.edu.br}}\\[4pt]
+      \textbf{Campus Sede}\\
+      SEP SUL EQ 704/904 Conj A\\
+      70390 045 Brasília DF\\
+      \textbf{T} 55 61 3704 8888
+    \end{tabular}%
+  }
+  \setlength{\headheight}{2.2cm}
+}
 
 % ---
 % Informações para CAPA e FOLHA DE ROSTO
@@ -60,7 +156,7 @@
 	pdftitle={\@title},
 	pdfauthor={\@author},
 	pdfsubject={Relatório Final PIBIT},
-	pdfkeywords={CoOps, Dashboard, Fábrica de Software Acadêmica, Métricas, KPIs, Arquitetura Medalhão, D3.js},
+	pdfkeywords={Dashboard, Fábrica de Software Acadêmica, Métricas, KPIs, Arquitetura Medalhão, D3.js},
 	colorlinks=true,
 	linkcolor=blue,
 	citecolor=blue,
@@ -73,6 +169,10 @@
 \setlength{\parindent}{1.3cm}
 \setlength{\parskip}{0.2cm}
 
+% Margem inferior maior para evitar conteúdo colado ao final da página
+\setlength{\textheight}{\textheight}
+\addtolength{\textheight}{-1.5cm}
+
 \makeindex
 
 % ----
@@ -82,10 +182,14 @@
 \selectlanguage{brazil}
 \frenchspacing
 
+% Forçar cabeçalho institucional em todas as páginas
+\pagestyle{fancy}
+
 % ----------------------------------------------------------
 % ELEMENTOS TEXTUAIS
 % ----------------------------------------------------------
 \textual
+\pagestyle{fancy}
 
 % ===============================
 % RELATÓRIO FINAL (PIBIT/2025-2026)
@@ -95,17 +199,30 @@
 % 1. IDENTIFICAÇÃO DO PROJETO
 % ----------------------------------------------------------
 \section*{1.\ Identificação do Projeto}
-\textbf{Professor(a) Orientador(a):} Kerlla de Souza Luz \\
-\textbf{Aluno(a) Pesquisador(a):} Danrley Willyan da Silva Pereira (RGM 42570166) \\
-\textbf{Área de conhecimento:} Engenharia de Software / Engenharia de Dados \\
-\textbf{Título:} Desenvolvimento de um Dashboard para o Monitoramento e Acompanhamento Contínuo de Projetos em Fábricas de Software Acadêmicas
+
+\begin{tabular}{|p{4.5cm}|p{10cm}|}
+\hline
+\textbf{Aluno Pesquisador:} & Esp.\ Danrley Pereira \\
+\hline
+\textbf{Orientador:} & Dra.\ Kerlla de Souza Luz \\
+\hline
+\textbf{Área de conhecimento do Projeto:} &
+Ciências Exatas e da Terra \newline
+\hspace*{0.5em}» Ciência da Computação \newline
+\hspace*{1.0em}» » Metodologia e Técnicas da Computação \newline
+\hspace*{1.5em}» » » Engenharia de Software \\
+\hline
+\textbf{Título do Projeto:} &
+Desenvolvimento de um Dashboard para o Monitoramento e Acompanhamento Contínuo de Projetos em Fábricas de Software Acadêmicas \\
+\hline
+\end{tabular}
 
 % ----------------------------------------------------------
 % 2. RESUMO
 % ----------------------------------------------------------
 \section*{2.\ Resumo}
 
-Este relatório final apresenta os resultados completos do projeto PIBIT que desenvolveu o \textbf{CoOps} --- uma plataforma \textit{open source} para monitoramento de projetos em fábricas de software acadêmicas. O projeto, que teve início com uma revisão de literatura e definição de KPIs (relatório parcial, set/2025), evoluiu para uma aplicação \textit{full-stack} em produção, co-desenvolvida em colaboração com a \textbf{Dra.\ Carla Rocha} (professora de Métodos de Desenvolvimento de Software --- MDS, na Universidade de Brasília). A plataforma implementa integralmente a \textbf{Arquitetura Medalhão} (Bronze$\rightarrow$Silver$\rightarrow$Gold), conta com \textbf{13+ páginas interativas} com visualizações D3.js, análise por inteligência artificial via API Google Gemini e duas instâncias em produção: \textbf{UnB} (\url{https://unb-mds.github.io/2025-2-Squad-01/}) e \textbf{UDF/LabTech} (\url{https://labtechudf.github.io/CoOps/}). Danrley construiu o CoOps e iterou diretamente com Dra.\ Carla para definir quais dados Silver e Gold ela necessitava para suas disciplinas. Ao final do semestre, Dra.\ Carla utilizou o CoOps para avaliar seus alunos --- validando o software em contexto pedagógico real. A otimização do pipeline de extração alcançou ganho de \textbf{100x} em desempenho. O frontend atinge \textbf{94\% de cobertura de testes}. O CoOps é distribuído sob licença \textbf{GPL v3.0} e opera com \textbf{infraestrutura zero} via GitHub Pages e GitHub Actions.
+Este relatório final apresenta os resultados completos do projeto PIBIT que desenvolveu o \textbf{Dashboard de Monitoramento de Métricas de Produtividade e Qualidade} --- uma plataforma \textit{open source} para monitoramento de projetos em fábricas de software acadêmicas. O projeto, que teve início com uma revisão de literatura e definição de KPIs (relatório parcial, set/2025), evoluiu para uma aplicação \textit{full-stack} em produção, co-desenvolvida em colaboração com a \textbf{Dra.\ Carla Rocha} (professora de Métodos de Desenvolvimento de Software --- MDS, na Universidade de Brasília). A plataforma implementa integralmente a \textbf{Arquitetura Medalhão} (Bronze$\rightarrow$Silver$\rightarrow$Gold), conta com \textbf{13+ páginas interativas} com visualizações D3.js, análise por inteligência artificial via API Google Gemini e duas instâncias em produção: \textbf{UnB} (\url{https://unb-mds.github.io/2025-2-Squad-01/}) e \textbf{UDF/LabTech} (\url{https://labtechudf.github.io/CoOps/}). Danrley construiu a plataforma e iterou diretamente com Dra.\ Carla para definir quais dados Silver e Gold ela necessitava para suas disciplinas. Ao final do semestre, Dra.\ Carla utilizou o dashboard para avaliar seus alunos --- validando o software em contexto pedagógico real. A otimização do pipeline de extração alcançou ganho de \textbf{100x} em desempenho. O frontend atinge \textbf{94\% de cobertura de testes}. O dashboard é distribuído sob licença \textbf{GPL v3.0} e opera com \textbf{infraestrutura zero} via GitHub Pages e GitHub Actions.
 
 % ----------------------------------------------------------
 % 3. INTRODUÇÃO
@@ -118,11 +235,11 @@ A proposta original deste projeto PIBIT visava desenvolver um \textit{dashboard}
 
 Após o relatório parcial, o projeto evoluiu significativamente em escopo e maturidade. A fábrica de software LabTech do UDF não possuía projeto ativo no segundo semestre de 2025, o que motivou a busca por uma colaboração externa. A parceria foi estabelecida com a \textbf{Dra.\ Carla Rocha}, professora de Métodos de Desenvolvimento de Software (MDS) na Universidade de Brasília (UnB), que já havia sido entrevistada na fase de levantamento qualitativo (Apêndice A). Dra.\ Carla coordena disciplinas nas quais dezenas de equipes de estudantes desenvolvem projetos de software em organizações GitHub, configurando um cenário ideal para validação da plataforma.
 
-A partir dessa colaboração, os protótipos iniciais deram lugar ao \textbf{CoOps} --- uma plataforma \textit{full-stack} de código aberto para análise cooperativa de organizações GitHub. Danrley construiu o CoOps e colaborou diretamente com Dra.\ Carla para decidir quais dados das camadas Silver e Gold ela necessitava para acompanhar e avaliar suas turmas. O processo foi iterativo: juntos, eles definiram métricas, visualizações e camadas de dados. Um módulo de análise por inteligência artificial foi adicionado para gerar resumos em linguagem natural das contribuições dos membros.
+A partir dessa colaboração, os protótipos iniciais deram lugar ao \textbf{Dashboard de Monitoramento de Métricas de Produtividade e Qualidade} --- uma plataforma \textit{full-stack} de código aberto para análise cooperativa de organizações GitHub. Danrley construiu a plataforma e colaborou diretamente com Dra.\ Carla para decidir quais dados das camadas Silver e Gold ela necessitava para acompanhar e avaliar suas turmas. O processo foi iterativo: juntos, eles definiram métricas, visualizações e camadas de dados. Um módulo de análise por inteligência artificial foi adicionado para gerar resumos em linguagem natural das contribuições dos membros.
 
-A validação mais significativa ocorreu ao final do semestre, quando Dra.\ Carla utilizou o CoOps para \textbf{avaliar seus alunos} --- demonstrando que o software atende a necessidades reais de avaliação pedagógica em fábricas de software acadêmicas.
+A validação mais significativa ocorreu ao final do semestre, quando Dra.\ Carla utilizou o dashboard para \textbf{avaliar seus alunos} --- demonstrando que o software atende a necessidades reais de avaliação pedagógica em fábricas de software acadêmicas.
 
-O CoOps tem relevância tanto para a \textbf{academia} --- ao possibilitar avaliação baseada em evidências de equipes de software --- quanto para a \textbf{indústria} --- ao fornecer um pipeline de analytics reproduzível, de custo zero e aplicável a qualquer organização GitHub \cite{kitchenham2010s,ozkan2019agile}.
+O dashboard tem relevância tanto para a \textbf{academia} --- ao possibilitar avaliação baseada em evidências de equipes de software --- quanto para a \textbf{indústria} --- ao fornecer um pipeline de analytics reproduzível, de custo zero e aplicável a qualquer organização GitHub \cite{kitchenham2010s,ozkan2019agile}.
 
 % ----------------------------------------------------------
 % 4. MATERIAIS E MÉTODOS
@@ -133,7 +250,7 @@ O CoOps tem relevância tanto para a \textbf{academia} --- ao possibilitar avali
 
 O projeto adotou abordagem de \textbf{métodos mistos} (quanti-qualitativa). A componente qualitativa envolveu entrevistas semiestruturadas com gestores de fábricas de software acadêmicas (Apêndice A --- LAPPIS/UnB; Apêndice B --- LabTech/UDF), que orientaram o desenho dos KPIs e a priorização de funcionalidades. A componente quantitativa se materializou na extração automatizada de dados via API do GitHub e na produção de métricas e visualizações para análise de equipes.
 
-O desenvolvimento seguiu ciclos iterativos de co-desenvolvimento: Danrley construía funcionalidades no CoOps, apresentava os resultados a Dra.\ Carla Rocha (UnB), e ambos decidiam conjuntamente os próximos dados e visualizações a serem incorporados nas camadas Silver e Gold. Esse modelo de co-desenvolvimento academia-academia é sustentado pela literatura sobre colaboração e co-criação \cite{bjerregaard2021lessons,jarvela2018collaboration,franssen2019cogs}.
+O desenvolvimento seguiu ciclos iterativos de co-desenvolvimento: Danrley construía funcionalidades no dashboard, apresentava os resultados a Dra.\ Carla Rocha (UnB), e ambos decidiam conjuntamente os próximos dados e visualizações a serem incorporados nas camadas Silver e Gold. Esse modelo de co-desenvolvimento academia-academia é sustentado pela literatura sobre colaboração e co-criação \cite{bjerregaard2021lessons,jarvela2018collaboration,franssen2019cogs}.
 
 \subsection*{4.2 Pipeline de dados: Arquitetura Medalhão}
 
@@ -181,9 +298,9 @@ Cada imagem (tabelas, gráficos, figuras) é citada no texto e apresentada nos A
 % ----------------------------------------------------------
 \section*{5.\ Resultados Finais}
 
-\subsection*{5.1 Visão geral da plataforma CoOps}
+\subsection*{5.1 Visão geral da plataforma}
 
-O CoOps é uma aplicação \textit{full-stack} de código aberto para análise cooperativa de organizações GitHub. A plataforma transforma dados brutos de repositórios em insights acionáveis por meio de visualizações interativas e análise por inteligência artificial. Duas instâncias estão em produção:
+O dashboard é uma aplicação \textit{full-stack} de código aberto para análise cooperativa de organizações GitHub. A plataforma transforma dados brutos de repositórios em insights acionáveis por meio de visualizações interativas e análise por inteligência artificial. Duas instâncias estão em produção:
 
 \begin{itemize}
     \item \textbf{UnB (MDS)}: \url{https://unb-mds.github.io/2025-2-Squad-01/} --- analisa a organização \texttt{unb-mds} com 70+ repositórios de equipes de alunos.
@@ -193,7 +310,7 @@ O CoOps é uma aplicação \textit{full-stack} de código aberto para análise c
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.9\textwidth]{screenshot-coops/pagina-inicial.png}
-\caption{Página inicial do CoOps (\url{https://labtechudf.github.io/CoOps/}), exibindo a visão geral da organização com navegação para repositórios, membros e visualizações.}
+\caption{Página inicial do dashboard (\url{https://labtechudf.github.io/CoOps/}), exibindo a visão geral da organização com navegação para repositórios, membros e visualizações.}
 \label{fig:pagina-inicial}
 \end{figure}
 
@@ -234,7 +351,7 @@ O pipeline implementa integralmente a Arquitetura Medalhão:
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.9\textwidth]{screenshot-coops/pipelines-github-todos-workflows-rodados.png}
-\caption{Workflows do GitHub Actions executando o pipeline de extração e transformação de dados do CoOps. Cada execução processa as camadas Bronze, Silver e Gold automaticamente.}
+\caption{Workflows do GitHub Actions executando o pipeline de extração e transformação de dados do dashboard. Cada execução processa as camadas Bronze, Silver e Gold automaticamente.}
 \label{fig:pipeline-github}
 \end{figure}
 
@@ -271,7 +388,7 @@ O frontend conta com \textbf{13+ páginas interativas} construídas com React 19
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.9\textwidth]{screenshot-coops/heatmap.png}
-\caption{Heatmap de atividade do CoOps, exibindo padrões temporais de contribuições (dia da semana $\times$ hora do dia).}
+\caption{Heatmap de atividade do dashboard, exibindo padrões temporais de contribuições (dia da semana $\times$ hora do dia).}
 \label{fig:heatmap-coops}
 \end{figure}
 
@@ -305,7 +422,7 @@ O frontend conta com \textbf{13+ páginas interativas} construídas com React 19
 
 \subsection*{5.4 Análise por inteligência artificial}
 
-O CoOps integra a API do \textbf{Google Gemini} para geração de resumos em linguagem natural:
+O dashboard integra a API do \textbf{Google Gemini} para geração de resumos em linguagem natural:
 
 \begin{itemize}
     \item Processamento em lote das contribuições de cada membro
@@ -324,13 +441,13 @@ Este módulo foi adicionado durante as iterações com Dra.\ Carla Rocha, atende
 
 \subsection*{5.5 Co-desenvolvimento e uso real}
 
-O modelo de desenvolvimento do CoOps seguiu um processo de \textbf{co-desenvolvimento academia-academia}:
+O modelo de desenvolvimento do dashboard seguiu um processo de \textbf{co-desenvolvimento academia-academia}:
 
 \begin{itemize}
-    \item Danrley construiu o CoOps e colaborou diretamente com Dra.\ Carla Rocha (UnB) para definir quais dados das camadas Silver e Gold ela necessitava para suas disciplinas de MDS.
+    \item Danrley construiu a plataforma e colaborou diretamente com Dra.\ Carla Rocha (UnB) para definir quais dados das camadas Silver e Gold ela necessitava para suas disciplinas de MDS.
     \item O processo foi \textbf{iterativo}: Danrley e Carla decidiam juntos sobre métricas, visualizações e camadas de dados. A cada ciclo, novos módulos Silver/Gold eram implementados e validados.
     \item O módulo de \textbf{análise por IA} foi adicionado com base nas necessidades identificadas durante a colaboração.
-    \item Ao final do semestre 2025/2, Dra.\ Carla \textbf{utilizou o CoOps para avaliar seus alunos} --- configurando uma validação pedagógica real do software.
+    \item Ao final do semestre 2025/2, Dra.\ Carla \textbf{utilizou o dashboard para avaliar seus alunos} --- configurando uma validação pedagógica real do software.
     \item Duas instâncias em produção foram implantadas: UnB (\texttt{unb-mds.github.io}) e UDF (\texttt{labtechudf.github.io/CoOps}).
     \item A instância UnB analisa \textbf{70+ repositórios} da organização \texttt{unb-mds}, demonstrando a escalabilidade da solução.
 \end{itemize}
@@ -338,7 +455,7 @@ O modelo de desenvolvimento do CoOps seguiu um processo de \textbf{co-desenvolvi
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.9\textwidth]{screenshot-coops/activity-timeline-screen-partial-view-here-we-can-see-prs-issues-etc-by-user.png}
-\caption{Timeline de atividade do CoOps analisando repositórios da organização unb-mds, com visualização de PRs, issues e contribuições por membro.}
+\caption{Timeline de atividade do dashboard analisando repositórios da organização unb-mds, com visualização de PRs, issues e contribuições por membro.}
 \label{fig:timeline-unb-mds}
 \end{figure}
 
@@ -351,7 +468,7 @@ O modelo de desenvolvimento do CoOps seguiu um processo de \textbf{co-desenvolvi
 
 \subsection*{5.6 KPIs implementados}
 
-Os KPIs implementados no CoOps abrangem quatro dimensões:
+Os KPIs implementados no dashboard abrangem quatro dimensões:
 
 \textbf{Técnicos:}
 \begin{itemize}
@@ -409,7 +526,7 @@ Os KPIs implementados no CoOps abrangem quatro dimensões:
 
 \textbf{Co-desenvolvimento como modelo eficaz.} O modelo de co-desenvolvimento com Dra.\ Carla Rocha demonstrou-se eficaz: as iterações conjuntas sobre dados Silver/Gold garantiram que as métricas e visualizações atendessem a necessidades reais de avaliação pedagógica. Esse resultado é consonante com a literatura sobre co-criação academia-indústria \cite{bjerregaard2021lessons} e coordenação temporal em projetos colaborativos \cite{franssen2019cogs}.
 
-\textbf{Validação pedagógica real.} O fato de Dra.\ Carla ter utilizado o CoOps para avaliar seus alunos ao final do semestre constitui a evidência mais forte da utilidade prática da plataforma. Essa validação vai além de testes-piloto controlados --- trata-se de uso real, em contexto pedagógico autêntico, com dezenas de equipes e 70+ repositórios.
+\textbf{Validação pedagógica real.} O fato de Dra.\ Carla ter utilizado o dashboard para avaliar seus alunos ao final do semestre constitui a evidência mais forte da utilidade prática da plataforma. Essa validação vai além de testes-piloto controlados --- trata-se de uso real, em contexto pedagógico autêntico, com dezenas de equipes e 70+ repositórios.
 
 \textbf{Maturidade técnica.} A otimização de \textbf{100x no desempenho} da extração (de 3--4 horas para 30--40 segundos) demonstra evolução técnica significativa. A migração de GraphQL para REST API, embora contraintuitiva, mostrou-se superior para o caso de uso específico de extração em lote de organizações GitHub.
 
@@ -417,26 +534,26 @@ Os KPIs implementados no CoOps abrangem quatro dimensões:
 
 \textbf{Escalabilidade comprovada.} A instância UnB, analisando 70+ repositórios da organização \texttt{unb-mds}, demonstra que a solução escala para cenários reais de múltiplas equipes. O pipeline diário automatizado garante dados atualizados sem intervenção manual.
 
-\textbf{Triangulação qualitativa.} Os dados qualitativos (Apêndices A e B) foram validados pelos dados quantitativos: a importância de métricas de ramp-up (Slope\_8w), clones iniciais, grafos de colaboração e regularidade semanal --- todos incorporados como KPIs no CoOps --- confirmou-se na prática com as turmas de Dra.\ Carla \cite{hamer2021using,kitchenham2010s}.
+\textbf{Triangulação qualitativa.} Os dados qualitativos (Apêndices A e B) foram validados pelos dados quantitativos: a importância de métricas de ramp-up (Slope\_8w), clones iniciais, grafos de colaboração e regularidade semanal --- todos incorporados como KPIs no dashboard --- confirmou-se na prática com as turmas de Dra.\ Carla \cite{hamer2021using,kitchenham2010s}.
 
-\textbf{Democratização via arquitetura serverless.} O CoOps demonstra que uma arquitetura serverless (GitHub Actions + GitHub Pages) pode democratizar o acesso a analytics avançados: custo zero, sem infraestrutura para manter, replicável por qualquer instituição. Isso remove barreiras técnicas e financeiras que historicamente limitaram a adoção de ferramentas de monitoramento em contextos acadêmicos \cite{vega2022scrumwatch,ozkan2019agile}.
+\textbf{Democratização via arquitetura serverless.} O dashboard demonstra que uma arquitetura serverless (GitHub Actions + GitHub Pages) pode democratizar o acesso a analytics avançados: custo zero, sem infraestrutura para manter, replicável por qualquer instituição. Isso remove barreiras técnicas e financeiras que historicamente limitaram a adoção de ferramentas de monitoramento em contextos acadêmicos \cite{vega2022scrumwatch,ozkan2019agile}.
 
-\textbf{Relevância para a indústria.} Além do contexto acadêmico, o pipeline de dados reproduzível e de custo zero é aplicável a qualquer organização GitHub. Empresas podem utilizar o CoOps para monitorar equipes de desenvolvimento com as mesmas métricas e visualizações, sem investimento em infraestrutura.
+\textbf{Relevância para a indústria.} Além do contexto acadêmico, o pipeline de dados reproduzível e de custo zero é aplicável a qualquer organização GitHub. Empresas podem utilizar o dashboard para monitorar equipes de desenvolvimento com as mesmas métricas e visualizações, sem investimento em infraestrutura.
 
-\textbf{Relevância para a academia.} O CoOps possibilita avaliação pedagógica baseada em evidências --- permitindo que docentes identifiquem padrões de colaboração, acompanhem evolução temporal e fundamentem notas em dados objetivos, sem depender exclusivamente de percepções subjetivas \cite{oliveira2017conduccao,dos2021experiencia}.
+\textbf{Relevância para a academia.} O dashboard possibilita avaliação pedagógica baseada em evidências --- permitindo que docentes identifiquem padrões de colaboração, acompanhem evolução temporal e fundamentem notas em dados objetivos, sem depender exclusivamente de percepções subjetivas \cite{oliveira2017conduccao,dos2021experiencia}.
 
 % ----------------------------------------------------------
 % 7. CONCLUSÃO
 % ----------------------------------------------------------
 \section*{7.\ Conclusão}
 
-O projeto PIBIT superou o escopo originalmente proposto: de um protótipo de coleta e visualização, evoluiu para o \textbf{CoOps} --- uma plataforma \textit{full-stack} em produção, validada e utilizada em contexto pedagógico real. O CoOps foi implantado e validado em \textbf{duas instituições} (UnB e UDF), demonstrando sua aplicabilidade e escalabilidade.
+O projeto PIBIT superou o escopo originalmente proposto: de um protótipo de coleta e visualização, evoluiu para o \textbf{Dashboard de Monitoramento de Métricas de Produtividade e Qualidade} --- uma plataforma \textit{full-stack} em produção, validada e utilizada em contexto pedagógico real. O dashboard foi implantado e validado em \textbf{duas instituições} (UnB e UDF), demonstrando sua aplicabilidade e escalabilidade.
 
-O modelo de co-desenvolvimento com Dra.\ Carla Rocha (UnB) mostrou-se eficaz: as iterações conjuntas sobre dados Silver e Gold, culminando na adição do módulo de análise por IA, produziram uma ferramenta que atende a necessidades reais de docentes que coordenam fábricas de software acadêmicas. A validação mais expressiva foi o \textbf{uso real para avaliação de alunos} ao final do semestre --- confirmando a relevância pedagógica do CoOps.
+O modelo de co-desenvolvimento com Dra.\ Carla Rocha (UnB) mostrou-se eficaz: as iterações conjuntas sobre dados Silver e Gold, culminando na adição do módulo de análise por IA, produziram uma ferramenta que atende a necessidades reais de docentes que coordenam fábricas de software acadêmicas. A validação mais expressiva foi o \textbf{uso real para avaliação de alunos} ao final do semestre --- confirmando a relevância pedagógica do dashboard.
 
-Do ponto de vista técnico, o CoOps demonstra que práticas de engenharia de dados da indústria (Arquitetura Medalhão, CI/CD, deploy serverless) podem ser aplicadas com sucesso ao contexto acadêmico. A otimização de 100x no pipeline, os 94\% de cobertura de testes e a arquitetura de infraestrutura zero evidenciam a maturidade técnica alcançada.
+Do ponto de vista técnico, o dashboard demonstra que práticas de engenharia de dados da indústria (Arquitetura Medalhão, CI/CD, deploy serverless) podem ser aplicadas com sucesso ao contexto acadêmico. A otimização de 100x no pipeline, os 94\% de cobertura de testes e a arquitetura de infraestrutura zero evidenciam a maturidade técnica alcançada.
 
-A distribuição sob licença \textbf{GPL v3.0} e a documentação abrangente (CONTRIBUTING.md, ARQUITETURA.md, EXTRACAO\_DADOS.md) garantem que outras instituições possam replicar e adaptar o CoOps às suas necessidades.
+A distribuição sob licença \textbf{GPL v3.0} e a documentação abrangente (CONTRIBUTING.md, ARQUITETURA.md, EXTRACAO\_DADOS.md) garantem que outras instituições possam replicar e adaptar o dashboard às suas necessidades.
 
 \textbf{Trabalhos futuros}: expansão para mais instituições; incorporação de métricas de qualidade de código (complexidade ciclomática, cobertura de testes dos projetos analisados); predições baseadas em aprendizado de máquina para identificação precoce de equipes em risco; e integração com outras plataformas além do GitHub (GitLab, Bitbucket).
 
@@ -529,7 +646,7 @@ A distribuição sob licença \textbf{GPL v3.0} e a documentação abrangente (C
 \label{apendiceC}
 
 \section*{Contexto}
-Este apêndice resume a exploração de scripts e sua execução para coleta e análise de dados da organização \texttt{LabTechUDF} no GitHub, servindo como base para construção do CoOps.
+Este apêndice resume a exploração de scripts e sua execução para coleta e análise de dados da organização \texttt{LabTechUDF} no GitHub, servindo como base para construção do dashboard.
 
 \section*{Como os dados foram capturados}
 A pipeline implementa um \textbf{ETL} completo com:
@@ -627,12 +744,12 @@ As figuras a seguir ilustram exemplos das 20 visualizações geradas na fase de 
 \end{figure}
 
 
-\chapter{Arquitetura e Funcionalidades do CoOps}
+\chapter{Arquitetura e Funcionalidades do dashboard}
 \label{apendiceD}
 
 \section*{Topologia da aplicação}
 
-O CoOps segue uma arquitetura serverless composta por:
+O dashboard segue uma arquitetura serverless composta por:
 \begin{itemize}
     \item \textbf{Pipeline Python} executado via GitHub Actions (extração, transformação, análise por IA)
     \item \textbf{Frontend React/TypeScript} servido via GitHub Pages
@@ -687,15 +804,15 @@ A Figura~\ref{fig:sequencia-etl} ilustra o diagrama de sequência deste processo
 \end{itemize}
 
 
-\chapter{Galeria de Screenshots do CoOps}
+\chapter{Galeria de Screenshots do dashboard}
 \label{apendiceE}
 
-As figuras a seguir apresentam capturas de tela adicionais da plataforma CoOps em operação, complementando as figuras inseridas ao longo do texto principal.
+As figuras a seguir apresentam capturas de tela adicionais da plataforma em operação, complementando as figuras inseridas ao longo do texto principal.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.9\textwidth]{screenshot-coops/pagina-inicial.png}
-\caption{Página inicial do CoOps.}
+\caption{Página inicial do dashboard.}
 \end{figure}
 
 \begin{figure}[ht]
