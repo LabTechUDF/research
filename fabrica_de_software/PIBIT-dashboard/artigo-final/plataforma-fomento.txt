@@ -1,0 +1,63 @@
+METODOS
+=======
+
+A metodologia adotada neste projeto segue uma abordagem mista, considerando aspectos qualitativos (observacoes, relatorios, entrevistas, diarios de bordo) e quantitativos (metricas coletadas automaticamente do GitHub).
+
+Tipo de Pesquisa: O trabalho caracteriza-se como pesquisa aplicada, com o objetivo de produzir uma ferramenta (dashboard) de uso pratico em Fabricas de Software Academicas. A pesquisa possui natureza descritiva e exploratoria, pois busca mapear e sintetizar metricas relevantes de sucesso em projetos academicos.
+
+Coleta de Dados: A coleta de dados e realizada em duas vertentes:
+1. Qualitativa: por meio de entrevistas semiestruturadas com professores e gestores de fabricas de software academicas, alem de observacoes em reunioes, a fim de identificar quais metricas sao mais valorizadas e quais necessidades nao sao atendidas pelas ferramentas existentes.
+2. Quantitativa: utilizando a API do GitHub para extrair dados de commits, issues, pull requests, comentarios e dados de rede (como a relacao entre revisores e autores).
+
+Analise e Desenvolvimento:
+- Definicao de KPIs: a partir da revisao de literatura e das entrevistas, sao selecionadas as principais metricas que reflitam o progresso (ex.: burndown, velocidade de fechamento de issues), o engajamento (rede de colaboracao, distribuicao de commits) e aspectos qualitativos.
+- Prototipagem: desenvolvimento de scripts em Python para a coleta e consolidacao dos dados, seguido pela criacao de uma interface web com React e D3.js para a visualizacao das metricas.
+- Testes-Piloto: implementacao inicial do dashboard para uso em fabricas de software academicas, com a coleta de feedback dos participantes e a realizacao de ajustes nas funcionalidades e visualizacoes.
+
+Aspectos Eticos: Sera garantido o anonimato dos participantes nas analises de engajamento (por exemplo, por meio do uso de hash de e-mails ou identificadores). Os dados coletados serao utilizados exclusivamente para fins de pesquisa e melhoria de processos, sem divulgacao publica de informacoes sensiveis. O projeto seguira as diretrizes eticas recomendadas pelo Comite de Etica em Pesquisa do UDF.
+
+Articulacao para acessibilidade dos resultados: A solucao e desenvolvida como software open source sob licenca GNU General Public License 3 (GPL3), permitindo que qualquer instituicao de ensino superior -- estadual, municipal ou federal -- possa adotar, adaptar e replicar o dashboard sem custos de licenciamento. O codigo-fonte e disponibilizado publicamente no GitHub (github.com/LabTechUDF), e o dashboard e implantado via GitHub Pages, garantindo acesso gratuito e sem necessidade de infraestrutura propria. A documentacao tecnica e os dados gerados (camadas Bronze, Silver e Gold) permanecem acessiveis para que pesquisadores e outras organizacoes possam reutiliza-los em suas proprias analises. Alem disso, o artigo cientifico resultante sera submetido a periodico ou conferencia da area, e o relatorio final e entregue a COP/UDF e disponibilizado no repositorio institucional.
+
+
+PLANO DE ATIVIDADES / CRONOGRAMA DE EXECUCAO
+=============================================
+Periodo: abril de 2025 (mes 1) a marco de 2026 (mes 12), totalizando 12 meses.
+
+Atividade 1 - Revisao de Literatura (OE1)
+Meses: 1, 2
+Descricao: Realizar a revisao de literatura e iniciar a definicao dos KPIs, identificando paralelos entre o presente trabalho e estudos correlatos.
+
+Atividade 2 - Definicao de KPIs (OE2)
+Meses: 2, 3
+Descricao: Concluir a definicao das metricas, estabelecendo quais dados serao coletados e quais graficos/tabelas comporao o dashboard.
+
+Atividade 3 - Coleta/extracao de dados (OE3)
+Meses: 4, 5
+Descricao: Desenvolver a camada de extracao de dados por meio da API do GitHub, implementando o pipeline ETL na Arquitetura Medalhao (Bronze, Silver, Gold).
+
+Atividade 4 - Construcao do Dashboard (OE4)
+Meses: 5, 6
+Descricao: Implementar a versao inicial do dashboard com base nas metricas definidas, desenvolvendo a interface web interativa com visualizacoes D3.js.
+
+Atividade 5 - Testes-Piloto e Ajustes (OE5)
+Meses: 7, 8, 9
+Descricao: Realizar testes-piloto com fabricas de software academicas, coletar feedbacks e efetuar os ajustes necessarios nas funcionalidades e visualizacoes.
+
+Atividade 6 - Analise de Resultados e Relatorio
+Meses: 10, 11
+Descricao: Analisar os resultados obtidos, elaborar o relatorio final e disponibilizar a solucao sob licenca GPL3.
+
+Atividade 7 - Apresentacao no Congresso UDF
+Mes: 12
+Descricao: Apresentar os achados no Congresso UDF e encerrar o projeto.
+
+Quadro-resumo:
+
+Atividade                              M1  M2  M3  M4  M5  M6  M7  M8  M9  M10 M11 M12
+Revisao de Literatura (OE1)             x   x
+Definicao de KPIs (OE2)                 x   x   x
+Coleta/extracao de dados (OE3)                      x   x
+Construcao do Dashboard (OE4)                           x   x
+Testes-Piloto e Ajustes (OE5)                                   x   x   x
+Analise de Resultados e Relatorio                                            x   x
+Apresentacao no Congresso UDF                                                        x

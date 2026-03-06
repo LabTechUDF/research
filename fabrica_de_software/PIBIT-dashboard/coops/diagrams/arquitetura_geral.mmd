@@ -1,0 +1,140 @@
+graph TB
+    %% Arquitetura Geral - Dashboard Fábrica de Software Acadêmica
+    %% Solução serverless: GitHub Actions + Firebase + React/D3.js
+
+    subgraph Internet ["🌐 Internet"]
+        direction LR
+        GITHUB[GitHub Platform]
+        FIREBASE[Firebase Platform]
+    end
+
+    subgraph Academic ["🎓 Ambiente Acadêmico"]
+        PROF[👨‍🏫 Professores<br/>Gestores]
+        STUD[👨‍🎓 Estudantes<br/>Colaboradores]
+        RESEAR[🔬 Pesquisadores<br/>Analistas]
+    end
+
+    subgraph GitHubInfra ["📦 GitHub Infrastructure"]
+        direction TB
+
+        subgraph OrgRepos ["🏢 Organização & Repositórios"]
+            ORG[LabTechUDF<br/>Organization]
+            REPO1[Projeto A<br/>Repository]
+            REPO2[Projeto B<br/>Repository]
+            REPO3[Projeto N<br/>Repository]
+
+            ORG --> REPO1
+            ORG --> REPO2
+            ORG --> REPO3
+        end
+
+        subgraph DashRepo ["📊 Dashboard Repository"]
+            MAIN[main branch<br/>Dashboard Source]
+
+            subgraph DataStorage ["💾 Data Storage"]
+                BRONZE_DIR[📁 data/bronze/<br/>Raw JSON files]
+                SILVER_DIR[📁 data/silver/<br/>Normalized CSV/Parquet]
+                GOLD_DIR[📁 data/gold/<br/>KPIs JSON]
+
+                BRONZE_DIR --> SILVER_DIR
+                SILVER_DIR --> GOLD_DIR
+            end
+
+            subgraph CodeAssets ["💻 Code Assets"]
+                SCRIPTS[📝 Python ETL Scripts]
+                FRONTEND[⚛️ React/D3 Frontend]
+                WORKFLOWS[🔧 GitHub Actions<br/>Workflows]
+            end
+
+            MAIN --> DataStorage
+            MAIN --> CodeAssets
+        end
+    end
+
+    subgraph ProcessingLayer ["⚙️ Processing Layer"]
+        direction LR
+
+        subgraph Actions ["🔄 GitHub Actions"]
+            SCHEDULE[⏰ Scheduled Trigger<br/>Daily: 0 6 * * *]
+            ETL_JOB[🐍 ETL Job<br/>Python Scripts]
+            DEPLOY_JOB[🚀 Deploy Job<br/>Firebase Deploy]
+
+            SCHEDULE --> ETL_JOB
+            ETL_JOB --> DEPLOY_JOB
+        end
+
+        subgraph ETL_Steps ["📊 ETL Process"]
+            EXTRACT[Extract<br/>GitHub API calls]
+            TRANSFORM[Transform<br/>Normalize & Clean]
+            LOAD[Load<br/>Store in repository]
+
+            EXTRACT --> TRANSFORM
+            TRANSFORM --> LOAD
+        end
+    end
+
+    subgraph FrontendLayer ["🖥️ Frontend Layer"]
+        direction TB
+
+        subgraph Hosting ["☁️ Firebase Hosting"]
+            STATIC[Static Web App<br/>React Build]
+            CDN[Global CDN<br/>Edge Locations]
+            STATIC --> CDN
+        end
+
+        subgraph AppComponents ["⚛️ React Application"]
+            DASHBOARD[📊 Dashboard Views]
+            D3VIZ[📈 D3.js Visualizations]
+            API_CLIENT[🔌 GitHub API Client]
+
+            DASHBOARD --> D3VIZ
+            DASHBOARD --> API_CLIENT
+        end
+    end
+
+    %% Main data flows (use concrete nodes, not subgraph IDs)
+    REPO1 -.->|GitHub API<br/>Fetch Data| EXTRACT
+    REPO2 -.->|GitHub API<br/>Fetch Data| EXTRACT
+    REPO3 -.->|GitHub API<br/>Fetch Data| EXTRACT
+    
+    %% ETL Flow Connection
+    ETL_JOB --> EXTRACT
+    EXTRACT --> BRONZE_DIR
+    TRANSFORM --> SILVER_DIR
+    LOAD --> GOLD_DIR
+
+    %% Deployment flow
+    WORKFLOWS --> ETL_JOB
+    WORKFLOWS --> DEPLOY_JOB
+    DEPLOY_JOB --> STATIC
+
+    %% Frontend data consumption
+    API_CLIENT -.->|Fetch KPIs<br/>GitHub API| GOLD_DIR
+    API_CLIENT -.->|Advanced Queries<br/>Research Access| SILVER_DIR
+
+    %% User interactions (point to concrete node)
+    Academic -->|HTTPS Access| CDN
+    CDN --> DASHBOARD
+
+    %% Advanced access for researchers (concrete nodes)
+    RESEAR -.->|Direct API| BRONZE_DIR
+    RESEAR -.->|Direct API| SILVER_DIR
+
+    %% External connections
+    GITHUB --> GitHubInfra
+    FIREBASE --> Hosting
+
+    %% Styling
+    classDef academicClass fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px;
+    classDef githubClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+    classDef processClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    classDef frontendClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px;
+    classDef dataClass fill:#fce4ec,stroke:#c2185b,stroke-width:2px;
+    classDef infraClass fill:#f1f8e9,stroke:#388e3c,stroke-width:2px;
+
+    class PROF,STUD,RESEAR academicClass;
+    class ORG,REPO1,REPO2,REPO3,MAIN githubClass;
+    class SCHEDULE,ETL_JOB,DEPLOY_JOB,EXTRACT,TRANSFORM,LOAD processClass;
+    class STATIC,CDN,DASHBOARD,D3VIZ,API_CLIENT frontendClass;
+    class BRONZE_DIR,SILVER_DIR,GOLD_DIR dataClass;
+    class GITHUB,FIREBASE infraClass;
