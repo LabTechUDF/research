@@ -1,0 +1,93 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Seção: Módulo de Indexação Vetorial (DBVECTOR)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Módulo de Indexação Vetorial (DBVECTOR)}
+\label{sec:dbvector}
+
+\subsection{Objetivo e Escopo}
+A recuperação eficiente de informações em grandes acervos documentais constitui desafio fundamental em sistemas de recuperação de informação, especialmente quando aplicados ao domínio jurídico, caracterizado por vocabulário especializado e alta densidade informacional. Nesse contexto, o módulo DBVECTOR foi concebido e desenvolvido para prover uma camada especializada de indexação semântica, responsável pela construção, armazenamento e consulta de representações vetoriais (\textit{embeddings}) de documentos textuais, com ênfase em documentos jurídicos relacionados ao SEEU, legislação penal e jurisprudência.
+
+O propósito central desse módulo é permitir a recuperação eficiente dos documentos mais relevantes para uma consulta formulada em linguagem natural, servindo de alicerce para o \textit{pipeline} de Recuperação Aumentada por Geração (RAG). Para tanto, o DBVECTOR articula os seguintes objetivos específicos: (i) receber documentos previamente estruturados em formato textual, acompanhados de metadados enriquecidos; (ii) realizar pré-processamento textual e geração de \textit{embeddings} por meio de modelos de linguagem especializados; (iii) construir e manter índices vetoriais em \textit{backends} especializados, notadamente FAISS e, de forma opcional, OpenSearch; (iv) expor operações de consulta que aceitem \textit{queries} em linguagem natural e retornem documentos ordenados por similaridade semântica; e (v) disponibilizar mecanismos de avaliação da qualidade de recuperação e do desempenho do sistema, permitindo aprimoramentos contínuos.
+
+\subsection{Arquitetura Lógica e Componentes Principais}
+A arquitetura lógica do DBVECTOR adota organização em camadas, segregando responsabilidades relacionadas à geração de vetores, ao armazenamento, à consulta e à avaliação. Essa separação de responsabilidades, fundamentada em princípios de engenharia de software, favorece a modularidade, extensibilidade e manutenibilidade do sistema. De forma sintética, destacam-se os seguintes componentes principais:
+
+\begin{itemize}
+  \item \textbf{Camada de tratamento de dados}: responsável por limpar, normalizar e, quando necessário, segmentar o texto dos documentos, bem como padronizar campos de metadados antes da vetorização. A estratégia de segmentação (\textit{chunking}) adotada divide documentos extensos em trechos de tamanho configurável --- tipicamente entre 500 e 1\,000 tokens --- com sobreposição controlada (\textit{overlap}) de aproximadamente 10\% a 20\% do tamanho do trecho. Essa sobreposição visa preservar o contexto semântico nas fronteiras entre segmentos consecutivos, mitigando perdas de coerência que poderiam prejudicar a recuperação de passagens relevantes. Adicionalmente, são aplicados procedimentos de limpeza que removem caracteres de controle, normalizam espaços em branco e eliminam duplicações textuais, assegurando qualidade e consistência na representação vetorial;
+  \item \textbf{Camada de \textit{embeddings}}: encapsula a integração com modelos de linguagem sejam eles executados localmente ou acessados remotamente via API  para geração de \textit{embeddings} a partir de trechos de texto, produzindo vetores numéricos em ponto flutuante que capturam relações semânticas. O modelo de \textit{embeddings} selecionado para o protótipo é baseado em arquiteturas \textit{transformer} pré-treinadas em corpus multilíngue, gerando representações vetoriais em espaço de alta dimensionalidade (tipicamente 768 ou 1\,024 dimensões, dependendo da variante do modelo). A consistência do modelo é fundamental: o mesmo modelo utilizado na indexação deve ser mantido durante a geração de \textit{embeddings} de consultas, garantindo que documentos e \textit{queries} sejam projetados no mesmo espaço vetorial e, consequentemente, que as medidas de similaridade reflitam adequadamente a proximidade semântica;
+  \item \textbf{Camada de armazenamento vetorial}: implementa o armazenamento persistente e a busca aproximada por similaridade, com suporte a \textit{backends} especializados como FAISS e, alternativamente, OpenSearch com capacidades vetoriais. A escolha do \textit{backend} influencia diretamente o desempenho e a escalabilidade do sistema;
+  \item \textbf{Camada de API e serviços}: expõe interface de consulta (API) que recebe consultas textuais, aciona a geração de \textit{embeddings} da \textit{query}, executa a busca vetorial e retorna os documentos mais similares juntamente com seus metadados enriquecidos, em formato estruturado para consumo pelos demais componentes da \textit{pipeline}. Ademais, essa camada incorpora mecanismos de registro (\textit{logging}) que capturam informações relevantes sobre cada operação de consulta --- incluindo texto da \textit{query}, parâmetros de busca (como número de resultados solicitados, \textit{thresholds} de similaridade), tempo de resposta e identificadores dos documentos recuperados. Esses registros possibilitam análise posterior de padrões de uso, identificação de gargalos de desempenho e diagnóstico de falhas, contribuindo para a confiabilidade e a manutenibilidade do sistema;
+  \item \textbf{Camada de avaliação e monitoramento}: agrega \textit{scripts} e procedimentos voltados à avaliação de qualidade por meio de métricas de recuperação como precisão, \textit{recall} e F\textsubscript{1} e de desempenho das operações de indexação e consulta, permitindo aprimoramentos contínuos. Adicionalmente, são coletadas métricas operacionais como latência de busca, taxa de sucesso de requisições e distribuição de escores de similaridade, que informam ajustes de configuração e dimensionamento de recursos. Em ambientes de desenvolvimento, painéis de diagnóstico podem exibir essas métricas em tempo real, facilitando a identificação de anomalias e a validação de hipóteses durante o ciclo de experimentação.
+\end{itemize}
+
+Essa organização arquitetural permite que alterações em um componente específico tais como substituição do modelo de \textit{embeddings} ou troca do \textit{backend} de armazenamento sejam realizadas com impacto reduzido nos demais módulos. Por conseguinte, favorece-se a extensibilidade do sistema e facilita-se sua manutenção evolutiva, características essenciais para projetos de pesquisa e desenvolvimento em ambientes dinâmicos.
+
+\subsection{Fluxo de Processamento e Consulta}
+O fluxo lógico de dados no DBVECTOR pode ser descrito em duas fases principais: \textit{indexação} e \textit{consulta}.
+
+Na fase de \textbf{indexação}, o sistema recebe como entrada documentos em formato estruturado, normalmente em arquivos JSON Lines (\texttt{.jsonl}), contendo texto e metadados. A partir dessa entrada, o fluxo segue as etapas:
+
+\begin{enumerate}
+  \item \textbf{Tratamento}: o texto é submetido a procedimentos de limpeza e normalização, que podem incluir remoção de caracteres indesejados, padronização de espaçamento, deduplicação de trechos e eventual segmentação em unidades menores;
+  \item \textbf{Geração de \textit{embeddings}}: cada documento, ou cada segmento textual, é convertido em um vetor de características numéricas por meio de um modelo de linguagem pré-treinado;
+  \item \textbf{Construção do índice}: os vetores gerados são inseridos em uma estrutura de índice vetorial (por exemplo, FAISS), a qual é otimizada para operações de busca por vizinhos mais próximos em alta dimensão;
+  \item \textbf{Mapeamento entre vetores e metadados}: paralelamente, é mantido um arquivo ou estrutura de metadados que associa cada vetor (identificado por um \textit{id} interno) ao documento original, preservando campos como título, conteúdo, fonte e outros atributos relevantes.
+\end{enumerate}
+
+Na fase de \textbf{consulta}, o fluxo é análogo, mas orientado à recuperação:
+
+\begin{enumerate}
+  \item o usuário ou sistema cliente envia uma \textit{query} em texto para a API do DBVECTOR;
+  \item a \textit{query} é pré-processada e convertida em um vetor de \textit{embedding} pelo mesmo modelo utilizado na indexação;
+  \item o vetor da \textit{query} é consultado no índice vetorial, que retorna os identificadores dos vetores mais próximos (maior similaridade);
+  \item os identificadores retornados são utilizados para recuperar os documentos e metadados correspondentes;
+  \item o conjunto de resultados é ordenado e, se necessário, submetido a um pós-processamento (por exemplo, reordenação ou filtragem) antes de ser devolvido ao cliente.
+\end{enumerate}
+
+Esse fluxo garante consistência entre a forma como documentos e consultas são representados, o que é essencial para a qualidade do sistema de recuperação semântica.
+
+\subsection{Formato dos Dados e Esquema Documental}
+Os documentos tratados pelo DBVECTOR seguem, em geral, um esquema simples e flexível em formato JSON Lines. Cada linha representa um documento e contém campos típicos como:
+
+\begin{itemize}
+  \item \texttt{id}: identificador único do documento;
+  \item \texttt{title}: título ou descrição resumida;
+  \item \texttt{content}: texto principal do documento (por exemplo, inteiro teor de uma decisão ou conteúdo de um manual);
+  \item \texttt{source}: informação sobre a origem (tribunal, sistema, \textit{cluster} temático);
+  \item \texttt{metadata}: estrutura adicional com campos específicos (artigo do Código Penal, tipo de documento, data, entre outros).
+\end{itemize}
+
+Os \textit{embeddings} são representados internamente como vetores de números em ponto flutuante (tipicamente \texttt{float32}) organizados em matrizes, nas quais cada linha corresponde a um documento ou segmento textual. Embora esses vetores sejam armazenados nos índices vetoriais, o mapeamento entre identificadores internos e documentos originais é mantido em estruturas paralelas, garantindo rastreabilidade e transparência.
+
+\subsection{Estratégias de Indexação e Armazenamento}
+O DBVECTOR suporta diferentes estratégias de indexação e armazenamento, com destaque para:
+
+\begin{itemize}
+  \item \textbf{FAISS}: utilizado como backend principal para armazenamento local de índices vetoriais de alta performance. Essa solução é adequada para cenários em que o volume de dados é compatível com o ambiente local e se busca baixa latência em consultas;
+  \item \textbf{OpenSearch}: empregado como opção alternativa para cenários em que se requerem capacidades adicionais, como busca híbrida (combinação de texto e vetores), replicação, distribuição e integração via APIs REST em ambientes mais próximos de produção.
+\end{itemize}
+
+Em ambos os casos, o sistema mantém a associação entre cada vetor armazenado e seus metadados. Isso permite que, após a obtenção de um conjunto de identificadores pelo índice vetorial, a camada de aplicação recupere o documento completo e informações complementares, que são posteriormente utilizadas pelo \textit{pipeline} RAG para compor respostas fundamentadas.
+
+Questões de compatibilidade de versões (especialmente no caso do FAISS) e de capacidade de armazenamento são consideradas na operação do DBVECTOR. Mudanças significativas de versão ou de configuração do backend podem exigir a reconstrução dos índices a partir dos arquivos de documentos originais.
+
+\subsection{API de Consulta e Integração com a Aplicação}
+Para integração com os demais componentes do sistema, em especial com a interface e com a camada de orquestração do RAG, o DBVECTOR disponibiliza uma API de consulta. Essa API, em linhas gerais, oferece:
+
+\begin{itemize}
+  \item um ponto de entrada para recebimento de \textit{queries} textuais;
+  \item rotinas internas para geração de \textit{embeddings} da consulta;
+  \item chamadas ao backend vetorial selecionado (FAISS ou OpenSearch) para recuperação dos vetores mais similares;
+  \item mapeamento dos resultados para documentos e metadados legíveis pela aplicação cliente;
+  \item retorno estruturado, adequado ao consumo por modelos de linguagem ou por outras camadas de apresentação.
+\end{itemize}
+
+Dessa forma, o DBVECTOR atua como um serviço especializado de busca semântica, abstrato em relação ao backend de armazenamento, mas consistente em relação ao formato de entrada e saída, o que favorece a integração com a interface descrita anteriormente e com os módulos de coleta de dados.
+
+\subsection{Avaliação, Extensões e Considerações Finais}
+O módulo inclui ainda mecanismos voltados à avaliação da qualidade da recuperação, por meio de conjuntos de dados de teste e \textit{scripts} que calculam métricas pertinentes (como \textit{recall} em diferentes profundidades). Esses recursos permitem comparar configurações de índice, modelos de \textit{embeddings} e estratégias de pós-processamento, contribuindo para a escolha das melhores combinações para o domínio jurídico considerado.
+
+Em termos de extensibilidade, a arquitetura do DBVECTOR permite: (i) a adição de novos backends de armazenamento vetorial, por meio de implementações específicas que seguem um contrato comum de armazenamento e busca; (ii) a substituição ou atualização do modelo de \textit{embeddings}, desde que mantida a interface de geração de vetores; e (iii) a criação de novos \textit{pipelines} de ingestão de dados, capazes de produzir documentos no formato JSONL esperado pelo sistema.
+
+Por fim, cabe destacar que a operação do DBVECTOR está sujeita a limitações de ambiente (por exemplo, disponibilidade de GPU ou CPU, restrições de memória e armazenamento) e a cuidados relacionados à privacidade dos dados indexados. Documentos que contenham informações sensíveis devem ser previamente anonimizados ou tratados conforme as políticas de segurança adotadas. Ainda assim, o módulo fornece uma base robusta e flexível para indexação semântica, desempenhando papel central na qualidade das respostas geradas pelo \textit{pipeline} de Recuperação Aumentada por Geração proposto neste trabalho.

@@ -2,6 +2,12 @@
 % Documento: Preâmbulo
 %
 \usepackage{lmodern}
+\usepackage{letltxmacro}
+\usepackage{adjustbox}
+\LetLtxMacro{\OldIncludegraphics}{\includegraphics}
+\renewcommand{\includegraphics}[2][]{%
+	\adjustbox{max width=\textwidth,max height=0.9\textheight,keepaspectratio}{\OldIncludegraphics[#1]{#2}}%
+}
 \renewcommand{\familydefault}{\rmdefault}
 \renewcommand{\lstlistingname}{Código}
 
@@ -40,25 +46,26 @@ showstringspaces=false
 }
 \lstset{style=master-thesis}
 
-\instituicao{Centro Universitário do Distrito Federal}
-\localapresentacao{Brasília - Distrito Federal}
-\programa{Trabalho de Conclusão de Curso de Ciência da Computação}
+\instituicao{UDF -- Centro de Ensino Unificado do Distrito Federal}
+\departamento{Curso de Ciência da Computação}
+\localapresentacao{Brasília -- Distrito Federal}
+\programa{Trabalho de Conclusão de Curso}
 \modalidade{}
-\nomeautor{Danrley Willyan da Silva Pereira}
-\titulotb{Análise da Experiência LabTech:\\
-    Integração de Ferramentas, Processos e Artefatos na Gestão de Fábricas de Software Acadêmicas}
-%\subtitulo{Subtítulo do trabalho}
+\nomeautor{Gabriel Oliveira Faria -- RGM 29615267\\Pedro Samuel Thiago Beserra Valeriano -- RGM 29697000\\Zandor Duarte -- RGM 29693829}
+\titulotb{Justiça 4.0 com IA e Busca Vetorial:\\
+    Esteira de RAG para Auxiliar ao Programa de Modernização da Execução Penal do CNJ/PNUD}
+%\subtitulo{}
 \anoapresentacao{2025}
 \grau{Bacharel em Ciência da Computação}
-\dataapresentacao{junho de 2025}
-\mesapresentacao{junho}
+\dataapresentacao{Novembro de 2025}
+\mesapresentacao{Novembro}
 
 %Dados Orientador
-\orientador{Kerlla Souza Luz}
+\orientador{Kerlla de Luz Souza}
 \instOrientador{UDF}
 \titulacaoorientador{Prof.ª Dra.}
 
 %Dados Coorientador
-\coorientador{Danrley}
-\instCoorientador{UDF}
-\titulacaocoorientador{Prof.}
+\coorientador{Danrley Willyan da Silva Pereira}
+\instCoorientador{IBICT}
+\titulacaocoorientador{Esp.}

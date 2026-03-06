@@ -1,0 +1,23 @@
+sequenceDiagram
+    %% --- Atores e participantes ----------------------------------------
+    actor Operador as "Operador Jurídico"
+    participant ChatbotUI as "Chatbot (interface Web/App)"
+    participant BackendAPI as "Backend API"
+    participant RAGEngine as "RAG Engine"
+    participant VectorDB as "Banco Vetorial"
+    participant LLM as "LLM"
+
+    %% --- Fluxo principal -----------------------------------------------
+    Operador ->> ChatbotUI: Digita pergunta e pressiona “Enviar”
+    ChatbotUI ->> BackendAPI: POST /questions {pergunta}
+    BackendAPI ->> RAGEngine: processQuestion(pergunta)
+    RAGEngine ->> VectorDB: searchContext(embedding)
+    VectorDB -->> RAGEngine: top-k trechos de contexto
+    RAGEngine ->> LLM: prompt(contexto + pergunta)
+    LLM -->> RAGEngine: resposta gerada
+    RAGEngine -->> BackendAPI: resposta em JSON
+    BackendAPI -->> ChatbotUI: resposta formatada
+    ChatbotUI -->> Operador: Exibe resposta na tela
+
+    %% --- Passo opcional (extend) ---------------------------------------
+    ChatbotUI -->> BackendAPI: logInteracao()  note over ChatbotUI,BackendAPI:  «extend» Avaliar métricas

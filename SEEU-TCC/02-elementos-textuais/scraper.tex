@@ -1,0 +1,263 @@
+% -----------------------------------------------------------------------------
+% Coleta de Dados: Scraper do STF (seção dedicada do Capítulo 4)
+% -----------------------------------------------------------------------------
+\section{Coleta de Dados -- Extrator do STF}
+\label{sec:stf_scraper}
+
+\subsection{Objetivo e Escopo}
+A construção de sistemas de recuperação de informação jurídica depende fundamentalmente da disponibilidade de acervos documentais atualizados, estruturados e representativos do domínio de conhecimento. Nesse contexto, o módulo de extração automatizada desenvolvido para o portal de jurisprudência do Supremo Tribunal Federal (STF) foi concebido com o propósito de extrair, organizar e padronizar decisões públicas incluindo acórdãos, despachos e demais documentos transformando-as em registros estruturados adequados para armazenamento e indexação vetorial.
+
+A estratégia de coleta baseia-se em consultas pré-definidas (\textit{queries}) agrupadas por artigo do Código Penal, permitindo a criação de um corpus temático de jurisprudência alinhado aos requisitos da \textit{pipeline} de Recuperação Aumentada por Geração (RAG). Dessa forma, a automação persegue quatro objetivos principais: (i) garantir atualização contínua da base documental, acompanhando a publicação de novas decisões; (ii) padronizar dados heterogêneos oriundos da interface web, reduzindo variabilidade e facilitando processamento posterior; (iii) reduzir trabalho manual e mitigar suscetibilidade a erros humanos; e (iv) alimentar o \textit{pipeline} RAG com dados em formato uniforme e processável, assegurando qualidade e rastreabilidade das informações.
+
+\subsection{Implementação e Arquitetura}
+O coletor foi implementado em \textit{Python}, utilizando o framework Scrapy e o Playwright para automação de navegador, dada a dependência do portal em JavaScript para renderização dinâmica de conteúdo. A arquitetura adota organização modular, segregando responsabilidades em componentes especializados: módulo de orquestração de consultas, módulo de extração e navegação, \textit{pipelines} de processamento e validação, e camada de persistência em arquivos JSON Lines.
+
+Para otimizar o aproveitamento de recursos computacionais, a solução emprega processamento paralelo coordenado por mecanismo de fila compartilhada, permitindo execução concorrente de múltiplas consultas. Ademais, o controle de estado persistido facilita a retomada da execução em caso de interrupções, garantindo resiliência e eficiência operacional.
+
+\subsection{Fluxo de Extração (Busca, Listagem e Paginação)}
+A execução inicia a partir de arquivo de configuração contendo consultas pré-definidas, em que cada \textit{query} está associada a um artigo do Código Penal. O gerenciador de fila mantém o controle das consultas processadas, pendentes e em execução, permitindo retomada controlada e evitando processamento duplicado mediante mecanismos de sincronização.
+
+Para cada consulta, o módulo de navegação estabelece sessão de navegador em modo \textit{headless} e acessa a página de pesquisa correspondente. Considerando que os resultados são apresentados de forma paginada tipicamente até 250 decisões por página o coletor aguarda o carregamento completo dos elementos, identifica o total de itens e o número de páginas, e percorre as listagens extraindo metadados básicos por item, tais como título, link, número do caso e artigo associado. Cada item identificado gera requisição subsequente à respectiva página de detalhes para extração do conteúdo integral.
+
+\subsection{Extração do Inteiro Teor e Campos Estruturados}
+Após localizar os links das decisões, o scraper acessa a página de detalhes utilizando o mesmo contexto de navegador do \textit{worker}. Como o texto é renderizado dinamicamente em JavaScript, a extração do inteiro teor é, preferencialmente, realizada por meio da API de área de transferência (\textit{clipboard}) exposta pela página: aguarda-se o carregamento do elemento de texto, aciona-se, via JavaScript, o botão de ``copiar'' e lê-se o conteúdo da área de transferência como texto principal da decisão.
+
+Quando a estratégia de \textit{clipboard} não está disponível ou falha, aplica-se um mecanismo de \textit{fallback} que extrai o texto diretamente do Document Object Model (DOM), por meio de seletores CSS ou XPath. Além do texto integral, são extraídos campos estruturados, como relator, partes, legislação citada e demais metadados relevantes.
+
+\subsection{Validação, Organização por Artigo e Persistência}
+Os dados extraídos são encapsulados em objetos estruturados e encaminhados a uma cadeia de \textit{pipelines} de processamento. Essa cadeia compreende três etapas principais:
+
+\begin{itemize}
+  \item \textbf{Validação}: verifica a presença de campos obrigatórios (título, URL, conteúdo textual), calcula escore de qualidade baseado em critérios como tamanho do texto, presença de relator e completude estrutural, e descarta registros abaixo de limiar mínimo estabelecido;
+  \item \textbf{Organização temática}: identifica o artigo do Código Penal associado a cada decisão por meio de metadados estruturados e direciona o registro para arquivo JSON Lines específico do respectivo artigo, em modo \textit{append}, preservando execuções anteriores e facilitando atualização incremental;
+  \item \textbf{Registro de métricas}: coleta estatísticas de execução, incluindo número de itens processados por artigo, distribuição de qualidade e tempo de processamento, permitindo monitoramento e diagnóstico do sistema.
+\end{itemize}
+
+Como resultado, o coletor produz, para cada artigo do Código Penal, um arquivo JSONL contendo uma linha por decisão, com metadados enriquecidos (título, URL de origem, artigo associado, texto completo, relator, legislação citada e escore de qualidade). Esses arquivos constituem a base primária de jurisprudência utilizada no projeto.
+
+\subsection{Papel no Pipeline RAG (Análise e Impacto)}
+O scraper garante que o modelo de linguagem disponha de um corpus abrangente e atualizado de decisões organizadas por artigo do Código Penal. Ao agrupar decisões por artigo e prover metadados estruturados (título, relator, URL de origem e texto integral), o coletor:
+
+\begin{itemize}
+  \item melhora a precisão do RAG ao permitir recuperação de trechos altamente relevantes;
+  \item viabiliza consultas contextualizadas por tema ou dispositivo legal;
+  \item aumenta a rastreabilidade das respostas, ao vincular cada saída a documentos oficiais;
+  \item sustenta a atualização contínua do conhecimento jurídico ao incorporar novas decisões aos arquivos JSONL por artigo.
+\end{itemize}
+
+\subsection{Limitações e Considerações Finais}
+O coletor depende de interfaces web dinâmicas e, portanto, pode necessitar de ajustes quando o portal do STF alterar significativamente sua estrutura ou APIs. A estratégia de extração por \textit{clipboard}, embora eficiente, requer mecanismos de \textit{fallback} para garantir extração quando essa API não estiver disponível. Além disso, condições de rede e limites impostos pelo servidor podem afetar a completude da coleta, sendo mitigadas por políticas de \textit{retry} e controle de concorrência descritos anteriormente.
+
+Em síntese, o scraper constitui componente central para a integridade e a qualidade dos dados que alimentam o \textit{pipeline} RAG, contribuindo diretamente para a confiabilidade dos resultados do sistema.
+
+% -----------------------------------------------------------------------------
+% Coleta de Dados: Scraper do TRF4 (Tribunal Regional Federal da 4ª Região)
+% -----------------------------------------------------------------------------
+\section{Coleta de Dados -- Scraper do TRF4}
+\label{sec:trf4_scraper}
+
+\subsection{Objetivo e Escopo}
+O módulo de extração desenvolvido para o Tribunal Regional Federal da 4ª Região (TRF4) complementa o \textit{pipeline} de obtenção e padronização de dados jurídicos, ampliando a cobertura documental com decisões de âmbito regional. Seu propósito é automatizar a busca e a coleta de decisões judiciais publicadas no portal do Tribunal, garantindo organização, consistência e padronização dos registros para posterior indexação vetorial e uso no \textit{pipeline} de Recuperação Aumentada por Geração (RAG).
+
+A estratégia de coleta persegue cinco objetivos específicos: (i) capturar decisões e documentos relevantes de forma contínua e estruturada; (ii) extrair metadados essenciais, incluindo número do processo, tipo de documento, datas de julgamento e publicação, e identificação do relator; (iii) obter o texto integral das decisões, quando disponível na interface pública; (iv) padronizar os registros em formato compatível com a base vetorial; e (v) minimizar inconsistências e duplicidades na base final por meio de mecanismos de validação e deduplicação.
+
+\subsection{Implementação, Arquitetura e Fluxo de Coleta}
+A arquitetura do coletor do TRF4 adota organização modular compatível com os demais extratores do projeto, permitindo reúso de componentes e manutenção consistente. A implementação foi realizada em \textit{Python}, utilizando o framework Scrapy e, quando necessário, automação de navegador por meio do Playwright, caso a interface do portal exija execução de JavaScript para renderização de conteúdo. O fluxo geral de coleta compreende as etapas descritas a seguir.
+
+\subsubsection{Abertura do portal e configuração da busca}
+O coletor inicia estabelecendo conexão com a página de busca do TRF4 e preparando o ambiente de interação: inicializa o contexto de execução (sessão HTTP ou navegador \textit{headless}), localiza os elementos de interface necessários e carrega o termo de pesquisa configurado.
+
+\subsubsection{Aplicação de filtros e submissão da consulta}
+Em seguida, o scraper ajusta filtros pertinentes (como pesquisa avançada, tipo de decisão e intervalos de datas), preenche os campos de busca e submete o formulário para iniciar a consulta, respeitando a lógica de navegação do portal.
+
+\subsubsection{Extração estruturada dos resultados}
+Após o retorno da listagem de resultados, cada item é identificado por meio de seletores CSS ou XPath, e são extraídos os campos principais: número do processo, tipo de documento, datas (de julgamento e de publicação), relator e, quando acessível, o texto integral da decisão. Os metadados e o conteúdo textual são encapsulados em um objeto de coleta para posterior padronização.
+
+\subsubsection{Navegação automática entre páginas}
+O scraper verifica a existência de paginação e, se presente, avança automaticamente para as páginas subsequentes: aciona o controle de página (botão ou link), aguarda o carregamento completo e retoma a extração até esgotar as páginas de resultados. Esse procedimento garante cobertura integral do conjunto de decisões retornadas pelos filtros utilizados.
+
+\subsubsection{Padronização e persistência}
+Cada registro extraído passa por um \textit{pipeline} de normalização, que realiza limpeza textual, normalização de chaves e enriquecimento de metadados. Os registros são gravados em formato compatível com o índice vetorial (por exemplo, JSON Lines), preservando referência à página de origem, ao índice na página e ao termo de busca empregado.
+
+\subsection{Estratégias de robustez, logs e resiliência}
+Para garantir execução estável e auditável, o coletor incorpora mecanismos de confiabilidade, entre os quais se destacam:
+\begin{itemize}
+  \item geração de logs detalhados, com identificadores de execução e métricas de extração;
+  \item persistência imediata (\textit{write-through}) de cada resultado extraído, minimizando perda de dados em caso de falha;
+  \item mecanismos de \textit{fallback} quando seletores esperados não forem encontrados (uso de seletores alternativos ou marcação do item para revisão manual);
+  \item controle de concorrência e coordenação entre múltiplos \textit{workers}, evitando processamento duplicado de páginas;
+  \item captura de \textit{snapshots} (HTML ou PDF) das páginas consultadas para fins de diagnóstico; e
+  \item tratamento estruturado de exceções, com políticas de \textit{retry} e \textit{backoff}.
+\end{itemize}
+
+\subsection{Papel do Scraper do TRF4 no Pipeline RAG}
+O coletor do TRF4 amplia e aprimora a cobertura documental do projeto, contribuindo para a qualidade do \textit{pipeline} RAG ao:
+\begin{itemize}
+  \item aumentar o conjunto de decisões disponíveis para vetorização;
+  \item viabilizar atualização contínua da base jurídica sem intervenção manual constante;
+  \item melhorar a precisão das respostas do modelo, ao fornecer documentos regionais e federais complementares;
+  \item assegurar uniformidade no tratamento dos dados coletados, facilitando a indexação e a recuperação conjunta com fontes como STF e SEEU.
+\end{itemize}
+
+De modo geral, o scraper do TRF4 segue os mesmos princípios de organização, padronização e rastreabilidade adotados nos demais coletores, garantindo coerência metodológica no conjunto da solução.
+
+% -----------------------------------------------------------------------------
+% NOTA IMPORTANTE: A seção "Interface de Usuário da Aplicação" foi REMOVIDA
+% deste arquivo pois estava duplicada. A seção correta está definida em
+% desenvolvimento.tex (Seção 7.4), onde pertence estruturalmente no contexto
+% do capítulo de Desenvolvimento da Solução.
+% 
+% Esta remoção corrige a incoerência estrutural que gerava seções duplicadas
+% e numeração inconsistente no documento final.
+% -----------------------------------------------------------------------------
+
+\section{Coleta de Dados -- Scraper SEEU (Sistema Eletrônico de Execução Unificado)}
+\label{sec:seeu_scraper}
+
+\subsection{Objetivo e Escopo}
+O módulo de extração desenvolvido para coleta de documentos públicos relacionados ao Sistema Eletrônico de Execução Unificado (SEEU) tem por objetivo automatizar a extração, organização e padronização de materiais de suporte à execução penal, tais como orientações técnicas, manuais operacionais, portarias e instruções normativas. Esses materiais são disponibilizados em portais oficiais do CNJ e constituem insumos textuais complementares à jurisprudência dos tribunais, compondo o corpus utilizado no \textit{pipeline} de Recuperação Aumentada por Geração (RAG).
+
+Dessa forma, o coletor persegue quatro objetivos principais: (i) garantir atualização contínua da base documental, acompanhando a publicação de novos materiais normativos; (ii) padronizar formatos heterogêneos de publicação, reduzindo variabilidade estrutural; (iii) reduzir trabalho manual de coleta e mitigar suscetibilidade a erros; e (iv) disponibilizar documentos em formato estruturado, adequado à indexação vetorial e à consulta semântica.
+
+\subsection{Implementação e Arquitetura}
+O coletor foi implementado em \textit{Python}, utilizando o framework Scrapy e adotando arquitetura modular alinhada aos demais extratores do projeto. Diferentemente dos coletores de jurisprudência, que lidam com conteúdo dinâmico renderizado por JavaScript, este módulo opera sobre páginas essencialmente estáticas, dispensando automação de navegador e simplificando o processo de extração.
+
+A arquitetura compreende três componentes principais:
+\begin{itemize}
+  \item \textbf{Módulo de orquestração}: responsável por coordenar as requisições à página índice dos materiais e percorrer as entradas disponíveis sistematicamente;
+  \item \textbf{\textit{Pipelines} de processamento}: encarregados de limpar, normalizar e serializar os dados coletados para o formato padronizado adotado pelo banco vetorial;
+  \item \textbf{Camada de persistência}: baseada em arquivos JSON Lines, armazenados em diretório específico do projeto, garantindo compatibilidade com os demais módulos.
+\end{itemize}
+
+Essa organização mantém consistência com o padrão de saída dos demais coletores, favorecendo o reúso de componentes e simplificando a etapa de vetorização.
+
+\subsection{Fluxo de Coleta (Página Índice e Documentos)}
+O fluxo de coleta do scraper SEEU inicia-se com o envio de uma requisição HTTP à página índice que centraliza os materiais de suporte oficiais. Após o carregamento dessa página, a \textit{spider} identifica cada item disponível na listagem, normalmente composto por título, descrição sucinta e link para o documento correspondente (em HTML, PDF ou outros formatos).
+
+A partir dessa listagem, o fluxo pode ser resumido nas etapas a seguir:
+\begin{enumerate}
+  \item envio de requisição à página índice dos materiais de suporte;
+  \item identificação, por meio de seletores CSS ou XPath, dos elementos que representam cada documento;
+  \item extração de metadados básicos, tais como título, URL e, quando disponível, breve descrição do conteúdo;
+  \item construção de um objeto de coleta contendo esses metadados;
+  \item encaminhamento do objeto ao \textit{pipeline} de processamento para tratamento e persistência.
+\end{enumerate}
+
+Quando o documento está disponível em formato HTML acessível, a \textit{spider} tenta realizar a extração imediata do conteúdo textual. Quando se trata de arquivo binário (por exemplo, PDF), registra-se a URL para que a conversão em texto seja realizada em etapa posterior, com ferramentas específicas de extração textual.
+
+\subsection{Processamento, Padronização e Persistência}
+Considerando a diversidade de formatos e estruturas presentes nos materiais públicos relacionados ao SEEU, o \textit{pipeline} de processamento atua em duas frentes principais:
+
+\begin{itemize}
+  \item \textbf{Documentos HTML}: o conteúdo é extraído diretamente pelo módulo de \textit{parsing}, com identificação da área central do texto por meio de seletores especializados e remoção de elementos não informativos (menus, rodapés, \textit{scripts} e componentes de navegação);
+  \item \textbf{Documentos binários}: os metadados (título, URL e descrição, quando disponível) são registrados, ficando a extração textual completa a cargo de etapa posterior de pré-processamento, que pode envolver bibliotecas especializadas para leitura de PDF ou reconhecimento óptico de caracteres.
+\end{itemize}
+
+Independentemente do formato original, os registros finais são normalizados para estrutura canônica utilizada pelo banco vetorial, compatibilizando-os com os demais coletores do projeto. No \textit{pipeline} de normalização, são aplicadas as seguintes transformações:
+\begin{itemize}
+  \item categorização temática automatizada, identificando os documentos como pertencentes ao conjunto de materiais de suporte relacionados ao SEEU;
+  \item normalização de chaves e ordenação dos campos de acordo com o padrão estabelecido no projeto;
+  \item limpeza textual, com remoção de quebras de linha redundantes, espaços em excesso e caracteres indesejados;
+  \item gravação dos registros em formato JSON Lines, em modo \textit{append}, permitindo inserção incremental e preservação de execuções anteriores.
+\end{itemize}
+
+Esse procedimento assegura que todos os documentos públicos relacionados ao SEEU sejam disponibilizados em formato uniforme, compatível com a etapa de vetorização e com as rotinas de auditoria manual.
+
+\subsection{Integração com o Pipeline RAG}
+A base documental construída pelo scraper SEEU integra-se ao \textit{pipeline} de Recuperação Aumentada por Geração como fonte complementar à jurisprudência extraída dos tribunais. Enquanto o scraper do STF fornece decisões judiciais organizadas por artigo do Código Penal, o coletor SEEU disponibiliza documentos normativos e orientativos que contextualizam a execução penal.
+
+Na etapa de indexação vetorial, os registros oriundos do SEEU são processados da mesma forma que os demais documentos: o campo \texttt{content} é convertido em vetores de características (\textit{embeddings}), armazenados no índice vetorial juntamente com seus metadados (\texttt{cluster\_name}, título e URL). Durante as consultas, o modelo RAG pode recuperar, para uma mesma pergunta, tanto decisões judiciais quanto documentos de suporte, permitindo respostas mais completas, contextualizadas e rastreáveis.
+
+\subsection{Limitações e Considerações Finais}
+Assim como outros coletores baseados em \textit{web scraping}, o scraper SEEU é sensível a alterações na estrutura das páginas consultadas. Modificações significativas no layout ou na organização dos materiais podem exigir ajustes nos seletores utilizados e novos testes de validação. Além disso, a presença de documentos em formato binário implica dependência de uma etapa adicional de extração textual para torná-los plenamente pesquisáveis.
+
+Recomenda-se, portanto, a adoção de políticas de \textit{retry}, controle de concorrência e registro detalhado de logs, de forma a reduzir o impacto de falhas temporárias de rede ou indisponibilidades momentâneas do servidor. Em conjunto, esses cuidados tornam o coletor SEEU apto a fornecer, de maneira contínua e confiável, uma base de documentos de suporte organizada e padronizada, preparada para alimentar o processo de indexação vetorial do projeto e contribuir para a qualidade das respostas geradas pelo \textit{pipeline} RAG.
+
+% -----------------------------------------------------------------------------
+% Coleta de Dados: Scraper do STJ (Superior Tribunal de Justiça)
+% -----------------------------------------------------------------------------
+\section{Coleta de Dados -- Extrator do STJ}
+\label{sec:stj_scraper}
+
+\subsection{Objetivo e Escopo}
+O módulo de extração automatizada desenvolvido para o Superior Tribunal de Justiça (STJ) tem por objetivo coletar, processar e padronizar decisões monocráticas e acórdãos publicados no Diário da Justiça e disponibilizados no portal de dados abertos do Tribunal. Diferentemente dos coletores baseados em consultas diretas ao portal de jurisprudência, este módulo opera sobre conjuntos de dados estruturados distribuídos em arquivos compactados, contendo metadados em formato JSON e textos integrais em arquivos de texto puro.
+
+A estratégia de coleta persegue cinco objetivos específicos: (i) automatizar o descobrimento e o download de recursos de dados abertos; (ii) extrair e associar decisões judiciais aos seus respectivos textos integrais por meio de identificadores únicos; (iii) filtrar e selecionar decisões monocráticas relevantes ao escopo do projeto; (iv) normalizar metadados e conteúdo textual para formato uniforme, compatível com os demais coletores; e (v) produzir saída estruturada em JSON Lines, adequada à indexação vetorial e ao uso no \textit{pipeline} RAG.
+
+\subsection{Implementação e Arquitetura}
+O coletor foi implementado em \textit{Python}, utilizando o framework Scrapy e bibliotecas especializadas para manipulação de arquivos compactados e interações com APIs de portais de dados abertos. A arquitetura modular é compatível com os demais coletores do projeto, sendo composta pelos seguintes componentes principais:
+
+\begin{itemize}
+  \item \textbf{Módulo de descoberta}: responsável por interagir com a API do portal de dados abertos do STJ, listar conjuntos de dados disponíveis e identificar os recursos associados a cada conjunto;
+  \item \textbf{Gerenciador de fila}: encarregado de coordenar a fila de recursos a serem processados, manter o estado de execução persistido e permitir retomada de processamento em caso de interrupções;
+  \item \textbf{Módulo de download}: encapsula a lógica de requisições HTTP, incluindo tratamento de erros, políticas de \textit{retry} com \textit{backoff} exponencial e armazenamento local dos arquivos em diretório temporário;
+  \item \textbf{Módulo de extração e \textit{parsing}}: realiza a abertura dos arquivos compactados, identificação dos arquivos JSON de metadados e dos arquivos de texto correspondentes, e o mapeamento entre decisões e seus textos integrais por meio de identificadores únicos;
+  \item \textbf{Módulo de normalização}: transforma os metadados brutos em estrutura padronizada, realiza limpeza textual, extração de informações estruturadas (relator, partes, legislação citada) e calcula indicador de qualidade de conteúdo;
+  \item \textbf{\textit{Pipelines} de processamento}: aplicam validações, filtram decisões por critérios definidos (tipo de decisão, esfera jurisdicional), eliminam duplicatas e gravam os registros no formato JSON Lines.
+\end{itemize}
+
+Essa organização mantém coerência arquitetural com os demais coletores do projeto, favorecendo o reúso de componentes e simplificando a manutenção da base de código.
+
+\subsection{Fluxo de Coleta (Descoberta, Download e Extração)}
+A execução do coletor do STJ compreende cinco etapas principais, descritas a seguir.
+
+\subsubsection{Descoberta de recursos}
+O módulo de descoberta consulta a API do portal de dados abertos do STJ e obtém a listagem de conjuntos de dados disponíveis. Para cada conjunto, identifica os recursos associados tipicamente, arquivos compactados contendo lotes de decisões e extrai os metadados relevantes, tais como identificador do recurso, URL de download, data de publicação e descrição.
+
+\subsubsection{Enfileiramento e controle de estado}
+Cada recurso descoberto é adicionado à fila de processamento gerenciada pelo módulo de controle, que mantém registro dos recursos já processados, pendentes e em execução. O estado da fila é persistido em arquivo estruturado, permitindo retomada do processamento em caso de interrupções e evitando reprocessamento duplicado de recursos.
+
+\subsubsection{Download e armazenamento temporário}
+Múltiplos processos coordenados pelo gerenciador de fila realizam o download dos arquivos compactados de forma paralela. Cada arquivo é armazenado temporariamente em diretório específico, possibilitando reprocessamento posterior sem necessidade de novo download e reduzindo a carga sobre os servidores do STJ.
+
+\subsubsection{Extração e mapeamento de decisões}
+Após o download, o módulo de extração descompacta o arquivo e identifica os componentes contidos: tipicamente, um ou mais arquivos JSON com metadados das decisões e uma coleção de arquivos de texto nomeados de acordo com identificadores únicos. O módulo realiza o mapeamento entre cada decisão e o arquivo de texto correspondente, tolerando variações de nomenclatura e aplicando heurísticas de \textit{fallback} em caso de inconsistências.
+
+\subsubsection{Filtragem e seleção}
+Cada decisão extraída é submetida a critérios de filtragem para identificar aquelas relevantes ao escopo do projeto. São considerados, entre outros, os seguintes critérios:
+\begin{itemize}
+  \item tipo de documento: decisões monocráticas;
+  \item esfera jurisdicional: compatível com o âmbito definido no projeto;
+  \item presença de texto integral: decisões sem texto associado são marcadas para auditoria posterior, mas não descartadas imediatamente.
+\end{itemize}
+
+\subsection{Normalização, Rastreabilidade e Persistência}
+Após a extração e a filtragem, os registros passam pelo módulo de normalização, que realiza quatro transformações principais:
+
+\begin{itemize}
+  \item \textbf{Padronização de campos}: conversão de datas para formato ISO (AAAA-MM-DD), extração e estruturação de informações sobre relator, identificação de partes processuais e legislação citada;
+  \item \textbf{Limpeza textual}: remoção de caracteres de controle, normalização de espaços em branco, correção de quebras de linha e eliminação de artefatos de extração;
+  \item \textbf{Cálculo de qualidade}: atribuição de escore de qualidade de conteúdo baseado em critérios como tamanho do texto, presença de metadados essenciais e completude da estrutura documental;
+  \item \textbf{Geração de metadados de rastreabilidade}: inclusão de metadados de proveniência contendo informações sobre origem do arquivo, identificador do recurso, URL de download, caminho interno no arquivo compactado e \textit{timestamp} de processamento.
+\end{itemize}
+
+Esses metadados de rastreabilidade são essenciais para garantir auditabilidade e reprodutibilidade, permitindo que cada decisão seja rastreada até sua origem no portal de dados abertos do STJ.
+
+Os registros normalizados são encapsulados em objetos padronizados e encaminhados ao \textit{pipeline} de persistência, que realiza três etapas principais:
+\begin{itemize}
+  \item validação de campos obrigatórios (identificador único, título, conteúdo textual);
+  \item eliminação de duplicatas com base em identificadores únicos de documento e recurso;
+  \item gravação em arquivo JSON Lines único, com uma linha por decisão, em modo \textit{append}.
+\end{itemize}
+
+Opcionalmente, o coletor pode preservar os arquivos de texto extraídos em diretório separado para inspeção manual ou reprocessamento posterior.
+
+\subsection{Papel no Pipeline RAG}
+O scraper do STJ amplia significativamente a cobertura documental do projeto, fornecendo decisões monocráticas de um dos principais tribunais superiores do país. Ao integrar esses dados ao \textit{pipeline} RAG, o sistema passa a dispor de:
+
+\begin{itemize}
+  \item maior diversidade de fontes jurídicas, contemplando decisões do STJ além daquelas do STF e de tribunais regionais;
+  \item decisões organizadas e rastreáveis até a origem no portal de dados abertos, aumentando a confiabilidade e a auditabilidade das respostas geradas;
+  \item metadados estruturados e normalizados, facilitando consultas temáticas, filtragem por relator, legislação citada ou período de publicação;
+  \item conteúdo textual limpo e pronto para vetorização, otimizando a qualidade dos \textit{embeddings} e a precisão da recuperação semântica.
+\end{itemize}
+
+A integração do coletor do STJ reforça, portanto, a capacidade do \textit{pipeline} RAG de fornecer respostas contextualizadas, embasadas em um corpus abrangente e diversificado de decisões judiciais.
+
+\subsection{Limitações e Considerações Finais}
+O coletor do STJ, assim como os demais scrapers baseados em dados abertos, é sensível a alterações na estrutura dos arquivos ZIP, nos esquemas de metadados JSON e na nomenclatura dos arquivos de texto. Inconsistências na associação entre \texttt{seqDocumento} e arquivos \texttt{.txt} podem ocorrer, sendo mitigadas por heurísticas de \textit{fallback} e registro detalhado de casos não resolvidos no bloco de rastreabilidade.
+
+A dependência de APIs externas (CKAN) implica necessidade de monitoramento contínuo e adaptação a eventuais mudanças nos endpoints, parâmetros de consulta ou estrutura de resposta. Além disso, condições de rede e políticas de acesso podem afetar a taxa de sucesso dos downloads, sendo recomendada a adoção de mecanismos robustos de \textit{retry}, controle de concorrência e registro de logs detalhados.
+
+Em síntese, o extrator do STJ constitui componente fundamental para a abrangência e a qualidade da base documental que alimenta o \textit{pipeline} RAG, contribuindo diretamente para a confiabilidade, a rastreabilidade e a completude das respostas fornecidas pelo sistema.
+

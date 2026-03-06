@@ -1,0 +1,637 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CAPÍTULO 4 – DESENVOLVIMENTO DA SOLUÇÃO
+% NOTE: Reorganizado para conter apenas a descrição técnica da implementação,
+%       separado da metodologia de pesquisa, conforme estrutura ABNT para TCC.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Desenvolvimento da Solução}
+\label{chap:desenvolvimento}
+
+% TODO: Reorganizado para o novo capítulo de Desenvolvimento da Solução segundo ABNT
+% Este capítulo descreve a implementação técnica da pipeline RAG, incluindo
+% arquitetura, módulos de coleta, indexação vetorial, interface e integração.
+
+Este capítulo descreve o desenvolvimento técnico da solução proposta, detalhando a arquitetura da \textit{pipeline} RAG implementada, os módulos de coleta de dados, o sistema de indexação vetorial (DBVECTOR), a interface de usuário e a integração entre os componentes. A solução foi desenvolvida como protótipo funcional, demonstrando a viabilidade técnica da abordagem proposta e servindo como base para futuras implementações em ambiente de produção.
+
+\paragraph{Observação sobre UC-09 e painel de administrador}
+\noindent
+O \textbf{UC-09 – Avaliar Métricas e Monitorar Desempenho}, embora especificado na modelagem de requisitos como caso de uso desejável, não foi implementado no protótipo entregue. Em particular, o painel de administração (dashboard para visualização de métricas e gestão de alertas) não foi desenvolvido. Durante a implementação priorizou-se a entrega dos fluxos essenciais de coleta, indexação e recuperação (UC-01 a UC-08) e a instrumentação mínima de logs para permitir, em trabalhos futuros, a integração com soluções de monitoramento (por exemplo, Grafana/Prometheus). A implementação do UC-09 e do painel administrativo foi, portanto, deixada como recomendação de trabalho futuro, com indicação das dependências técnicas necessárias para sua realização.
+
+\section{Arquitetura Geral da Pipeline RAG}
+\label{sec:arquitetura_pipeline}
+
+A arquitetura da \textit{pipeline} RAG proposta e desenvolvida neste trabalho organiza-se em quatro estágios principais: ingestão de dados, pré-processamento e segmentação textual, indexação vetorial e geração de respostas. Cada estágio foi concebido de forma modular, permitindo flexibilidade na escolha de tecnologias e facilitando manutenção e escalabilidade em futuras implementações. A arquitetura geral, ilustrada na Figura~\ref{fig:arquitetura_pipeline}, demonstra o fluxo de dados desde a coleta até a geração de respostas fundamentadas em fontes oficiais.
+
+\begin{figure}[!htbp]
+  \centering
+    \IfFileExists{04-figuras/arquitetura_pipeline.png}{%
+    \includegraphics[width=\textwidth]{04-figuras/arquitetura_pipeline.png}
+  }{%
+    \fbox{Figura ausente: `arquitetura\_pipeline.png'}
+  }
+  \caption{Arquitetura geral da \textit{pipeline} RAG. Fonte: elaborado pelos autores.}
+  \label{fig:arquitetura_pipeline}
+\end{figure}
+
+\subsection{Visão Geral dos Componentes}
+\label{subsec:visao_geral_componentes}
+
+A \textit{pipeline} RAG é composta pelos seguintes componentes principais:
+
+\begin{itemize}[label=\textbullet]
+  \item \textbf{Módulos de Coleta de Dados (Scrapers)}: responsáveis pela extração automatizada de documentos jurídicos dos portais do STF, STJ, TRF4 e SEEU. Cada módulo implementa mecanismos de resiliência, validação de dados e padronização de saída em formato JSONL.
+  
+  \item \textbf{Módulo de Pré-processamento e Chunking}: processa os documentos brutos, realizando limpeza de texto, segmentação em fragmentos menores (\textit{chunks}) e enriquecimento de metadados.
+  
+  \item \textbf{Módulo DBVECTOR (Indexação Vetorial)}: converte os \textit{chunks} de texto em vetores de \textit{embeddings} utilizando modelos de linguagem pré-treinados, indexa os vetores em banco FAISS e persiste metadados em formato Parquet.
+  
+  \item \textbf{Módulo de Orquestração de Consultas}: recebe consultas em linguagem natural, vetoriza a consulta, recupera os \textit{chunks} mais relevantes do índice vetorial e constrói o contexto para o modelo de linguagem.
+  
+  \item \textbf{Módulo de Geração de Respostas}: integra-se com a API da OpenAI (GPT), enviando o contexto recuperado junto à consulta do usuário e recebendo a resposta gerada.
+  
+  \item \textbf{Interface de Usuário}: aplicação web desenvolvida em Nuxt.js e Vue.js, oferecendo interface conversacional para consultas e visualização de resultados.
+  
+  \item \textbf{API REST}: implementada em FastAPI, expõe \textit{endpoints} documentados para consulta, recuperação de metadados e integração com sistemas externos.
+\end{itemize}
+
+\subsection{Fluxo de Dados na Pipeline}
+\label{subsec:fluxo_dados}
+
+O fluxo de dados na \textit{pipeline} RAG segue a seguinte sequência:
+
+\begin{enumerate}[label=\arabic*.]
+  \item \textbf{Coleta}: Os scrapers acessam os portais oficiais, extraem documentos jurídicos e armazenam os dados brutos em formato JSONL.
+  
+  \item \textbf{Pré-processamento}: Os documentos brutos são processados, sendo realizada limpeza de texto, remoção de elementos indesejados (cabeçalhos, rodapés) e segmentação em \textit{chunks} de tamanho controlado.
+  
+  \item \textbf{Vetorização}: Cada \textit{chunk} é convertido em vetor de \textit{embedding} utilizando modelo Sentence-Transformers, capturando a semântica do texto.
+  
+  \item \textbf{Indexação}: Os vetores são indexados em banco FAISS, permitindo busca eficiente por similaridade. Metadados dos \textit{chunks} são armazenados em arquivo Parquet para recuperação posterior.
+  
+  \item \textbf{Consulta}: O usuário submete uma consulta em linguagem natural via interface web ou API.
+  
+  \item \textbf{Recuperação}: A consulta é vetorizada e comparada com os vetores indexados. Os \textit{k} \textit{chunks} mais similares são recuperados.
+  
+  \item \textbf{Geração}: Os \textit{chunks} recuperados são concatenados ao \textit{prompt} da consulta e enviados ao modelo de linguagem GPT, que gera a resposta fundamentada nas fontes recuperadas.
+  
+  \item \textbf{Exibição}: A resposta é apresentada ao usuário junto com os documentos consultados, permitindo validação das informações.
+\end{enumerate}
+
+\section{Módulo de Indexação Vetorial (DBVECTOR)}
+
+% NOTE: Reorganizado para o novo capítulo de Desenvolvimento da Solução segundo ABNT
+% Inserção do conteúdo técnico do DBVECTOR via \input
+% O label sec:dbvector está definido dentro de dbvector.tex
+\input{./02-elementos-textuais/dbvector}
+
+\section{Módulos de Coleta de Dados (Scrapers e Extratores)}
+\label{sec:scrapers}
+
+% NOTE: Reorganizado para o novo capítulo de Desenvolvimento da Solução segundo ABNT
+% Inserção das seções de scrapers (STF, TRF4, SEEU, STJ)
+\input{./02-elementos-textuais/scraper}
+
+\section{Interface de Usuário da Aplicação}
+\label{sec:interface_usuario}
+
+A interface de usuário foi desenvolvida como aplicação web moderna e responsiva, utilizando Nuxt.js como \textit{framework} principal e Vue.js para construção de componentes reativos. A interface foi concebida para proporcionar experiência intuitiva aos operadores judiciários, permitindo consultas em linguagem natural e visualização clara tanto das respostas geradas quanto dos documentos consultados como evidência.
+
+\subsection{Arquitetura da Interface}
+\label{subsec:arquitetura_interface}
+
+A arquitetura da interface segue o padrão de aplicação de página única (\textit{Single Page Application} -- SPA), oferecendo navegação fluida sem recarregamento de página. Os principais componentes da interface incluem:
+
+\begin{itemize}[label=\textbullet]
+  \item \textbf{Componente de Autenticação}: Modal de autenticação que valida credenciais do usuário antes de permitir acesso às funcionalidades de consulta.
+  
+  \item \textbf{Dashboard Principal}: Tela principal de interação, oferecendo campo de entrada para consultas, controles de alternância entre modos RAG e Chat Simples, seletor de modelo de linguagem e controles de personalização.
+  
+  \item \textbf{Componente de Conversação}: Exibe o histórico de mensagens trocadas entre usuário e sistema, com formatação diferenciada para perguntas e respostas.
+  
+  \item \textbf{Componente de Documentos Recuperados}: Apresenta os documentos consultados em formato de cartões informativos, incluindo título, tribunal de origem, grau de relevância, data e trechos específicos utilizados.
+  
+  \item \textbf{Componente de Controles Auxiliares}: Oferece funcionalidades como cópia de respostas, alternância de tema (claro/escuro) e seleção de modelo.
+\end{itemize}
+
+\subsection{Telas Principais da Interface}
+\label{subsec:telas_interface}
+
+A interface é composta por quatro telas principais, descritas a seguir:
+
+\subsubsection{Tela 01 – Autenticação (Login)}
+
+\begin{figure}[H]
+  \centering
+  \IfFileExists{04-figuras/auth.png}{%
+    \includegraphics[width=0.975\textwidth]{04-figuras/auth.png}
+  }{%
+    \fbox{Imagem `auth.png' ausente em `04-figuras/'}
+  }
+  \caption{Tela de autenticação do sistema. Fonte: elaborado pelos autores.}
+  \label{fig:tela_autenticacao}
+\end{figure}
+
+A tela de autenticação constitui o ponto de entrada para o sistema de consulta semântica baseado em documentos do SEEU. Apresentada como modal centralizado sobreposto à interface principal, essa tela exige que o operador forneça credenciais institucionais válidas antes de acessar as funcionalidades de consulta. A autenticação garante rastreabilidade das interações e controle de acesso ao sistema, em conformidade com as políticas de segurança da informação vigentes.
+
+O processo de autenticação é iniciado pelo preenchimento dos campos de identificação eletrônica e senha institucional. Uma vez submetidas, as credenciais são validadas pelo módulo de autenticação, que retorna autorização de acesso ou mensagem de erro em caso de credenciais inválidas. A implementação dessa camada de segurança assegura que apenas usuários autorizados possam submeter consultas e acessar as funcionalidades de recuperação aumentada por geração.
+
+\paragraph{Comandos da tela (botões) – Tela de autenticação}
+
+\begin{table}[H]
+  \centering
+  \caption{Quadro – Comandos da tela (botões) – Tela de autenticação}
+  \label{tab:cmd_tela_autenticacao}
+  \begin{tabular}{|c|p{4.5cm}|p{9cm}|}
+    \hline
+    \textbf{Item} & \textbf{Comando} & \textbf{Ação} \\ \hline
+    1 & Botão Sign In & Submete as credenciais fornecidas para validação, autorizando o acesso ao sistema em caso de sucesso ou exibindo mensagem de erro em caso de falha. \\ \hline
+    2 & Campo de E-mail & Permite a entrada do endereço de correio eletrônico institucional utilizado como identificador principal do usuário. \\ \hline
+    3 & Campo de Senha & Permite a entrada da senha confidencial associada ao identificador do usuário, com caracteres ocultos para preservar sigilo. \\ \hline
+  \end{tabular}
+\end{table}
+\vspace*{-0.5cm}
+{\raggedright \fonte{Elaborado pelos autores.}}
+
+%----------------------------------------------------------------------
+% Tela 02 – Dashboard Inicial (Pós-autenticação)
+%----------------------------------------------------------------------
+\subsubsection{Tela 02 – Dashboard Inicial}
+
+\begin{figure}[H]
+  \centering
+  \IfFileExists{04-figuras/inicio.png}{%
+    \includegraphics[width=\textwidth]{04-figuras/inicio.png}
+  }{%
+    \fbox{Imagem `inicio.png' ausente em `04-figuras/'}
+  }
+  \caption{Tela inicial do chat após autenticação. Fonte: elaborado pelos autores.}
+  \label{fig:tela_dashboard_inicial}
+\end{figure}
+
+Após a autenticação bem-sucedida, o sistema apresenta a tela principal de interação, denominada \textit{dashboard} inicial. Essa interface proporciona acesso imediato às funcionalidades de consulta semântica, permitindo ao operador alternar entre dois modos de operação: o modo RAG (Busca Vetorial), que fundamenta as respostas em documentos recuperados do banco vetorial, e o modo Chat Simples, que consulta diretamente o modelo de linguagem sem recuperação documental prévia.
+
+A tela inicial exibe estado vazio convidativo, instruindo o usuário a iniciar uma conversação por meio do campo de entrada textual. O modo de operação ativo é indicado visualmente por meio de controles de alternância posicionados de forma proeminente, assegurando clareza sobre o comportamento esperado do sistema. Adicionalmente, são disponibilizados controles auxiliares para configuração do modelo de linguagem e personalização de preferências de visualização, proporcionando flexibilidade ao operador conforme suas necessidades específicas.
+
+\paragraph{Comandos da tela (botões) – Tela inicial}
+
+\begin{table}[H]
+  \centering
+  \caption{Quadro – Comandos da tela (botões) – Tela inicial}
+  \label{tab:cmd_tela_inicial}
+  \begin{tabular}{|c|p{4.5cm}|p{9cm}|}
+    \hline
+    \textbf{Item} & \textbf{Comando} & \textbf{Ação} \\ \hline
+    1 & RAG (Busca Vetorial) & Alterna o modo de busca para RAG, permitindo consultas com recuperação de documentos indexados do banco vetorial. \\ \hline
+    2 & Chat Simples & Alterna o modo de busca para Chat simples, consultando diretamente o modelo de linguagem sem recuperação de documentos. \\ \hline
+    3 & Botão Enviar & Submete a pergunta digitada pelo usuário, validando se o campo não está vazio e executando a busca no modo selecionado (RAG ou Chat). \\ \hline
+    4 & Seletor de Modelo & Permite selecionar o modelo de linguagem a ser utilizado para geração de respostas, conforme disponibilidade do sistema. \\ \hline
+    5 & Alternância de Tema & Alterna entre tema claro e escuro da interface, preservando a preferência do usuário entre sessões. \\ \hline
+  \end{tabular}
+\end{table}
+\vspace*{-0.5cm}
+{\raggedright \fonte{Elaborado pelos autores.}}
+
+%----------------------------------------------------------------------
+% Tela 03 – Chat com Resposta RAG (Modo RAG Ativo)
+%----------------------------------------------------------------------
+\subsubsection{Tela 03 – Resposta no Modo RAG}
+
+\begin{figure}[H]
+  \centering
+  \IfFileExists{04-figuras/resposta_rag.png}{%
+    \includegraphics[width=\textwidth]{04-figuras/resposta_rag.png}
+  }{%
+    \fbox{Imagem `resposta\_rag.png' ausente em `04-figuras/'}
+  }
+  \caption{Tela de resposta com modo RAG ativo. Fonte: elaborado pelos autores.}
+  \label{fig:tela_resposta_rag}
+\end{figure}
+
+A tela de resposta no modo RAG representa o resultado da consulta quando a recuperação aumentada por geração está ativa. Nessa configuração, o sistema executa busca semântica no banco vetorial de documentos jurídicos, recupera os trechos mais relevantes e os utiliza como contexto para fundamentar a resposta gerada pelo modelo de linguagem. Esse processo assegura que as respostas apresentem embasamento direto em fontes oficiais, reduzindo a incidência de informações não verificáveis.
+
+A interface apresenta a resposta em linguagem natural na área principal, seguida de seção dedicada aos documentos consultados. Cada documento recuperado é exibido em formato de cartão informativo, contendo título, identificação do tribunal de origem, grau de relevância calculado pela similaridade vetorial, data de publicação e trechos específicos utilizados na composição da resposta. Essa apresentação dual --- resposta sintetizada acompanhada de evidências rastreáveis --- visa proporcionar transparência ao operador, permitindo validação das informações antes de sua incorporação em decisões judiciais.
+
+\paragraph{Comandos da tela (botões) – Tela de resposta RAG}
+
+\begin{table}[H]
+  \centering
+  \caption{Quadro – Comandos da tela (botões) – Tela de resposta RAG}
+  \label{tab:cmd_tela_resposta_rag}
+  \begin{tabular}{|c|p{4.5cm}|p{9cm}|}
+    \hline
+    \textbf{Item} & \textbf{Comando} & \textbf{Ação} \\ \hline
+    1 & Botão Enviar & Submete nova pergunta ao sistema, mantendo o histórico da conversação para consultas de seguimento. \\ \hline
+    2 & Copiar Resposta & Copia o texto completo da resposta gerada para a área de transferência do sistema operacional. \\ \hline
+    3 & Cartões de Documentos & Exibe os documentos recuperados do banco vetorial, permitindo visualizar título, tribunal, relevância e trechos citados. \\ \hline
+  \end{tabular}
+\end{table}
+\vspace*{-0.5cm}
+{\raggedright \fonte{Elaborado pelos autores.}}
+
+%----------------------------------------------------------------------
+% Tela 04 – Chat com Resposta Simples (Modo Chat Simples)
+%----------------------------------------------------------------------
+\subsubsection{Tela 04 – Resposta no Modo Chat Simples}
+
+\begin{figure}[H]
+  \centering
+  \IfFileExists{04-figuras/resposta_simples.png}{%
+    \includegraphics[width=\textwidth]{04-figuras/resposta_simples.png}
+  }{%
+    \fbox{Imagem `resposta\_simples.png' ausente em `04-figuras/'}
+  }
+  \caption{Tela de resposta no modo Chat simples. Fonte: elaborado pelos autores.}
+  \label{fig:tela_resposta_chat_simples}
+\end{figure}
+
+A tela de resposta no modo Chat Simples corresponde ao comportamento do sistema quando a recuperação documental não é acionada. Nesse modo, a consulta é enviada diretamente ao modelo de linguagem, que gera resposta baseada exclusivamente em seu conhecimento pré-treinado e no histórico da conversação, sem consultar o banco vetorial de documentos jurídicos indexados.
+
+Visualmente, a interface assemelha-se à tela de resposta RAG, mantendo consistência de design e usabilidade. Entretanto, a seção de documentos consultados não é exibida, uma vez que não há recuperação de contexto externo. Essa modalidade é indicada para consultas exploratórias, esclarecimentos conceituais ou interações que não demandem fundamentação normativa específica. O sistema preserva o histórico da conversação, permitindo que o operador refine suas perguntas em sequência e obtenha esclarecimentos incrementais sobre temas de interesse.
+
+\paragraph{Comandos da tela (botões) – Tela de resposta (Chat simples)}
+
+\begin{table}[H]
+  \centering
+  \caption{Quadro – Comandos da tela (botões) – Tela de resposta (Chat simples)}
+  \label{tab:cmd_tela_resposta_chat}
+  \begin{tabular}{|c|p{4.5cm}|p{9cm}|}
+    \hline
+    \textbf{Item} & \textbf{Comando} & \textbf{Ação} \\ \hline
+    1 & Botão Enviar & Submete nova pergunta ao modelo de linguagem, mantendo o contexto conversacional para consultas de seguimento. \\ \hline
+    2 & Copiar Resposta & Copia o texto completo da resposta gerada para a área de transferência do sistema operacional. \\ \hline
+  \end{tabular}
+\end{table}
+\vspace*{-0.5cm}
+{\raggedright \fonte{Elaborado pelos autores.}}
+
+
+\paragraph{Campos da tela – Tela inicial}
+
+\begin{table}[H]
+  \centering
+  \caption{Quadro – Campos da tela – Tela Inicial}
+  \label{tab:campos_tela_inicial}
+  \footnotesize
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}X|c|c|c|c|>{\raggedright\arraybackslash}p{2.2cm}|c|c|}
+    \hline
+    \textbf{Item} & \textbf{Nome do Campo} & \textbf{Tipo} & \makecell{\textbf{Tama-}\\\textbf{nho}} & \makecell{\textbf{Más-}\\\textbf{cara}} & \makecell{\textbf{Obri-}\\\textbf{gatório}} & \makecell[l]{\textbf{Valor}\\\textbf{Padrão}} & \makecell{\textbf{Edi-}\\\textbf{tável}} & \makecell{\textbf{Visí-}\\\textbf{vel}} \\ \hline
+    1 & Campo de entrada de pergunta & Alfanumérico & N/A & Não & Sim & Vazio & Sim & Sim \\ \hline
+    2 & Seleção de Modelo de Linguagem & Seleção & N/A & Não & Não & Conforme configuração & Sim & Sim \\ \hline
+  \end{tabularx}
+\end{table}
+\vspace*{-0.5cm}
+{\raggedright \fonte{Elaborado pelos autores.}}
+
+\paragraph{Observações (Tela inicial)}
+
+O campo de entrada de texto permite ao usuário inserir sua pergunta em linguagem natural. O tamanho máximo do texto não é definido explicitamente na interface, sendo indicado como ``N/A'' (não aplicável) na Tabela~\ref{tab:campos_tela_inicial}. A validação de obrigatoriedade é realizada no momento do envio, impedindo o envio de consultas vazias.
+
+A seleção do modelo de linguagem permite ao usuário escolher entre diferentes modelos disponíveis no sistema. O valor padrão é definido pela configuração do sistema e pode variar conforme a instalação. A lista de modelos é carregada dinamicamente a partir da configuração centralizada da aplicação.
+
+% NOTE: Reorganizado para o novo capítulo de Desenvolvimento da Solução segundo ABNT
+% Inserção da seção de integração interface - API - RAG
+% IMPORTANTE: A seção está definida dentro do arquivo integracao_interface.tex
+% Não deve haver \section{...} aqui para evitar duplicação
+\input{./02-elementos-textuais/integracao_interface}
+
+\section{Diagrama de Caso de Uso}
+\label{sec:diagrama-caso-uso}
+
+Os diagramas de casos de uso são representações visuais que descrevem as interações entre os usuários (atores) e o sistema, identificando as funcionalidades oferecidas e os relacionamentos entre elas. Segundo \citeonline{edwards2024hybrid}, diagramas de casos de uso auxiliam na especificação de requisitos funcionais, facilitando a comunicação entre as partes interessadas e servindo como base para o desenvolvimento e a validação do sistema. No contexto deste trabalho, o diagrama de casos de uso ilustra como operadores judiciários, administradores e componentes externos interagem com a \textit{pipeline} RAG, evidenciando os principais fluxos de consulta, configuração, coleta de dados, processamento e recuperação de informações.
+
+Conforme apresentado na Figura~\ref{fig:diagrama-rag-seeu}, o sistema organiza os casos de uso em torno de quatro atores principais: Operador Judiciário, Administrador, Sistema (ator externo que dispara processos automatizados) e os módulos internos que compõem a \textit{pipeline}.
+
+\begin{figure}[!htbp]
+  \centering
+  \IfFileExists{04-figuras/casoDeUso.pdf}{%
+    \includegraphics[width=\textwidth,keepaspectratio]{04-figuras/casoDeUso.pdf}
+  }{%
+    \fbox{Figura ausente: `casoDeUso.pdf'}
+  }
+  \caption{Diagrama de Caso de Uso da \textit{Pipeline} RAG para consulta ao SEEU. Fonte: elaborado pelos autores.}
+  \label{fig:diagrama-rag-seeu}
+\end{figure}
+
+\noindent
+O diagrama da Figura~\ref{fig:diagrama-rag-seeu} apresenta os atores e casos de uso principais da pipeline RAG para o SEEU:  
+\begin{itemize}
+  \item \textbf{Operador Judiciário}: inicia a consulta via "Receber Pergunta".  
+  \item \textbf{Administrador}: configura parâmetros da pipeline em "Configurar Pipeline".  
+  \item \textbf{Sistema}: atua como ator externo encarregado de disparar e orquestrar os processos de "Coletar Documentos Públicos", "Pré-processar e segmentar texto", "Gerar Embeddings e atualizar índice" e "Realizar Consulta Semântica (RAG)".  
+  \item \textbf{Include} (setas obrigatórias): indicam os casos de uso que são sempre invocados no fluxo principal.  
+  \item \textbf{Extend} (setas opcionais): representam funcionalidades adicionais, como a "Avaliar Métricas e Monitorar Desempenho", que estende o caso de uso "Exibir Resposta via chatbot/API REST".  
+\end{itemize}  
+
+\noindent
+A organização dos casos de uso em relacionamentos de inclusão ({\textit{include}}) e extensão ({\textit{extend}}) permite identificar dependências obrigatórias e funcionalidades complementares. Os casos de uso de inclusão garantem que operações fundamentais, como a consulta semântica e a atualização da base de conhecimento, sejam sempre executadas quando acionadas por casos de uso superiores. Já as extensões representam comportamentos opcionais que agregam valor ao sistema sem impactar o fluxo principal, como a coleta de métricas de desempenho e a geração de \textit{logs} para auditoria. Essa estrutura modular facilita a manutenção, a evolução do sistema e a rastreabilidade dos requisitos ao longo do ciclo de desenvolvimento.
+
+\subsection{Especificação de Casos de Uso}
+\label{subsec:especificacao-casos-uso}
+A seguir são detalhados cada um dos casos de uso identificados no diagrama, explicando suas interações com os atores do sistema:
+
+%----------------------------------------------------------------------
+% UC-01 – Enviar Pergunta
+%----------------------------------------------------------------------
+\subsubsection{UC-01 – Enviar Pergunta}
+
+\noindent
+O \textit{Operador Judiciário} envia sua dúvida à interface de chatbot
+para iniciar a consulta semântica.
+
+\begin{table}[H]
+\centering
+\caption{Especificação do Caso de Uso UC-01 – Enviar Pergunta}
+\label{tab:uc01}
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Nome do caso de uso} & UC-01 – Enviar Pergunta \\ \hline
+\textbf{Ator Principal}      & Operador Judiciário \\ \hline
+\textbf{Resumo}              & Registrar e validar a pergunta do usuário. \\ \hline
+\textbf{Pré-Condições}       & Interface de chatbot online. \\ \hline
+\textbf{Pós-Condições}       & Pergunta armazenada e evento emitido para \emph{UC-07}. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Principal}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+\begin{enumerate}[label=\arabic*.,leftmargin=*]
+  \item Operador acessa a interface.
+  \item Digita a pergunta e clica em \textit{Enviar}.
+  \item Sistema valida formato/tamanho.
+  \item Sistema grava a pergunta e confirma recebimento.
+\end{enumerate}} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Alternativo}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+\begin{enumerate}[label=\arabic*a.,leftmargin=*]
+  \item[3a.] Pergunta inválida $\rightarrow$ sistema exibe erro e retorna ao passo 2.
+\end{enumerate}} \\ \hline
+\end{tabular}
+\end{table}
+
+
+% UC-02
+\subsubsection{UC-02 – Configurar Pipeline}
+\noindent
+O \textit{Administrador} define parâmetros e módulos da pipeline RAG.
+
+\begin{table}[H]
+\centering
+\caption{Especificação do Caso de Uso UC-02 – Configurar Pipeline}
+\label{tab:uc02}
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Nome do caso de uso}     & UC-02 – Configurar Pipeline \\ \hline
+\textbf{Ator Principal}          & Administrador \\ \hline
+\textbf{Resumo}                  & Ajustar fontes de coleta, periodicidade e parâmetros de indexação. \\ \hline
+\textbf{Pré-Condições}           & Credenciais válidas de administrador. \\ \hline
+\textbf{Pós-Condições}           & Parâmetros persistidos e \emph{UC-03 – Atualizar Base de Conhecimento} apto a ser agendado. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Principal}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+  \begin{enumerate}[leftmargin=*]
+    \item Administrador acessa o painel de configuração.
+    \item Define fontes, cronograma e opções de pré-processamento e indexação.
+    \item Salva alterações; sistema valida e aplica as configurações.
+  \end{enumerate}} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Alternativo}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+  \begin{enumerate}[label=\arabic*a.,leftmargin=*]
+    \item[2a.] Valor inválido $\to$ sistema rejeita, exibe mensagem e retorna ao passo 2.
+  \end{enumerate}} \\ \hline
+\end{tabular}
+\end{table}
+
+% UC-03
+\subsubsection{UC-03 – Atualizar Base de Conhecimento}
+\noindent
+Caso de uso de alto nível que executa todo o \textit{ETL} para manter o
+índice vetorial sempre atualizado.
+
+\begin{table}[H]
+\centering
+\caption{Especificação do Caso de Uso UC-03 – Atualizar Base de Conhecimento}
+\label{tab:uc03}
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Nome do caso de uso}     & UC-03 – Atualizar Base de Conhecimento \\ \hline
+\textbf{Ator Principal}          & Administrador \\ \hline
+\textbf{Relações}                & {\small «include» UC-04, UC-05 e UC-06} \\ \hline
+\textbf{Resumo}                  & Orquestrar a coleta, pré-processamento e (re)indexação dos dados. \\ \hline
+\textbf{Pré-Condições}           & Parâmetros de pipeline configurados (UC-02). \\ \hline
+\textbf{Pós-Condições}           & Índice vetorial contém todo o conteúdo recém-coletado. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Principal}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+  \begin{enumerate}[leftmargin=*]
+    \item Administrador dispara atualização ou CronJob executa no agendamento.
+    \item Sistema aciona \emph{UC-04 – Coletar Documentos Públicos}.
+    \item Sistema aciona \emph{UC-05 – Pré-processar e Segmentar Texto}.
+    \item Sistema aciona \emph{UC-06 – Gerar Embeddings e Atualizar Índice}.
+    \item Resultado agregado é registrado e notificado ao Administrador.
+  \end{enumerate}} \\ \hline
+\end{tabular}
+\end{table}
+
+%----------------------------------------------------------------------
+% UC-04 – Coletar Documentos Públicos
+%----------------------------------------------------------------------
+\subsubsection{UC-04 – Coletar Documentos Públicos}
+
+\noindent
+Extrai automaticamente documentos dos portais SEEU/CNJ.
+
+\begin{table}[H]
+\centering
+\caption{Especificação do Caso de Uso UC-04 – Coletar Documentos Públicos}
+\label{tab:uc04}
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Nome}        & UC-04 – Coletar Documentos Públicos \\ \hline
+\textbf{Ator Principal} & Sistema (Crawler) \\ \hline
+\textbf{Resumo}      & Baixar PDFs/HTML/JSON dos portais e armazenar cópias brutas. \\ \hline
+\textbf{Pré-Condições} & Fontes externas acessíveis. \\ \hline
+\textbf{Pós-Condições} & Documentos brutos salvos para pré-processamento. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Principal}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+\begin{enumerate}[leftmargin=*]
+  \item Crawler inicia sessão nos portais.
+  \item Pesquisa conteúdos novos.
+  \item Faz download dos arquivos.
+  \item Verifica integridade e armazena em repositório bruto.
+\end{enumerate}} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Alternativo}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+\begin{enumerate}[label=\arabic*a.,leftmargin=*]
+  \item Falha de rede $\rightarrow$ reprograma tentativa e registra log.
+  \item Documento corrompido $\rightarrow$ descarta e alerta administrador.
+\end{enumerate}} \\ \hline
+\end{tabular}
+\end{table}
+
+%----------------------------------------------------------------------
+% UC-05 – Pré-processar e Segmentar Texto
+%----------------------------------------------------------------------
+\subsubsection{UC-05 – Pré-processar e Segmentar Texto}
+
+\noindent
+Converte PDFs em texto limpo e divide em \textit{chunks}.
+
+\begin{table}[H]
+\centering
+\caption{Especificação do Caso de Uso UC-05 – Pré-processar e Segmentar Texto}
+\label{tab:uc05}
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Nome}        & UC-05 – Pré-processar e Segmentar Texto \\ \hline
+\textbf{Ator Principal} & Sistema (Pre-Processor) \\ \hline
+\textbf{Resumo}      & Extrair texto, limpar ruídos e segmentar em \textit{chunks}. \\ \hline
+\textbf{Pré-Condições} & Documentos brutos disponíveis. \\ \hline
+\textbf{Pós-Condições} & \textit{Chunks} prontos para vetorização. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Principal}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+\begin{enumerate}[leftmargin=*]
+  \item Extrai texto de cada PDF/HTML.
+  \item Remove cabeçalhos, rodapés e formatação.
+  \item Separa texto em \textit{chunks} de 500–1000 tokens.
+  \item Armazena \textit{chunks} para o Embedding Service.
+\end{enumerate}} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Alternativo}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+\begin{enumerate}[label=\arabic*a.,leftmargin=*]
+  \item Falha na extração $\rightarrow$ registra alerta; prossegue com próximos arquivos.
+\end{enumerate}} \\ \hline
+\end{tabular}
+\end{table}
+
+%----------------------------------------------------------------------
+% UC-06 – Gerar Embeddings e Atualizar Índice
+%----------------------------------------------------------------------
+\subsubsection{UC-06 – Gerar Embeddings e Atualizar Índice}
+
+\noindent
+Converte \textit{chunks} em vetores e atualiza o índice vetorial.
+
+\begin{table}[H]
+\centering
+\caption{Especificação do Caso de Uso UC-06 – Gerar Embeddings e Atualizar Índice}
+\label{tab:uc06}
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Nome}        & UC-06 – Gerar Embeddings e Atualizar Índice \\ \hline
+\textbf{Ator Principal} & Sistema (Embedding Service) \\ \hline
+\textbf{Resumo}      & Gerar embeddings e fazer \emph{upsert} no Vector DB. \\ \hline
+\textbf{Pré-Condições} & \textit{Chunks} pré-processados disponíveis. \\ \hline
+\textbf{Pós-Condições} & Índice vetorial atualizado. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Principal}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+\begin{enumerate}[leftmargin=*]
+  \item Seleciona \textit{chunks} não indexados.
+  \item Calcula embedding com modelo pré-treinado.
+  \item Envia vetor + metadados ao Vector DB.
+  \item Recebe confirmação (\textit{ACK}).
+\end{enumerate}} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Alternativo}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+\begin{enumerate}[label=\arabic*a.,leftmargin=*]
+  \item Falha no modelo $\rightarrow$ reprocessa \textit{chunk}; registra erro.
+\end{enumerate}} \\ \hline
+\end{tabular}
+\end{table}
+
+
+%----------------------------------------------------------------------
+% UC-07 – Realizar Consulta Semântica (RAG)
+%----------------------------------------------------------------------
+\subsubsection{UC-07 – Realizar Consulta Semântica (RAG)}
+
+\noindent
+Executa a recuperação de contexto e geração de resposta via LLM.
+
+\begin{table}[H]
+\centering
+\caption{Especificação do Caso de Uso UC-07 – Realizar Consulta Semântica (RAG)}
+\label{tab:uc07}
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Nome}        & UC-07 – Realizar Consulta Semântica (RAG) \\ \hline
+\textbf{Ator Principal} & Sistema (RAG Engine) \\ \hline
+\textbf{Resumo}      & Vetorizar a pergunta, recuperar top-\emph{k} documentos e gerar resposta. \\ \hline
+\textbf{Pré-Condições} & Pergunta armazenada (UC-01) e índice vetorial online. \\ \hline
+\textbf{Pós-Condições} & Resposta gerada e log gravado. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Principal}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+\begin{enumerate}[leftmargin=*]
+  \item Converte pergunta em vetor.
+  \item Recupera top-\emph{k} \textit{chunks} relevantes.
+  \item Cria \emph{prompt} com contexto + pergunta.
+  \item Chama LLM e obtém resposta.
+  \item Formata resposta e grava log.
+\end{enumerate}} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Alternativo}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+\begin{enumerate}[label=\arabic*a.,leftmargin=*]
+  \item Índice indisponível $\rightarrow$ retorna erro para UC-08.
+\end{enumerate}} \\ \hline
+\end{tabular}
+\end{table}
+
+%----------------------------------------------------------------------
+% UC-08 – Exibir Resposta ao Usuário
+%----------------------------------------------------------------------
+\subsubsection{UC-08 – Exibir Resposta ao Usuário}
+
+\noindent
+Entrega a resposta ao Operador e registra entrega.
+
+\begin{table}[H]
+\centering
+\caption{Especificação do Caso de Uso UC-08 – Exibir Resposta ao Usuário}
+\label{tab:uc08}
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Nome}        & UC-08 – Exibir Resposta ao Usuário \\ \hline
+\textbf{Ator Principal} & Operador Judiciário \\ \hline
+\textbf{Relações}    & {\small «extend» UC-09 – Avaliar Métricas} \\ \hline
+\textbf{Resumo}      & Formatar e entregar a resposta via WebSocket ou REST. \\ \hline
+\textbf{Pré-Condições} & Resposta gerada no UC-07. \\ \hline
+\textbf{Pós-Condições} & Resposta entregue e log de entrega salvo. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Principal}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+\begin{enumerate}[leftmargin=*]
+  \item Sistema formata resposta (HTML/JSON).
+  \item Envia pelo canal apropriado.
+  \item Recebe \textit{ACK} e registra status.
+\end{enumerate}} \\ \hline
+\end{tabular}
+\end{table}
+
+%----------------------------------------------------------------------
+% UC-09 – Avaliar Métricas e Monitorar Desempenho
+%----------------------------------------------------------------------
+\subsubsection{UC-09 – Avaliar Métricas e Monitorar Desempenho}
+
+\noindent
+Calcula métricas (precisão, recall, latência) e dispara alertas.
+
+\begin{table}[H]
+\centering
+\caption{Especificação do Caso de Uso UC-09 – Avaliar Métricas e Monitorar Desempenho}
+\label{tab:uc09}
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Nome}        & UC-09 – Avaliar Métricas e Monitorar Desempenho \\ \hline
+\textbf{Ator Principal} & Sistema (Metrics Service) \\ \hline
+\textbf{Ator Secundário} & Administrador \\ \hline
+\textbf{Resumo}      & Agregar logs, calcular métricas e atualizar dashboards. \\ \hline
+\textbf{Pré-Condições} & Logs de UC-07 e UC-08 disponíveis. \\ \hline
+\textbf{Pós-Condições} & Painel atualizado; alertas enviados se limites excedidos. \\ \hline
+\multicolumn{2}{|l|}{\textbf{Fluxo Principal}} \\ \hline
+\multicolumn{2}{|p{15cm}|}{%
+\begin{enumerate}[leftmargin=*]
+  \item Coleta dados de log/telemetria.
+  \item Calcula precisão, recall, F1 e latência.
+  \item Atualiza Painel Grafana/Prometheus.
+  \item Se métrica fora do SLA, dispara alerta ao Administrador.
+\end{enumerate}} \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Considerações Finais do Capítulo}
+
+Este capítulo apresentou o desenvolvimento técnico da solução proposta, detalhando a arquitetura da \textit{pipeline} RAG, os módulos de coleta de dados (scrapers), o sistema de indexação vetorial (DBVECTOR), a interface de usuário e a integração entre os componentes. A solução foi desenvolvida como protótipo funcional, demonstrando a viabilidade técnica da abordagem e servindo como base para futuras implementações em ambiente de produção. A arquitetura modular e a documentação detalhada dos casos de uso facilitam a manutenção, a evolução e a reprodutibilidade da solução.
