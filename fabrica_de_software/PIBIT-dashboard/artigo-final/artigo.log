@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.6.3)  18 SEP 2025 19:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.6.3)  6 MAR 2026 01:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -861,11 +861,11 @@ Package babel Info: Importing basic data for english
 
 ] (./artigo.toc
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 43.
+(Font)              <14.4> on input line 41.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 43.
+(Font)              <10> on input line 41.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 43.
+(Font)              <7> on input line 41.
  [4
 
 ]) [5] [6
@@ -993,20 +993,14 @@ Underfull \hbox (badness 1584) in paragraph at lines 192--193
 [][]\T1/lmr/m/n/10 (+20) 2010[][][]; [][]HA-MER et
  []
 
-[8]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
 05.
- (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
+(/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Overfull \hbox (24.70613pt too wide) in paragraph at lines 205--206
-[]\T1/lmr/bx/n/12 (-20) Bronze (raw)\T1/lmr/m/n/12 (-20) : in-ges-tão bruta e \
-T1/lmr/m/it/12 (-20) append-only \T1/lmr/m/n/12 (-20) de múl-ti-plas fon-tes (G
-itHub/GitLab/Notion).
- []
-
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
 06.
+
 (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -1014,86 +1008,128 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [9]
-Overfull \hbox (64.11104pt too wide) in paragraph at lines 218--219
-[]\T1/lmr/bx/n/12 (-20) Métricas téc-ni-cas: \T1/lmr/m/n/12 (-20) com-mits por 
-usuá-rio/repositório/tempo; \T1/lmr/m/it/12 (-20) is-sues \T1/lmr/m/n/12 (-20) 
-cri-a-das/atribuídas/fechadas;
+ [8] [9]
+Overfull \hbox (2.94846pt too wide) in paragraph at lines 237--238
+\T1/lmr/m/n/12 (-20) vas (mé-tri-cas ex-traí-das au-to-ma-ti-ca-mente do GitHub
+) e qua-li-ta-ti-vas (en-tre-vis-tas/observação),
  []
 
-[10]
-Overfull \hbox (12.63228pt too wide) in paragraph at lines 265--266
-[]\T1/lmr/bx/n/12 (-20) Prototipagem: \T1/lmr/m/it/12 (-20) scripts \T1/lmr/m/n
-/12 (-20) em \T1/lmr/m/it/12 (-20) Python\T1/lmr/m/n/12 (-20) /\T1/lmr/m/it/12 
-(-20) JavaScript \T1/lmr/m/n/12 (-20) para co-leta e con-so-li-da-ção (Bronze $
-\OMS/lmsy/m/n/12 !$ \T1/lmr/m/n/12 (-20) Sil-
- []
+[10] [11] [12]
+<arquitetura-geral.png, id=285, 3854.4pt x 2154.0475pt>
+File: arquitetura-geral.png Graphic file (type png)
+<use arquitetura-geral.png>
+Package pdftex.def Info: arquitetura-geral.png  used on input line 302.
+(pdftex.def)             Requested size: 386.75278pt x 216.10759pt.
+ [13 <./arquitetura-geral.png>]
+<sequencia_etl.png, id=301, 2585.66pt x 3854.4pt>
+File: sequencia_etl.png Graphic file (type png)
+<use sequencia_etl.png>
+Package pdftex.def Info: sequencia_etl.png  used on input line 321.
+(pdftex.def)             Requested size: 386.75278pt x 576.4883pt.
+ [14 <./sequencia_etl.png>]
+<dag-medalhao.png, id=308, 3729.935pt x 3854.4pt>
+File: dag-medalhao.png Graphic file (type png)
+<use dag-medalhao.png>
+Package pdftex.def Info: dag-medalhao.png  used on input line 331.
+(pdftex.def)             Requested size: 409.49722pt x 423.16193pt.
 
-[11]
+[15 <./dag-medalhao.png>]
+<screenshot-coops/pagina-inicial.png, id=317, 1908.12875pt x 1031.855pt>
+File: screenshot-coops/pagina-inicial.png Graphic file (type png)
+<use screenshot-coops/pagina-inicial.png>
+Package pdftex.def Info: screenshot-coops/pagina-inicial.png  used on input lin
+e 355.
+(pdftex.def)             Requested size: 386.75278pt x 209.13843pt.
+ [16 <./screenshot-coops/pagina-inicial.png>]
+<screenshot-coops/rede-de-colaboracao.png, id=324, 1908.12875pt x 1031.855pt>
+File: screenshot-coops/rede-de-colaboracao.png Graphic file (type png)
+<use screenshot-coops/rede-de-colaboracao.png>
+Package pdftex.def Info: screenshot-coops/rede-de-colaboracao.png  used on inpu
+t line 379.
+(pdftex.def)             Requested size: 386.75278pt x 209.13843pt.
+<screenshot-coops/heatmap.png, id=325, 1908.12875pt x 1031.855pt>
+File: screenshot-coops/heatmap.png Graphic file (type png)
+<use screenshot-coops/heatmap.png>
+Package pdftex.def Info: screenshot-coops/heatmap.png  used on input line 386.
+(pdftex.def)             Requested size: 386.75278pt x 209.13843pt.
+<screenshot-coops/treemap.png, id=326, 999.735pt x 897.3525pt>
+File: screenshot-coops/treemap.png Graphic file (type png)
+<use screenshot-coops/treemap.png>
+Package pdftex.def Info: screenshot-coops/treemap.png  used on input line 393.
+(pdftex.def)             Requested size: 386.75278pt x 347.14542pt.
+<screenshot-coops/circlepack-view.png, id=327, 999.735pt x 897.3525pt>
+File: screenshot-coops/circlepack-view.png Graphic file (type png)
+<use screenshot-coops/circlepack-view.png>
+Package pdftex.def Info: screenshot-coops/circlepack-view.png  used on input li
+ne 400.
+(pdftex.def)             Requested size: 386.75278pt x 347.14542pt.
+ [17 <./screenshot-coops/rede-de-colaboracao.png> <./screenshot-coops/heatmap.p
+ng>]
+<screenshot-coops/ai-analysis-issues-from-one-member-from-mds.png, id=336, 579.
+16376pt x 566.115pt>
+File: screenshot-coops/ai-analysis-issues-from-one-member-from-mds.png Graphic 
+file (type png)
+<use screenshot-coops/ai-analysis-issues-from-one-member-from-mds.png>
+Package pdftex.def Info: screenshot-coops/ai-analysis-issues-from-one-member-fr
+om-mds.png  used on input line 418.
+(pdftex.def)             Requested size: 386.75278pt x 378.04254pt.
+<screenshot-coops/activity-timeline-screen-partial-view-here-we-can-see-prs-iss
+ues-etc-by-user.png, id=337, 1718.42pt x 953.5625pt>
+File: screenshot-coops/activity-timeline-screen-partial-view-here-we-can-see-pr
+s-issues-etc-by-user.png Graphic file (type png)
+<use screenshot-coops/activity-timeline-screen-partial-view-here-we-can-see-prs
+-issues-etc-by-user.png>
+Package pdftex.def Info: screenshot-coops/activity-timeline-screen-partial-view
+-here-we-can-see-prs-issues-etc-by-user.png  used on input line 425.
+(pdftex.def)             Requested size: 386.75278pt x 214.60051pt.
+<screenshot-coops/pipelines-github-todos-workflows-rodados.png, id=338, 1908.12
+875pt x 1031.855pt>
+File: screenshot-coops/pipelines-github-todos-workflows-rodados.png Graphic fil
+e (type png)
+<use screenshot-coops/pipelines-github-todos-workflows-rodados.png>
+Package pdftex.def Info: screenshot-coops/pipelines-github-todos-workflows-roda
+dos.png  used on input line 436.
+(pdftex.def)             Requested size: 386.75278pt x 209.13843pt.
 
-LaTeX Warning: Reference `fig:topologia' on page 12 undefined on input line 283
-.
-
-
-LaTeX Warning: Reference `fig:sequencia-etl' on page 12 undefined on input line
- 292.
-
-[12]
-
-LaTeX Warning: Reference `fig:dag-medalhao' on page 13 undefined on input line 
-301.
-
-[13]
-Overfull \hbox (13.66228pt too wide) in paragraph at lines 326--327
-\T1/lmr/m/n/12 (-20) Cada ci-clo se-ma-nal \T1/lmr/bx/n/12 (-20) li-bera Bronze
-/Silver \T1/lmr/m/n/12 (-20) para usuá-rios avan-ça-dos (pes-qui-sa-do-res/moni
-tores)
- []
-
-[14] [15] (./artigo.bbl (./artigo.brf)
+[18 <./screenshot-coops/treemap.png>] [19 <./screenshot-coops/circlepack-view.p
+ng>] [20 <./screenshot-coops/ai-analysis-issues-from-one-member-from-mds.png> <
+./screenshot-coops/activity-timeline-screen-partial-view-here-we-can-see-prs-is
+sues-etc-by-user.png>] (./artigo.bbl (./artigo.brf)
 \tf@brf=\write5
 \openout5 = `artigo.brf'.
 
- [16]
+ [21 <./screenshot-coops/pipelines-github-todos-workflows-rodados.png>]
 bibitemlist
-[17
+[22
 
-]) [18]
+]) [23]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\uppercase' on input line 408.
+(hyperref)                removing `\uppercase' on input line 475.
 
-[19
+[24
 
 
-] [20
+] [25
 
-] [21] [22
+] [26] [27
 
 ]
 \tf@toc=\write6
 \openout6 = `artigo.toc'.
 
  (./artigo.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-Package rerunfilecheck Warning: File `artigo.brf' has changed.
-(rerunfilecheck)                Rerun to get bibliographical references right.
-
-Package rerunfilecheck Info: Checksums for `artigo.brf':
-(rerunfilecheck)             Before: A44B5216246E3A38FE3B52F23EFB0166;4187
-(rerunfilecheck)             After:  5A40DEA0CFA86E5B1FDAAE694877E368;4189.
+Package rerunfilecheck Info: File `artigo.brf' has not changed.
+(rerunfilecheck)             Checksum: 94002B79E95EA76595B6262439C894A7;4339.
  ) 
 Here is how much of TeX's memory you used:
- 17909 strings out of 478031
- 287966 string characters out of 5840163
- 1870330 words of memory out of 5000000
- 37383 multiletter control sequences out of 15000+600000
- 604698 words of font info for 228 fonts, out of 8000000 for 9000
+ 17957 strings out of 478031
+ 290667 string characters out of 5840163
+ 1868330 words of memory out of 5000000
+ 37435 multiletter control sequences out of 15000+600000
+ 603134 words of font info for 214 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
- 90i,12n,90p,1327b,709s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,12n,90p,1517b,707s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
 ips/lm/lm-ts1.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}</usr/shar
 e/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/l
@@ -1105,10 +1141,10 @@ b></usr/share/texmf/fonts/type1/public/lm/lmss12.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmss17.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb><
 /usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1
 /public/lm/lmtt12.pfb>
-Output written on artigo.pdf (22 pages, 384764 bytes).
+Output written on artigo.pdf (27 pages, 4240296 bytes).
 PDF statistics:
- 589 PDF objects out of 1000 (max. 8388607)
- 531 compressed objects within 6 object streams
- 106 named destinations out of 1000 (max. 500000)
- 52041 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 645 PDF objects out of 1000 (max. 8388607)
+ 560 compressed objects within 6 object streams
+ 117 named destinations out of 1000 (max. 500000)
+ 52080 words of extra memory for PDF output out of 61914 (max. 10000000)
 

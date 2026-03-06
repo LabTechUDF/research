@@ -35,12 +35,6 @@ Provides insights on successful industry-academia collaboration strategies.}
 Explores temporal coordination challenges in collaborative innovation
   projects.}
 
-\bibitem[Group 2022]{software2022metrics}
-\abntrefinfo{Group}{GROUP}{2022}
-{GROUP, S. M.~R. Software metrics: A rigorous and practical approach.
-\emph{Software Engineering Metrics}, 2022.
-Comprehensive overview of software measurement practices and methodologies.}
-
 \bibitem[Hamer et al. 2021]{hamer2021using}
 \abntrefinfo{Hamer et al.}{HAMER et al.}{2021}
 {HAMER, S. et al. Using git metrics to measure students’ and teams’ code
@@ -124,13 +118,6 @@ Universidade Estadual Paulista (Unesp), 2016.}
 {SILVA C~L B;~BRUM, W. L.~N. Defini{\c{c}}{\~a}o de um conjunto de indicadores
   para apoiar a gest{\~a}o de projetos.
 \emph{Universidade Federal do Estado do Rio de Janeiro}, 2016.}
-
-\bibitem[Team 2021]{gitmetrics2021students}
-\abntrefinfo{Team}{TEAM}{2021}
-{TEAM, G. E.~R. Git metrics for students: Educational applications of version
-  control analytics.
-\emph{Educational Software Engineering}, 2021.
-Specific focus on using Git/GitHub metrics in educational contexts.}
 
 \bibitem[TEMITOPE 2020]{temitope2020software}
 \abntrefinfo{TEMITOPE}{TEMITOPE}{2020}
