@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.6.3)  18 SEP 2025 20:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.6.3)  27 FEB 2026 03:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1026,30 +1026,30 @@ Underfull \hbox (badness 10000) in paragraph at lines 220--221
  []
 
 [4] [5]
-Overfull \hbox (26.28189pt too wide) in paragraph at lines 238--241
+Overfull \hbox (26.28189pt too wide) in paragraph at lines 246--249
 []\T1/lmr/bx/n/12 (-20) Migração dos pro-tó-ti-pos\T1/lmr/m/n/12 (-20) : trans-
 for-mar os ar-te-fa-tos atu-ais (\T1/lmtt/m/n/12 extrair-dados-github.py
  []
 
-[6]
-<arquitetura-geral.png, id=117, 3854.4pt x 2154.0475pt>
+[6] [7]
+<arquitetura-geral.png, id=133, 3854.4pt x 1945.2675pt>
 File: arquitetura-geral.png Graphic file (type png)
 <use arquitetura-geral.png>
-Package pdftex.def Info: arquitetura-geral.png  used on input line 261.
-(pdftex.def)             Requested size: 409.49722pt x 228.82755pt.
-<dag-medalhao.png, id=119, 3729.935pt x 3854.4pt>
+Package pdftex.def Info: arquitetura-geral.png  used on input line 269.
+(pdftex.def)             Requested size: 409.49722pt x 206.64854pt.
+<dag-medalhao.png, id=135, 3729.935pt x 3854.4pt>
 File: dag-medalhao.png Graphic file (type png)
 <use dag-medalhao.png>
-Package pdftex.def Info: dag-medalhao.png  used on input line 268.
+Package pdftex.def Info: dag-medalhao.png  used on input line 276.
 (pdftex.def)             Requested size: 409.49722pt x 423.16193pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 269--269
+Underfull \hbox (badness 10000) in paragraph at lines 277--277
 [][]\T1/lmr/m/n/12 (+20) DAG da Ar-qui-te-tura Me-da-lhão de-ta-lhando o fluxo 
 com-pleto
  []
 
 
-Underfull \hbox (badness 3029) in paragraph at lines 269--269
+Underfull \hbox (badness 3029) in paragraph at lines 277--277
 \T1/lmr/m/n/12 (+20) Bronze\TS1/lmr/m/n/12 (+20) ^^Y\T1/lmr/m/n/12 (+20) Silver
 \TS1/lmr/m/n/12 (+20) ^^Y\T1/lmr/m/n/12 (+20) Gold. As fon-tes GitHub API ali-m
 en-tam da-dos raw
@@ -1058,42 +1058,42 @@ en-tam da-dos raw
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<sequencia_etl.png, id=120, 2585.66pt x 3854.4pt>
+<sequencia_etl.png, id=136, 2585.66pt x 3854.4pt>
 File: sequencia_etl.png Graphic file (type png)
 <use sequencia_etl.png>
-Package pdftex.def Info: sequencia_etl.png  used on input line 275.
+Package pdftex.def Info: sequencia_etl.png  used on input line 283.
 (pdftex.def)             Requested size: 409.49722pt x 610.42358pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<collaboration-network.png, id=121, 578.16pt x 578.16pt>
+<collaboration-network.png, id=137, 578.16pt x 578.16pt>
 File: collaboration-network.png Graphic file (type png)
 <use collaboration-network.png>
-Package pdftex.def Info: collaboration-network.png  used on input line 284.
+Package pdftex.def Info: collaboration-network.png  used on input line 292.
 (pdftex.def)             Requested size: 364.00139pt x 363.99571pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<contributions-over-time.png, id=122, 722.7pt x 433.62pt>
+<contributions-over-time.png, id=138, 722.7pt x 433.62pt>
 File: contributions-over-time.png Graphic file (type png)
 <use contributions-over-time.png>
-Package pdftex.def Info: contributions-over-time.png  used on input line 291.
+Package pdftex.def Info: contributions-over-time.png  used on input line 299.
 (pdftex.def)             Requested size: 364.00139pt x 218.40404pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<activity-heatmap.png, id=123, 867.24pt x 433.62pt>
+<activity-heatmap.png, id=139, 867.24pt x 433.62pt>
 File: activity-heatmap.png Graphic file (type png)
 <use activity-heatmap.png>
-Package pdftex.def Info: activity-heatmap.png  used on input line 298.
+Package pdftex.def Info: activity-heatmap.png  used on input line 306.
 (pdftex.def)             Requested size: 364.00139pt x 182.00006pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<pie-contributions.png, id=124, 462.528pt x 346.896pt>
+<pie-contributions.png, id=140, 462.528pt x 346.896pt>
 File: pie-contributions.png Graphic file (type png)
 <use pie-contributions.png>
-Package pdftex.def Info: pie-contributions.png  used on input line 305.
+Package pdftex.def Info: pie-contributions.png  used on input line 313.
 (pdftex.def)             Requested size: 364.00139pt x 273.01265pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1102,45 +1102,46 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 \tf@brf=\write5
 \openout5 = `relatorio-parcial.brf'.
 
- [7
+ [8
 
- <./arquitetura-geral.png>] [8 <./dag-medalhao.png>] [9 <./sequencia_etl.png>] 
-[10 <./collaboration-network.png>] [11 <./contributions-over-time.png> <./activ
-ity-heatmap.png>] [12 <./pie-contributions.png>]
+ <./arquitetura-geral.png>] [9 <./dag-medalhao.png>] [10 <./sequencia_etl.png>]
+ [11 <./collaboration-network.png>] [12 <./contributions-over-time.png> <./acti
+vity-heatmap.png>]
+[13 <./pie-contributions.png>]
 bibitemlist
-) [13
-
-]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\uppercase' on input line 320.
-
 [14
 
+]) [15]
 
-] [15
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\uppercase' on input line 328.
 
-] [16] [17
+[16
+
+
+] [17
+
+] [18] [19
 
 ]
-Overfull \hbox (14.07716pt too wide) in paragraph at lines 419--420
+Overfull \hbox (14.07716pt too wide) in paragraph at lines 427--428
 []\T1/lmr/bx/n/12 (-20) Técnicas: \T1/lmr/m/n/12 (-20) com-mits por usuá-rio/re
 positório/tempo; \T1/lmr/m/it/12 (-20) is-sues \T1/lmr/m/n/12 (-20) cri-a-das/a
 tribuídas/fechadas;
  []
 
-[18
+[20
 
-] [19] [20] (./relatorio-parcial.aux)
+] [21] [22] (./relatorio-parcial.aux)
 Package rerunfilecheck Info: File `relatorio-parcial.brf' has not changed.
-(rerunfilecheck)             Checksum: D27B0C3A68F142357A340BA31714AE2C;670.
+(rerunfilecheck)             Checksum: D121026E41359180BFEB97AB7F16B549;991.
  ) 
 Here is how much of TeX's memory you used:
- 17668 strings out of 478031
- 283636 string characters out of 5840163
+ 17702 strings out of 478031
+ 284457 string characters out of 5840163
  1869330 words of memory out of 5000000
- 37228 multiletter control sequences out of 15000+600000
- 588910 words of font info for 181 fonts, out of 8000000 for 9000
+ 37258 multiletter control sequences out of 15000+600000
+ 588775 words of font info for 180 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
  90i,12n,90p,1189b,730s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texmf/fonts/enc/d
@@ -1150,14 +1151,15 @@ bx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/f
 onts/type1/public/lm/lmbxi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.
 pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/t
 ype1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/
-share/texmf/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/publ
-ic/lm/lmss12.pfb></usr/share/texmf/fonts/type1/public/lm/lmss17.pfb></usr/share
-/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm
-/lmtk10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on relatorio-parcial.pdf (20 pages, 2249132 bytes).
+share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/publ
+ic/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmss12.pfb></usr/share
+/texmf/fonts/type1/public/lm/lmss17.pfb></usr/share/texmf/fonts/type1/public/lm
+/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtk10.pfb></usr/share/texm
+f/fonts/type1/public/lm/lmtt12.pfb>
+Output written on relatorio-parcial.pdf (22 pages, 2265536 bytes).
 PDF statistics:
- 358 PDF objects out of 1000 (max. 8388607)
- 289 compressed objects within 3 object streams
- 101 named destinations out of 1000 (max. 500000)
- 44116 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 390 PDF objects out of 1000 (max. 8388607)
+ 316 compressed objects within 4 object streams
+ 107 named destinations out of 1000 (max. 500000)
+ 44124 words of extra memory for PDF output out of 51595 (max. 10000000)
 

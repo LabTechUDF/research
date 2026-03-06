@@ -14,11 +14,34 @@
 Disponibilizado em PDF no acervo do autor; dados de identificação
   institucional no corpo do texto.}
 
+\bibitem[Bjerregaard et al. 2021]{bjerregaard2021lessons}
+\abntrefinfo{Bjerregaard et al.}{BJERREGAARD et al.}{2021}
+{BJERREGAARD, T. et al. Lessons learned on research co-creation: Making
+  industry-academia collaboration work.
+\emph{Research-Industry Collaboration Studies}, 2021.
+Provides insights on successful industry-academia collaboration strategies.}
+
+\bibitem[Franssen et al. 2019]{franssen2019cogs}
+\abntrefinfo{Franssen et al.}{FRANSSEN et al.}{2019}
+{FRANSSEN, T. et al. Get the cogs in synch: Time horizon and temporal
+  coordination in innovation collaboration.
+\emph{Innovation Management Journal}, 2019.
+Explores temporal coordination challenges in collaborative innovation
+  projects.}
+
 \bibitem[Hamer et al. 2021]{hamer2021using}
 \abntrefinfo{Hamer et al.}{HAMER et al.}{2021}
 {HAMER, S. et al. Using git metrics to measure students’ and teams’ code
   contributions in software development projects.
 \emph{CLEI electronic journal}, v.~24, n.~2, p.~8--1, 2021.}
+
+\bibitem[J{\"a}rvel{\"a} et al. 2018]{jarvela2018collaboration}
+\abntrefinfo{J{\"a}rvel{\"a} et al.}{J{\"A}RVEL{\"A} et al.}{2018}
+{J{\"A}RVEL{\"A}, H.-M. et al. Collaboration and innovation dynamics in
+  software ecosystems: A technology management research perspective.
+\emph{Technology Management Research}, 2018.
+Focuses on collaboration dynamics and innovation in software ecosystems from
+  technology management perspective.}
 
 \bibitem[Kitchenham 2010]{kitchenham2010s}
 \abntrefinfo{Kitchenham}{KITCHENHAM}{2010}
