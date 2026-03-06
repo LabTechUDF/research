@@ -23,7 +23,6 @@
 *.run.xml
 
 # Arquivos de saída (PDF, DVI, PS)
-*.pdf
 *.dvi
 *.ps
 
