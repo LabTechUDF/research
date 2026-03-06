@@ -1,0 +1,50 @@
+# .gitignore para projeto LaTeX
+# Ignorar arquivos gerados pelo LaTeX / latexmk
+*.aux
+**/*.aux
+*.bbl
+*.blg
+*.brf
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex
+*.nav
+*.snm
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.run.xml
+
+# Arquivos de saída (PDF, DVI, PS)
+*.pdf
+*.dvi
+*.ps
+
+# Diretórios e arquivos de configuração/IDE
+.vscode/
+.idea/
+_minted-*/
+
+# Arquivos temporários e backups de editores
+*~
+*.swp
+*.bak
+*.tmp
+*.backup
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de configuração do latexmk (opcional)
+.latexmkrc
+latexmkrc
+
+# Se preferir versionar o PDF final, remova ou comente a linha '*.pdf' acima
