@@ -5,13 +5,57 @@
 \chapter{Introdução}
 \label{sec:introducao}
 
-A digitalização dos serviços públicos surge como uma resposta eficaz à necessidade de modernização dos processos judiciais, conforme destacado em diversos estudos. O Sistema Eletrônico de Execução Unificado (SEEU) destaca-se como uma ferramenta essencial para a centralização e gestão dos processos no âmbito da execução penal, devido à crescente demanda por maior agilidade e precisão na recuperação de informações \cite{divald2021e-estonia}.
+Em nível estadual, o Tribunal de Justiça da Bahia (TJ-BA) mantém cerca de
+24\,000 execuções penais ativas no Sistema Eletrônico de Execução Unificado
+(SEEU). A Lei de Execução Penal (LEP) exige revisões trimestrais, requisito
+confirmado pela Súmula 533 do Superior Tribunal de Justiça (STJ); isso
+representa, na prática, a análise de aproximadamente 8\,000 movimentações por
+mês (cerca de 267 por dia) \cite{brasil1984lep,stj2015sumula533}. 
 
-A relevância deste tema é evidenciada pela busca de superação dos desafios associados à consulta manual em um vasto acervo documental, um processo que se revela moroso, sujeito a inconsistências e, por conseguinte, propenso a retardar a tomada de decisão. O estudo "e-Estonia: A digital society for the transition to formality" ilustra como a digitalização pode promover maior transparência e eficiência, uma vez que "tudo no mundo online deixa uma rastreabilidade" \cite{divald2021e-estonia}.
+Ainda que a digitalização dos processos reduza o manuseio físico dos autos, o
+volume de informações a consultar continua elevado. No Mutirão Processual Penal
+de 2024, por exemplo, foram lançados 18\,600 atos em apenas 60 dias—número que
+ultrapassa a meta estabelecida na Portaria 304/2024 do Conselho Nacional de
+Justiça (CNJ)—evidenciando a sobrecarga de magistrados e servidores
+\cite{tjba2024mutirao,cnj2024portaria304}. Situação semelhante observou-se no
+Tribunal de Justiça do Ceará (TJ-CE): a confecção manual de 146 despachos
+consumiria mais de quatro horas, ao passo que um robô executa cada um em apenas
+30 s \cite{tjce2023robos}. 
 
-No contexto atual, tecnologias que combinam Inteligência Artificial (IA) e modelos de linguagem de grande porte, em especial as técnicas de Retrieval-Augmented Generation (RAG), apresentam-se como soluções inovadoras. Essas técnicas permitem a integração de bases de dados externas com a geração de respostas contextualizadas, otimizando a recuperação de informações e possibilitando consultas em linguagem natural que fornecem resultados baseados em documentos originais de maneira rápida e precisa.
+Diante desse cenário, este trabalho propõe e desenvolve uma \textit{pipeline} de Geração Aumentada por Recuperação (\textit{Retrieval-Augmented Generation} -- RAG) voltada ao apoio a pesquisas jurídicas relacionadas ao SEEU. O objetivo não é substituir a atuação humana na prolação de atos judiciais, mas sim propor uma arquitetura que ofereça: (i) busca semântica sobre a LEP, a Constituição Federal e demais normas correlatas; (ii) resumos e apontamentos normativos que facilitem o entendimento das execuções penais cadastradas; e (iii) sugestões de referências jurisprudenciais e doutrinárias que possam ser utilizadas pelo usuário ao redigir suas próprias decisões.
 
-Este trabalho tem como objetivo desenvolver uma pipeline de RAG para processamento e disponibilização dos dados públicos do SEEU, principalmente os dados de suporte. Através de uma interface de chatbot, os operadores do Direito terão a capacidade de realizar buscas de forma intuitiva, obtendo respostas consistentes e contextualizadas. Além disso, a implementação de uma API para acesso externo amplia as possibilidades de integração com outros sistemas e serviços, contribuindo para a modernização do sistema Judiciário e para a transformação digital na execução penal.
+Essa abordagem devolve tempo às equipes de execução penal, melhora a qualidade
+das decisões ao tornar a pesquisa jurídica mais precisa e, sobretudo, preserva
+as garantias processuais. A iniciativa segue a diretriz de modernização
+judicial sustentada por parcerias entre o Conselho Nacional de Justiça (CNJ) e
+organismos internacionais—como o Programa das Nações Unidas para o
+Desenvolvimento (PNUD)—que buscam ampliar a transparência e o acesso à Justiça
+por meio de soluções digitais e governança inovadora
+\cite{undp2025pnudcnj}.
+
+
+A experiência do \emph{e-Government} da Estônia mostra o impacto de
+infraestrutura digital robusta: 98 \% das declarações de imposto passam a ser
+enviadas on-line em poucos minutos, e o mesmo percentual de empresas é
+registrado eletronicamente, aumentando a rastreabilidade e reduzindo fraudes
+\cite{divald2021eformalization}. Guardadas as proporções, o SEEU enfrenta
+desafio semelhante — consolidar milhares de atos processuais dispersos e
+assegurar as revisões trimestrais obrigatórias. O caso estoniano indica que
+automação e padronização digitais podem gerar ganhos análogos de eficiência e
+transparência, reforçando o valor da \emph{pipeline} RAG proposta.
+
+Apesar dos avanços, a consulta manual a grandes acervos documentais ainda é
+demorada e sujeita a erros. Pesquisas mostram que bancos de dados vetoriais e
+\emph{embeddings} reduzem a latência e aumentam a precisão de recuperação
+\cite{taipalus2024vector,gao2023survey}. Técnicas RAG — que combinam
+Inteligência Artificial (IA) e \emph{Large Language Models} (LLMs) — despontam
+como solução para consultas em linguagem natural. Revisões recentes destacam o
+potencial dessa abordagem \cite{qwak2024integrating,pujiono2024implementing}.
+
+Este trabalho apresenta o desenvolvimento de uma \textit{pipeline} RAG concebida para consultas relacionadas ao SEEU, implementada em Python, com interface \textit{web} baseada em \textit{Server-Side Rendering} (SSR) executando em ambiente Linux protegido por \textit{firewall}. A arquitetura proposta permite que operadores do Direito realizem buscas intuitivas e integrem a solução a sistemas externos por meio de uma \textit{Application Programming Interface} (API) \textit{Representational State Transfer} (REST).
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Seção 1.1 – Objetivos
@@ -21,18 +65,19 @@ Este trabalho tem como objetivo desenvolver uma pipeline de RAG para processamen
 \label{sec:objetivos}
 
 \subsection{Objetivo Geral}
-Desenvolver uma pipeline de Retrieval-Augmented Generation (RAG) para otimizar a recuperação e disponibilização de dados públicos no Sistema Eletrônico de Execução Unificado (SEEU), visando a modernização dos processos judiciais na esfera da execução penal e a promoção de uma gestão mais eficiente e transparente por meio da integração de tecnologias de Inteligência Artificial e interfaces de usuário intuitivas, como um chatbot, além de possibilitar a integração com outros sistemas através de uma API para acesso externo.
+Desenvolver uma arquitetura de \emph{pipeline} RAG orientada a consultas relacionadas ao SEEU, que permita a recuperação e disponibilização de dados públicos da execução penal por meio de \textit{chatbot} e API REST em ambiente de desenvolvimento, propondo um modelo conceitual que possa contribuir para a modernização dos processos judiciais e ampliar eficiência e transparência em futuras implementações.
 
-\subsection{Objetivos Específicos}
+\subsection{Objetivos específicos}
 \begin{enumerate}[label=\arabic*.]
-  \item Coletar e organizar os dados públicos do SEEU, principalmente os documentos de suporte;
-  \item Realizar a vetorização desses dados em um banco de dados vetorial (Elasticsearch, OpenSearch ou PostgreSQL+pgvector);
-  \item Desenvolver uma pipeline que conecte o índice vetorial ao LLM selecionado, criando mecanismos para consultas precisas;
-  \item Realizar testes de integração para avaliar a eficiência e a qualidade das respostas geradas;
-  \item Criar uma interface de chatbot integrada à pipeline de RAG e ao LLM para interação em tempo real;
-  \item Conduzir testes de usabilidade e implementar ajustes para aprimorar a experiência do usuário;
-  \item Implementar uma API REST documentada para consumo externo;
-  \item Preparar o ambiente para deployment, considerando aspectos de segurança e escalabilidade.
+  \item Coletar e organizar dados públicos relacionados ao SEEU, legislação penal e jurisprudência;
+  \item Vetorizar esses dados em um banco vetorial (FAISS, OpenSearch
+        ou soluções similares);
+  \item Conectar o índice vetorial ao LLM selecionado para geração de respostas fundamentadas;
+  \item Propor arquitetura de \textit{pipeline} RAG com mecanismos de recuperação e geração de respostas;
+  \item Disponibilizar protótipo de interface \textit{web} integrada à \emph{pipeline} em ambiente de desenvolvimento;
+  \item Implementar uma API REST documentada para acesso à funcionalidade;
+  \item Configurar ambiente de execução em Linux com controle de acesso via \textit{firewall};
+  \item Propor diretrizes para futuras integrações em ambiente de produção.
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -42,11 +87,16 @@ Desenvolver uma pipeline de Retrieval-Augmented Generation (RAG) para otimizar a
 \section{Trabalhos Correlatos}
 \label{sec:trabalhos-correlatos}
 
-\textbf{Edwards (2024)} propõe uma abordagem híbrida que combina RAG com grafos de conhecimento para relatórios de acreditação em educação superior. Embora semelhante na tecnologia RAG, difere no domínio de aplicação (educação vs. execução penal), exigindo adaptações metodológicas para atender às necessidades do SEEU.
+Esta seção discute estudos que aplicam RAG a contextos jurídicos ou regulatórios, evidenciando avanços e limitações relevantes para o SEEU.
 
-\textbf{Aquino (2024)} investiga extração de informações de documentos jurídicos brasileiros com RAG, apontando estratégias para mitigar alucinações e validar experimentalmente resultados. Tais estratégias são fundamentais para aumentar a confiabilidade do sistema proposto.
+\citeonline{edwards2024hybrid} apresenta um \textit{pipeline} RAG que integra grafos de conhecimento — construídos por especialistas e por LLMs — a uma base vetorial, automatizando relatórios de acreditação da \textit{Association to Advance Collegiate Schools of Business} (AACSB). O roteamento de consultas, a decomposição em subconsultas e a síntese automática de respostas reduzem o esforço humano e aumentam a transparência; entretanto, a curadoria desses grafos ainda exige validação manual \cite{edwards2024hybrid}.  
+\emph{Relação com o SEEU}: o sistema proposto neste TCC adota estratégias semelhantes de roteamento e síntese de consultas, porém aplica-as ao domínio jurídico-penal. Enquanto Edwards et al. empregam grafos de conhecimento para estruturar requisitos de acreditação, a presente solução organiza dispositivos legais, súmulas e doutrinas, permitindo recuperação contextualizada de normas da execução penal e facilitando a fundamentação de decisões judiciais.
 
-\textbf{Pujiono et al. (2024)} desenvolvem um chatbot RAG para consultas em agências públicas, empregando métricas de similaridade (\emph{cosine similarity}) para avaliar relevância das respostas. Este trabalho expande essa aplicação ao domínio penal e adiciona interoperabilidade via API.
+\citeonline{pujiono2024implementing} implementam um chatbot que combina \textit{embeddings} da OpenAI, armazenamento vetorial no Pinecone e geração condicionada à recuperação, respondendo a perguntas sobre normas de agências públicas. O estudo comprova a utilidade do RAG na interpretação de regulamentos, porém não trata acervos processuais volumosos \cite{pujiono2024implementing}.  
+\emph{Relação com o SEEU}: o presente trabalho incorpora técnicas de indexação escalável e métricas de cobertura para manipular grande acervo de legislação e doutrinas.
+
+\citeonline{aquino2024extracting} descreve um fluxo RAG local para extrair informações estruturadas de documentos de licitação, utilizando \textit{embeddings} BERTimbau, Chroma como \textit{vector store} e LLMs \textit{open source}. O autor relata ganhos de precisão sobre técnicas tradicionais, mas alerta para o elevado custo computacional \cite{aquino2024extracting}.  
+\emph{Relação com o SEEU}: esta pesquisa adota estratégias de compressão e particionamento que reduzem o consumo de recursos, viabilizando a execução em infraestrutura de tribunal estadual sem comprometer a qualidade das respostas.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Seção 1.3 – Solução Proposta
@@ -55,194 +105,621 @@ Desenvolver uma pipeline de Retrieval-Augmented Generation (RAG) para otimizar a
 \section{Solução Proposta}
 \label{sub:solucao-proposta}
 
-A solução consiste em uma pipeline de RAG com as etapas:
+A solução proposta consiste em uma arquitetura de \textit{pipeline} RAG concebida e desenvolvida em ambiente de prototipagem, organizada nos seguintes módulos conceituais e implementados:
+
 \begin{itemize}[label=\textbullet]
-  \item Coleta automatizada de documentos oficiais do SEEU;
-  \item Pré-processamento (limpeza, segmentação em 
-  \emph{chunks});
-  \item Vetorização por embeddings e indexação em banco vetorial;
-  \item Orquestração via LangChain entre FAISS/OpenSearch e LLM;
-  \item Exposição do serviço por chatbot e API REST.
+  \item \textbf{Extração e pré-processamento de dados relacionados ao SEEU}: coleta automatizada de documentos oficiais (PDF) e sítios web públicos com informações de suporte;
+  \item \textbf{Acesso a acervos legislativos e jurisprudenciais}: recuperação periódica de decisões do STF, STJ, TRF da 4ª Região, legislação penal, Constituição Federal, Código de Processo Penal, súmulas e resoluções em acervos oficiais;
+  \item \textbf{Pré-processamento}: limpeza e segmentação textual em \textit{chunks};
+  \item \textbf{Vetorização e indexação}: geração de \textit{embeddings} e armazenamento em base vetorial FAISS;
+  \item \textbf{Módulo DBVECTOR}: serviço interno de indexação e recuperação vetorial, exposto via API REST;
+  \item \textbf{Interface \textit{web} com SSR}: aplicação Nuxt.js executando com \textit{Server-Side Rendering}, servindo como camada de apresentação;
+  \item \textbf{Camada de validação jurídica}: mecanismos propostos para reduzir alucinações do modelo;
+  \item \textbf{Monitoramento e métricas}: estrutura para coleta de tempo de resposta e taxa de erro;
+  \item \textbf{Ambiente de execução seguro}: implantação em Linux com controle de acesso via UFW, isolando serviços internos;
+  \item \textbf{Documentação técnica}: código-fonte comentado, manuais de uso e de desenvolvedor, especificação da API;
+  \item \textbf{Mitigação de riscos}: diretrizes para atualização contínua de dependências e tratamento de vulnerabilidades em futuras implementações.
 \end{itemize}
 
-Essa arquitetura visa modernizar a consulta ao SEEU, reduzir tempo de busca e alucinações, e integrar-se a iniciativas do CNJ, PNUD e ONU.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CAPÍTULO 2 – FUNDAMENTAÇÃO TEÓRICA E REVISÃO DE LITERATURA
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+% ============================================================
+% Ajusta profundidade do sumário para ocultar o 3º nível (subsubsections)
+% Instrui a impressão do sumário para mostrar apenas até o 2º nível
+% (seções) ao processar o arquivo `.toc`.
+\addtocontents{toc}{\protect\changetocdepth{1}}
 \chapter{Fundamentação Teórica e Revisão de Literatura}
 \label{chap:fundamentacao_literatura}
 
+Apresentam-se aqui os conceitos essenciais que embasam este trabalho: bancos de dados vetoriais para armazenamento e consulta de \textit{embeddings} gerados por modelos de \textit{machine learning} \cite{qwak2024integrating}; modelos de linguagem de grande porte (\textit{Large Language Models} -- LLMs) baseados em arquitetura \textit{Transformer} \cite{lewis2020rag,gao2023survey}; o método de Geração Aumentada por Recuperação (RAG), que combina recuperação de documentos e geração de texto para reduzir alucinações \cite{edwards2024hybrid}; e, finalmente, o papel do Programa das Nações Unidas para o Desenvolvimento (PNUD) e sua parceria com o CNJ em iniciativas de transformação digital e acesso à justiça \cite{undp2025sobre,undp2025pnudcnj}.
+
 \section{Bancos de Dados Vetoriais}
-Bancos de dados vetoriais são sistemas especializados para armazenar, indexar e consultar embeddings gerados por modelos de aprendizado de máquina, permitindo buscas semânticas de alta dimensionalidade \cite{taipalus2024vector}. Esses sistemas habilitam aplicações como:
-\begin{itemize}[label=\textbullet]
-  \item Sistemas de recomendação;
-  \item Busca semântica;
-  \item Reconhecimento de padrões;
-  \item Integração com pipelines de IA.
+\label{sec:bancos-vetoriais}
+
+\subsection{Definição}
+Bancos de dados vetoriais são sistemas especializados em armazenar, indexar e
+consultar vetores em espaço multidimensional. Esses vetores — denominados
+\emph{embeddings} — são gerados por modelos de \emph{machine learning} e
+capturam características semânticas de dados não estruturados, como texto,
+imagens, áudio e vídeo \cite{qwak2024integrating}.
+
+\subsection{Importância}
+A busca por similaridade em embeddings é fundamental para diversas
+aplicações:
+\begin{itemize}
+  \item \textbf{Sistemas de recomendação} – identificação de itens similares às preferências do usuário;
+  \item \textbf{Busca semântica} – consultas que interpretam o significado das palavras, não apenas correspondências exatas;
+  \item \textbf{Reconhecimento de padrões} – detecção de faces, objetos ou outros padrões em grandes volumes de dados;
+  \item \textbf{Pipelines de IA} – armazenamento eficiente de embeddings utilizados por modelos de \emph{deep learning}.
 \end{itemize}
+Tais bases oferecem consultas rápidas, baixa latência e alta escalabilidade —
+qualidades essenciais em Natural Language Processing (\emph{NLP}), visão computacional e outros domínios que
+envolvem grandes conjuntos de dados não estruturados
+\cite{qwak2024integrating}.
 
-\subsection{Comparativo de Soluções}
+\subsection{Análise comparativa de soluções}
 \begin{description}
-  \item[Elasticsearch/OpenSearch:] escalável e distribuído, suporta vetorização via plugins. Menos maduro para consultas de alta dimensionalidade.
-  \item[PostgreSQL + pgvector:] integra dados relacionais e vetoriais; desempenho inferior em escala massiva.
-  \item[Milvus:] especializado e altamente otimizado, porém requer manutenção especializada.
-  \item[FAISS:] biblioteca eficiente de ANNS; necessita de sistema auxiliar para funcionalidades completas.
-  \item[Weaviate:] banco vetorial com recursos de grafo; exige configuração avançada.
-  \item[Oracle/IBM Vector DB:] soluções corporativas integradas a seus respectivos ecossistemas; custo e flexibilidade variáveis.
-\end{description}
+  \item[Elasticsearch:] plataforma distribuída e escalável com suporte a busca vetorial pelo \texttt{Elastic Vector Search}. Limitação: implementação vetorial ainda pouco madura em alta dimensionalidade.
 
-\section{Large Language Models}
-Modelos Transformer (GPT, BERT, LLama) passam por \emph{pre-training} em grandes corpora e \emph{fine-tuning} em domínios jurídicos para evitar alucinações e capturar nuances do linguajar penal \cite{vaswani2017attention,naveeda2024comprehensive}.
+  \item[OpenSearch:] \emph{fork} aberto do Elasticsearch com recursos vetoriais nativos e manutenção comunitária. Limitação: requer ajustes finos para consultas complexas.
 
-\section{Retrieval-Augmented Generation}
-O RAG integra dois módulos:
-\begin{enumerate}[label=\arabic*.]
-  \item \textbf{Retriever:} converte consultas e documentos em embeddings e recupera trechos relevantes;
-  \item \textbf{Generator:} utiliza LLM para formular respostas fundamentadas.
+  \item[PostgreSQL + \texttt{pgvector}:] integra dados relacionais e vetoriais em um mesmo SGBD. Limitação: desempenho inferior em buscas de larga escala.
+
+  \item[Milvus:] banco vetorial especializado, otimizado para similaridade e escalável a bilhões de vetores. Limitação: maior complexidade de configuração e manutenção.
+
+  \item[FAISS:] biblioteca de alto desempenho amplamente utilizada em pesquisa. Limitação: não é um SGBD completo, exigindo integração adicional.
+
+  \item[Weaviate:] código aberto que combina buscas vetoriais e de grafo, permitindo consultas semânticas e relacionais. Limitação: requer \emph{tuning} avançado para desempenho ótimo.
+
+  \item[Oracle Vector DB:] integração nativa ao ecossistema Oracle, com alta performance e segurança empresarial. Limitação: licenciamento oneroso e menor flexibilidade frente a soluções abertas \cite{oracle2025vector}.
+
+  \item[IBM Vector DB:] forte integração com ferramentas de IA da IBM, oferecendo recursos robustos de análise vetorial. Limitação: custo elevado e configuração complexa \cite{ibm2025vector}.
+  \end{description}
+
+  \subsection{Conclusão}
+Nesta seção, foram apresentados os principais conceitos e aplicações dos bancos de dados vetoriais, bem como uma análise comparativa das soluções mais utilizadas no mercado. Verificou-se que a escolha da tecnologia adequada depende do equilíbrio entre desempenho, escalabilidade e requisitos organizacionais. Plataformas especializadas, como Milvus e FAISS, oferecem maior eficiência em buscas de similaridade, enquanto soluções integradas, como PostgreSQL+pgvector, favorecem a unificação de dados em um único Sistema Gerenciador de Banco de Dados (SGBD). O contínuo aprimoramento nas técnicas de indexação e compressão de \textit{embeddings} consolidará ainda mais o papel dos bancos vetoriais em projetos de IA e processamento de dados semiestruturados.
+
+%--------------------------------------------------------------------
+% ------------------------------------------------------------
+\section{Large Language Models (LLMs)}
+\label{sec:llm}
+
+\subsection{Introdução}
+Os Modelos de LLMs, baseados na arquitetura
+Transformer \cite{vaswani2017attention,naveeda2024comprehensive}, elevaram o
+estado da arte em Processamento de Linguagem Natural (PLN), permitindo síntese,
+tradução e interpretação semântica de documentos em larga escala. Essas redes neurais podem substituir buscas
+puramente lexicais por consultas semânticas, aumentando a agilidade e a
+precisão das respostas. A integração de LLMs a bancos de dados vetoriais
+\cite{taipalus2024vector,qwak2024integrating} reforça essa capacidade,
+fornecendo resultados contextualizados a partir de extensos acervos
+documentais.
+
+\subsection{Aspectos Técnicos}
+\begin{enumerate}[label=\textbf{2.\arabic*}, leftmargin=*]
+  \item \textbf{Pre-Training}\label{itm:pretraining}\\
+        O modelo é submetido a um corpus genérico e volumoso para capturar
+        padrões linguísticos amplos, formando uma base de conhecimento
+        diversificada \cite{naveeda2024comprehensive}.
+  
+  \item \textbf{Fine-Tuning}\label{itm:finetuning}\\
+        Realiza-se \emph{fine-tuning} com dados do domínio de conhecimento desejado.
+        Estratégias de regularização (e.g., \textit{dropout}, \textit{early
+        stopping}) evitam \textit{overfitting}. A eficácia é medida por
+        precisão, \textit{recall} e F1-score
+        \cite{yue2023disclawllm,lai2023lawm}.
+  
+  \item \textbf{Validação e Resultados Esperados}\label{itm:validacao}\\
+        Na literatura especializada, trabalhos que aplicam \textit{fine-tuning} 
+        de LLMs a domínios específicos reportam avaliações baseadas em: 
+        (i) precisão na recuperação de informações; (ii) qualidade das 
+        respostas validadas por especialistas; e (iii) eficiência computacional 
+        comparada a métodos tradicionais. De modo geral, esses estudos apontam 
+        ganhos expressivos de precisão e \textit{recall} quando modelos de 
+        linguagem são adaptados a corpora específicos \cite{yue2023disclawllm,lai2023lawm}. 
+        Tais métricas servem de referência para futuras avaliações da arquitetura 
+        proposta neste trabalho.
 \end{enumerate}
 
-Variantes:
-\begin{itemize}[label=\textbullet]
-  \item \emph{RAG-Sequence}: margina sobre documentos completos;
-  \item \emph{RAG-Token}: escolhe fonte para cada token.
+\subsection{Conclusão}
+A combinação de pré-treinamento e \textit{fine-tuning}, aliada a bancos vetoriais, constitui abordagem inovadora para consultas jurídicas, reduzindo prazos e aumentando a transparência do Judiciário \cite{belarmino2025aplicacao,divald2021eformalization}. A integração desses modelos a mecanismos de recuperação documental, conforme descrito na seção seguinte, potencializa a precisão e a confiabilidade das respostas geradas.
+
+%--------------------------------------------------------------------
+\section{Retrieval-Augmented Generation (RAG)}
+\label{sec:rag}
+
+\subsection{Introdução}
+O RAG associa a competência de LLMs em gerar texto à recuperação automática de
+documentos, reduzindo \textit{alucinações} ao fundamentar as respostas em
+evidências externas verificáveis
+\cite{lewis2020rag,gao2023survey,edwards2024hybrid,pujiono2024implementing}.
+LLMs armazenam conhecimento nos parâmetros (\emph{memória paramétrica}); já o
+RAG adiciona uma \emph{memória não paramétrica} consultável em tempo real,
+essencial em cenários como o SEEU, cujo acervo documental é volumoso e
+dinâmico.
+
+\subsection{Fundamentos}
+\textbf{Data retrieval.} Consultas e documentos são convertidos em
+\emph{embeddings}; métodos densos, como o \textit{Dense Passage Retrieval}
+(DPR), aproximam vetores por similaridade de cosseno ou distância euclidiana,
+retornando um subconjunto $k$-relevante
+\cite{lewis2020rag,taipalus2024vector,mageirakos2025cracking}.\\
+\textbf{Content generation.} Um modelo \emph{encoder--decoder} (ex.: BART ou
+T5) concatena os trechos recuperados ao \textit{prompt} e gera a resposta. O
+treinamento conjunto (Sec.~\ref{sec:rag:pipeline}) ensina o \textit{retriever}
+a apresentar evidências úteis ao gerador
+\cite{aquino2024extracting,belarmino2025aplicacao}.
+
+\subsection{Pipeline}
+\label{sec:rag:pipeline}
+\begin{enumerate}[label=\arabic*.]
+  \item \textbf{Ingestion} – extração de fontes estruturadas (bases SQL,Comprehensive Knowledge Archive Network (CKAN))
+        e não estruturadas (PDF, HTML); limpeza, segmentação em parágrafos e
+        criação de embeddings com modelos como \textit{all-MiniLM}.
+        Objetos $\langle\text{ID},\,\text{embedding},\,\text{metadata}\rangle$
+        são indexados em repositórios vetoriais (FAISS, Pinecone)
+        \cite{qwak2024integrating,taipalus2024vector}.
+  \item \textbf{Retrieval} – a consulta é vetorizada e comparada com o índice;
+        top-$k$ documentos são ranqueados. Estratégias \emph{re-rank} com
+        \textit{cross-encoders} ou fusão heurística (ex.: \textit{Reciprocal
+        Rank Fusion}) aumentam precisão \cite{edwards2024hybrid}.
+  \item \textbf{Treinamento conjunto} – ajuste \textit{end-to-end} de
+        \textit{retriever} e \textit{generator} via
+        \textit{maximum-likelihood} ou \textit{policy-gradient}, fazendo o
+        \textit{retriever} maximizar a probabilidade da resposta correta
+        \cite{zhang2025fine}.
+\end{enumerate}
+
+\subsection{Variantes}
+\begin{itemize}
+  \item \textbf{RAG-Sequence} – para cada um dos $k$ documentos recuperados, o modelo gera uma resposta completa de forma independente. Em seguida, calcula-se a probabilidade de cada resposta e faz a marginalização, ou seja, a combinação ponderada dessas probabilidades para produzir a resposta final. Esse método garante que cada documento tenha igual oportunidade de influenciar a resposta global, sendo indicado quando se deseja explorar várias interpretações completas antes da decisão final \cite{lewis2020rag,edwards2024hybrid}.
+  \item \textbf{RAG-Token} – em vez de gerar respostas inteiras por documento, o modelo reavalia a distribuição de probabilidade a cada novo token, permitindo que diferentes documentos contribuam de forma pontual ao longo da geração. Isso amplia a cobertura informativa e mistura evidências de várias fontes, mas requer mecanismos adicionais de coerência para evitar que o texto final fique fragmentado ou inconsistente \cite{zhang2025fine}.
 \end{itemize}
 
-Desafios incluem latência, atualização em tempo real e coerência textual \cite{saleافغان미}.
+\subsection{Desafios e limitações}
+\begin{itemize}
+  \item \textbf{Latência} – cada consulta envolve busca vetorial $+$ geração,
+        podendo ultrapassar limites de tempo real
+        \cite{scalable2025overload}.
+  \item \textbf{Atualização em tempo real} – garantir que o índice reflita
+        alterações frequentes do corpus demanda pipelines de reingestão
+        contínua \cite{taipalus2024vector}.
+  \item \textbf{Qualidade da recuperação} – ruído ou pouca cobertura no índice
+        reduz acurácia; técnicas de \textit{negative-sampling} e \textit{hard
+        negatives} no treinamento mitigam o problema
+        \cite{gao2023survey,salemi2024hallucination}.
+  \item \textbf{Coerência textual} – fusão de múltiplas fontes pode gerar
+        redundância ou mudança de estilo; pós-edição automática e
+        penalidades de repetição auxiliam \cite{zhang2025fine}.
+\end{itemize}
+
+\subsection{Conclusão}
+Esta seção apresentou o método RAG, que combina modelos de linguagem de grande porte com recuperação de documentos para reduzir alucinações e fundamentar respostas em evidências verificáveis. Descreveu-se o pipeline de ingestão, recuperação e treinamento conjunto, bem como variantes como RAG-Sequence e RAG-Token. Foram discutidos desafios relativos à latência, atualização em tempo real, qualidade da recuperação e coerência textual. Conclui-se que, apesar das limitações, o RAG representa avanço significativo para aplicações que exigem precisão e atualização dinâmica, sendo promissor para sistemas que trabalham com grandes acervos documentais, como o SEEU.
+
+% ------------------------------------------------------------
+\section{Programa das Nações Unidas para o Desenvolvimento (PNUD)}
+\label{sec:pnud}
+
+O PNUD é a agência da Organização das Nações Unidas (ONU) responsável por promover o desenvolvimento
+humano sustentável e erradicar a pobreza em mais de 170 países e territórios
+\cite{undp2025sobre,undp2025onu}. Sediado em Nova York, o PNUD oferece suporte
+técnico e financeiro a políticas públicas voltadas às populações mais
+vulneráveis.
+
+\subsection{Objetivos e mandato}
+O mandato do PNUD abrange quatro eixos centrais:
+\begin{itemize}
+  \item \textbf{Erradicação da pobreza} – programas para reduzir a pobreza
+  extrema e melhorar as condições de vida;
+  \item \textbf{Desigualdade e inclusão social} – políticas que promovem
+  igualdade de oportunidades;
+  \item \textbf{Desenvolvimento sustentável} – iniciativas que conciliam o uso
+  de recursos naturais e a proteção ambiental;
+  \item \textbf{Governança democrática} – fortalecimento institucional,
+  transparência e participação cidadã.
+\end{itemize}
+Tais ações alinham-se à Agenda~2030 e aos Objetivos de Desenvolvimento
+Sustentável (ODS), sobretudo o ODS~1 (pobreza) e o ODS~10 (redução das
+desigualdades) \cite{wikipedia2025pnud}.
+
+\subsection{Estrutura e funcionamento}
+Financiado por contribuições voluntárias de Estados-membros, setor privado e
+ONGs, o PNUD é chefiado por um administrador indicado pelo Secretário-Geral da
+ONU e aprovado pela Assembleia Geral \cite{undp2025onu}. No Brasil, opera em
+parceria com governos, sociedade civil e empresas, direcionando projetos que
+fomentam o desenvolvimento sustentável e reduzem desigualdades
+\cite{undp2025sobre}.
+
+\subsection{Parceria CNJ–PNUD: direitos humanos e acesso à justiça}
+\label{sec:cnj-pnud}
+
+Em 2025, o CNJ e o PNUD firmaram acordo de
+cooperação para fortalecer o Poder Judiciário na promoção de direitos humanos,
+sustentabilidade socioambiental e acesso à justiça por populações
+vulnerabilizadas \cite{undp2025pnudcnj}. O projeto complementa iniciativas como:
+\begin{itemize}
+  \item \textbf{Programa Justiça 4.0} – transformação digital do Judiciário
+        brasileiro, ampliando transparência e celeridade processual;
+  \item \textbf{Fazendo Justiça} – melhorias nas políticas de privação de
+        liberdade e reintegração social.
+\end{itemize}
+
+A juíza auxiliar Karen Luise destaca que a ação se alinha à Estratégia 2021-2026
+do CNJ, priorizando igualdade e acesso jurisdicional. Para o PNUD, a parceria
+reforça o ODS~16, que visa instituições eficazes e inclusivas
+\cite{undp2025pnudcnj}. As atividades previstas contemplam:
+\begin{enumerate}
+  \item fortalecimento institucional e capacitação de magistrados;
+  \item diagnósticos situacionais e desenvolvimento de metodologias inclusivas;
+  \item projetos-piloto focados em crianças e adolescentes em abrigamento,
+        mulheres, pessoas LGBTQIA$+$, povos indígenas, pessoas em situação de
+        rua, idosos, pessoas com deficiência e grupos vulneráveis por fatores
+        socioambientais ou raciais.
+\end{enumerate}
+
+\subsection*{Impacto esperado}
+O fortalecimento do sistema judiciário — por meio da digitalização,
+capacitação e práticas inovadoras — tende a ampliar o acesso efetivo à justiça e
+a reduzir barreiras estruturais. A cooperação CNJ–PNUD, portanto, contribui para
+o cumprimento dos compromissos internacionais do Brasil relacionados aos ODS,
+promovendo uma sociedade mais justa e inclusiva
+\cite{undp2025pnudcnj}.
+
+\subsection{Conclusão}
+O PNUD configura-se como agente estratégico na promoção do desenvolvimento humano sustentável e na erradicação da pobreza, atuando em consonância com a Agenda 2030 e os Objetivos de Desenvolvimento Sustentável. A parceria firmada em 2025 entre o CNJ e o PNUD reforça esse compromisso, ao incorporar iniciativas de transformação digital, capacitação institucional e inclusão social no âmbito do Poder Judiciário brasileiro. Espera-se que tais ações ampliem o acesso efetivo à justiça para grupos vulnerabilizados e fortaleçam a governança democrática, contribuindo para o cumprimento das metas internacionais do Brasil e para a construção de uma sociedade mais equânime e participativa.
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% CAPÍTULO 3 – TECNOLOGIAS (revisado)
+% CAPÍTULO 3 – TECNOLOGIAS
+% NOTE: Mantido como Cap. 3 após reorganização (antes do Cap. 4 - Metodologia
+%       ser movido para arquivo separado).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Restaura inclusão do 3º nível no sumário para capítulos seguintes
+% Restaura a profundidade de impressão do sumário para capítulos seguintes
+\addtocontents{toc}{\protect\changetocdepth{3}}
 \chapter{Tecnologias}
 \label{chap:tecnologias}
 
+Este capítulo apresenta o conjunto de tecnologias, ferramentas e frameworks empregados no desenvolvimento da solução proposta. A seleção dessas tecnologias considerou critérios de maturidade, desempenho, documentação disponível e compatibilidade com o ecossistema de código aberto. Organiza-se a apresentação em quatro eixos principais: linguagens de programação e bibliotecas fundamentais para manipulação de dados e processamento de linguagem natural; soluções de indexação e recuperação vetorial; modelos de linguagem de grande porte e suas APIs de integração; e infraestrutura de orquestração e \textit{deployment}. Cada tecnologia é contextualizada quanto à sua aplicação específica na \textit{pipeline} RAG desenvolvida, evidenciando as escolhas técnicas que fundamentam a arquitetura proposta.
+
 \section{Linguagem e Bibliotecas Principais}
 \begin{itemize}[label=\textbullet]
-  \item \textbf{Python} – linguagem base, com extensas bibliotecas para NLP e ML (\cite{python2024});
-  \item \textbf{Pandas} – manipulação de dados tabulares e pré-processamento de textos (\cite{pandas2024});
-  \item \textbf{NumPy} – operações vetoriais e matrizes de alto desempenho.
+
+\item \textbf{Python} – linguagem base, com extensas bibliotecas para NLP e ML  \cite{python2024reference};
+\item \textbf{Pandas} – manipulação de dados tabulares e pré-processamento de textos  \cite{pandas2024};
+\item \textbf{NumPy} – operações vetoriais e matrizes de alto desempenho \cite{numpy2025};
+\item \textbf{FastAPI} – framework web em Python para construção de APIs REST, baseado em \textit{type hints} e ASGI; oferece validação por \texttt{Pydantic}, documentação automática (Swagger/OpenAPI e ReDoc), suporte assíncrono e boa performance para serviços de baixa latência \cite{fastapi2024docs}.
 \end{itemize}
 
 \section{Indexação e Recuperação Vetorial}
-\subsection{OpenSearch}
-Mecanismo de busca distribuída com suporte nativo a buscas vetoriais via plugins; ótimo para cenários de alta disponibilidade e grandes volumes de dados (\cite{taipalus2024vector}).
+\label{sec:indexacao_vetorial}
+
+A recuperação eficiente de documentos relevantes constitui componente fundamental da \textit{pipeline} RAG desenvolvida. Para isso, utiliza-se indexação vetorial baseada em \textit{embeddings} semânticos, permitindo buscas por similaridade em grandes acervos documentais. Esta seção descreve as tecnologias selecionadas para implementação desse mecanismo, com ênfase no FAISS (\textit{Facebook AI Similarity Search}), biblioteca de código aberto especializada em busca vetorial de alta performance.
 
 \subsection{FAISS}
-Biblioteca de similaridade aproximada desenvolvida pelo Facebook, altamente otimizada para bilhões de vetores, mas depende de um sistema auxiliar para metadados e persistência (\cite{facebookresearch2024faiss}).
+FAISS (Facebook AI Similarity Search) é uma biblioteca de código aberto desenvolvida pelo Facebook AI Research (FAIR) para busca de similaridade vetorial de alta performance em larga escala. Especializada em operações eficientes com bilhões de vetores, utiliza técnicas avançadas como quantização de produto (PQ) e índices invertidos (IVF) para acelerar consultas k-NN em até 5x comparado a soluções convencionais. Sua arquitetura é otimizada para paralelismo em CPU/GPU e permite aplicações em tempo real como sistemas de recomendação, clustering de embeddings e RAG. O FAISS foi escolhido para este projeto por sua eficiência, maturidade e ampla adoção na comunidade acadêmica e industrial. Embora não gerencie metadados ou persistência nativamente, sua integração com sistemas externos como arquivos Parquet e bancos SQL permite implementar cenários completos de produção \cite{facebook2024faiss,taipalus2024vector}.
 
-\subsection{Milvus e Weaviate}
-Soluções especializadas de código-aberto com integração a grafos (Weaviate) e suporte a esquemas de indexação avançados (Milvus). Indicadas para aplicações críticas de IA.
 
-\section{Modelos de Linguagem}
-\subsection{LLama}
-Modelo open-source eficiente, customizável para domínios específicos, incluindo jurídico.
+\section{Modelos de Linguagem (LLMs)}
+\label{sec:llms_tecnologias}
 
-\subsection{Hugging Face Transformers}
-Framework que fornece acesso a dezenas de modelos pré-treinados, tokenizadores e utilitários de pipeline (\cite{huggingface2024transformers}).
+A geração de respostas fundamentadas em documentos recuperados depende da integração com modelos de linguagem de grande porte capazes de compreender contextos extensos e sintetizar informações de forma coerente e precisa. Esta seção apresenta os modelos de linguagem selecionados para a \textit{pipeline} RAG desenvolvida, descrevendo suas características técnicas, justificativas de escolha e alternativas disponíveis no ecossistema atual de LLMs.
+
+\subsection{Fundamentos e Justificativa da Escolha}
+
+Modelos de Linguagem de Grande Porte (\textit{Large Language Models} -- LLMs) são redes neurais profundas treinadas em vastos corpora textuais com o objetivo de aprender representações estatísticas da linguagem natural e gerar texto coerente, contextualizado e semanticamente relevante \cite{vaswani2017attention,naveeda2024comprehensive}. Esses modelos, baseados predominantemente na arquitetura \textit{Transformer}, utilizam mecanismos de atenção para capturar dependências de longo alcance entre palavras e construir representações contextuais dinâmicas. O treinamento ocorre em duas fases principais: (i) pré-treinamento em grandes volumes de texto não rotulado, no qual o modelo aprende padrões linguísticos, semânticos e até mesmo conhecimentos factuais implícitos; e (ii) ajuste fino (\textit{fine-tuning}) ou adaptação contextual por meio de técnicas como \textit{instruction tuning} e aprendizado por reforço a partir de \textit{feedback} humano (RLHF), tornando-o capaz de seguir instruções e responder a perguntas de forma alinhada às expectativas dos usuários.
+
+No contexto deste projeto, a \textit{pipeline} RAG desenvolvida utiliza a API da OpenAI como provedor principal de capacidades generativas. A escolha da OpenAI justifica-se por diversos fatores técnicos e operacionais: (i) estabilidade e maturidade da API, com disponibilidade comercial, suporte técnico e atualizações frequentes; (ii) documentação abrangente e exemplos de integração que facilitam o desenvolvimento e a depuração; (iii) ampla adoção em ambientes de produção, o que resulta em vasto ecossistema de ferramentas, bibliotecas e boas práticas consolidadas; (iv) capacidade comprovada de gerar respostas de alta qualidade quando condicionadas a contextos recuperados, reduzindo significativamente a taxa de alucinação; e (v) oferta de múltiplos modelos com diferentes compromissos entre custo, latência e qualidade, permitindo otimização conforme requisitos do projeto.
+
+A API da OpenAI disponibiliza atualmente uma família diversificada de modelos, cada qual com características específicas:
+
+\begin{description}
+  \item[GPT-4 e GPT-4 Turbo:] modelos de maior capacidade da OpenAI, com suporte a contextos estendidos (até 128\,000 tokens em certas versões) e desempenho superior em raciocínio complexo, análise de documentos extensos e tarefas que exigem compreensão profunda. São recomendados para aplicações críticas que demandam respostas precisas e nuances contextuais refinadas, embora apresentem maior custo por token e latência ligeiramente superior.
+  
+  \item[GPT-4o (Optimized):] variante otimizada do GPT-4, projetada para equilibrar desempenho e eficiência. Oferece latência reduzida e custo intermediário, mantendo qualidade próxima ao GPT-4 padrão. Essa versão é adequada para cenários de produção nos quais a relação custo-benefício é crítica.
+  
+  \item[GPT-4o mini:] versão compacta e otimizada do GPT-4o, desenvolvida para cenários que exigem alta velocidade de resposta e custo reduzido. Embora apresente capacidades ligeiramente inferiores em tarefas de raciocínio complexo quando comparado ao GPT-4o, o GPT-4o mini oferece desempenho superior ao GPT-3.5 Turbo em diversas aplicações, mantendo latência extremamente baixa e custo acessível. É especialmente adequado para sistemas conversacionais em tempo real, prototipagem ágil e aplicações de larga escala com restrições orçamentárias.
+  
+  \item[GPT-3.5 Turbo:] modelo mais acessível em termos de custo e latência, mantendo capacidade satisfatória para grande parte das tarefas de geração de texto e resposta a perguntas. Apesar de inferior ao GPT-4 em raciocínio complexo e compreensão contextual profunda, o GPT-3.5 Turbo constitui opção viável para prototipagem rápida e aplicações com restrições orçamentárias.
+  
+  \item[Modelos de \textit{Embedding}:] a OpenAI disponibiliza modelos especializados na geração de vetores de \textit{embeddings} (como \texttt{text-embedding-ada-002} e \texttt{text-embedding-3-small/large}), que convertem textos em representações vetoriais densas de alta dimensionalidade. Esses vetores são fundamentais para a etapa de recuperação da \textit{pipeline} RAG, permitindo buscas semânticas eficientes em bases vetoriais como FAISS.
+\end{description}
+
+No \textit{pipeline} RAG proposto, a integração com a OpenAI opera da seguinte forma: (i) a consulta do usuário é vetorizada utilizando modelos de \textit{embedding}, permitindo busca por similaridade semântica no índice vetorial; (ii) os documentos mais relevantes são recuperados e concatenados ao \textit{prompt} enviado ao modelo generativo (GPT-4, GPT-4o ou GPT-3.5 Turbo); (iii) o LLM recebe esse contexto enriquecido e gera uma resposta fundamentada nas fontes recuperadas, reduzindo significativamente a probabilidade de alucinação; e (iv) mecanismos de controle de \textit{prompt} e validação de saída garantem que as respostas sejam coerentes, precisas e auditáveis. Dessa forma, a arquitetura combina a capacidade generativa dos LLMs com a precisão factual fornecida pela recuperação de documentos, resultando em sistema robusto e confiável para aplicações jurídicas.
+
+\subsection{Alternativas à OpenAI}
+
+Embora a OpenAI constitua solução robusta e amplamente adotada, existem alternativas proprietárias e de código aberto que podem ser consideradas em função de requisitos específicos relacionados a custo, privacidade, controle sobre a infraestrutura e flexibilidade de personalização. Esta subseção apresenta as principais alternativas disponíveis no mercado e na comunidade científica, comparando-as com a solução adotada.
+
+\subsubsection*{Google Gemini}
+
+A família Gemini, desenvolvida pelo Google DeepMind, representa a evolução dos esforços do Google em modelos de linguagem de larga escala. Os modelos Gemini estão disponíveis em múltiplas versões: Gemini Nano (otimizado para dispositivos móveis e \textit{edge computing}), Gemini Pro (voltado para aplicações gerais de alta qualidade) e Gemini Ultra (modelo de maior capacidade, competindo diretamente com GPT-4). A API do Gemini oferece integração nativa com o ecossistema Google Cloud, facilitando implantações em infraestrutura já existente nessa plataforma. Além disso, os modelos Gemini destacam-se pela capacidade multimodal nativa, processando simultaneamente texto, imagens, áudio e vídeo em um único modelo unificado. Em termos de custo, os preços são competitivos com os da OpenAI, embora variem conforme o volume de tokens e o nível de serviço contratado. A documentação técnica é robusta, mas o ecossistema de ferramentas e exemplos ainda é menos maduro quando comparado ao da OpenAI.
+
+\subsubsection*{Anthropic Claude}
+
+A Anthropic, fundada por ex-integrantes da OpenAI, desenvolveu a família Claude de modelos de linguagem, com foco explícito em segurança, interpretabilidade e alinhamento (\textit{Constitutional AI}). Os modelos Claude estão disponíveis em diferentes versões: Claude 3 Haiku (modelo rápido e econômico), Claude 3 Sonnet (balanceamento entre custo e desempenho) e Claude 3 Opus (máxima capacidade). A Anthropic destaca-se pela transparência em questões de alinhamento e pela capacidade dos modelos Claude de manter conversas longas com alta coerência contextual, suportando janelas de contexto de até 200\,000 tokens em certas configurações. A integração via API é similar à da OpenAI, facilitando a substituição ou experimentação comparativa. Em termos de custo, os modelos Claude apresentam preços competitivos, especialmente nas versões Haiku e Sonnet. A privacidade e as políticas de uso de dados são consideradas mais restritivas, aspecto relevante para aplicações em setores regulados.
+
+\subsubsection*{Meta LLaMA}
+
+A série LLaMA (\textit{Large Language Model Meta AI}), desenvolvida pela Meta, representa importante contribuição ao ecossistema de modelos abertos. A versão LLaMA 3 (e superiores, conforme atualizações futuras) é disponibilizada sob licenças permissivas que permitem uso comercial e adaptação. Os modelos LLaMA são oferecidos em múltiplas escalas (7B, 13B, 70B parâmetros, entre outras), permitindo escolha adequada conforme capacidade computacional disponível. Por serem de código aberto, os modelos LLaMA podem ser implantados localmente ou em infraestrutura própria, eliminando dependências de APIs externas e garantindo controle total sobre privacidade e processamento de dados. Essa característica é especialmente valiosa em contextos jurídicos e governamentais, nos quais a soberania dos dados é requisito crítico. Contudo, a implantação local exige infraestrutura computacional significativa (GPUs de alto desempenho) e expertise técnica para \textit{fine-tuning}, ajuste de hiperparâmetros e manutenção operacional.
+
+\subsubsection*{Modelos Distribuídos via HuggingFace}
+
+A plataforma HuggingFace consolidou-se como repositório central para modelos de linguagem de código aberto, hospedando milhares de modelos pré-treinados e ajustados para tarefas específicas. Entre os modelos de destaque disponíveis estão: Mistral (série de modelos franceses de alta qualidade e eficiência), Falcon (desenvolvido pela Technology Innovation Institute dos Emirados Árabes Unidos), MPT (MosaicML Pretrained Transformer), e diversos modelos baseados em arquiteturas \textit{Transformer} e variantes. A HuggingFace oferece bibliotecas robustas (\texttt{transformers}, \texttt{datasets}, \texttt{accelerate}) que facilitam a carga, o \textit{fine-tuning} e a inferência de modelos tanto localmente quanto em servidores próprios. Além disso, a plataforma disponibiliza serviços gerenciados (HuggingFace Inference Endpoints) que permitem implantar modelos em nuvem com escalabilidade automática, combinando flexibilidade de código aberto com conveniência operacional de APIs gerenciadas.
+
+\subsubsection*{Análise Comparativa}
+
+A escolha entre OpenAI e suas alternativas depende de múltiplos fatores:
+
+\begin{itemize}
+  \item \textbf{Custo:} modelos abertos (LLaMA, HuggingFace) eliminam custos de API, mas exigem investimento em infraestrutura e operação. APIs proprietárias (OpenAI, Google, Anthropic) oferecem precificação por uso, facilitando controle de custos em fases iniciais, mas podem tornar-se onerosas em escala.
+  
+  \item \textbf{Privacidade e soberania de dados:} soluções auto-hospedadas garantem controle total sobre dados sensíveis, aspecto crítico em contextos jurídicos. APIs externas, por outro lado, implicam envio de dados a terceiros, exigindo análise cuidadosa de termos de serviço e conformidade regulatória.
+  
+  \item \textbf{Flexibilidade e personalização:} modelos abertos permitem \textit{fine-tuning} completo e adaptação a domínios específicos, enquanto APIs proprietárias oferecem personalização limitada (geralmente via \textit{prompt engineering} ou \textit{few-shot learning}).
+  
+  \item \textbf{Facilidade de integração:} APIs gerenciadas (OpenAI, Google, Anthropic) oferecem documentação madura, SDKs e suporte técnico, acelerando desenvolvimento. Modelos abertos exigem maior esforço de integração e manutenção.
+  
+  \item \textbf{Disponibilidade de modelos de \textit{embedding}:} todas as alternativas oferecem soluções de \textit{embedding}, embora com diferentes níveis de qualidade e integração. A OpenAI e o Google destacam-se pela qualidade comprovada e pela facilidade de uso.
+\end{itemize}
+
+Para este projeto, a OpenAI foi selecionada considerando o estágio de prototipagem, a necessidade de resultados rápidos e a disponibilidade de recursos. Contudo, a arquitetura modular da solução facilita a substituição futura do provedor de LLM, permitindo experimentação com alternativas conforme evolução dos requisitos e disponibilidade de infraestrutura.
+
+\section{Ferramentas de Extração e Coleta de Dados}
+\subsection{Playwright}
+A coleta automatizada de dados em portais judiciais apresenta desafios técnicos significativos, sobretudo quando o conteúdo é renderizado dinamicamente por JavaScript. Nesse contexto, o Playwright, biblioteca de automação de navegadores desenvolvida pela Microsoft, foi selecionado para os módulos de \textit{scraping} deste projeto. Sua capacidade de controlar navegadores Chromium, Firefox e WebKit de forma programática permite acessar páginas web complexas, executando-as em modo \textit{headless} para extração de conteúdo textual e metadados. Além disso, a biblioteca oferece mecanismos de interação com elementos da página --- tais como cliques e preenchimento de formulários --- de forma automatizada e resiliente, o que se revelou fundamental para a coleta sistemática de jurisprudência e documentos normativos dos portais do STF, TRF4 e SEEU. Dessa forma, o Playwright constitui alicerce tecnológico para a aquisição consistente e escalável dos dados que alimentam o \textit{pipeline} RAG.
+
+\subsection{BeautifulSoup}
+Complementarmente, a análise estrutural dos documentos HTML e XML obtidos requer ferramentas especializadas em \textit{parsing}. BeautifulSoup, biblioteca Python amplamente utilizada nesse domínio, facilita a navegação, busca e modificação da árvore de elementos por meio de seletores CSS ou expressões XPath. Nos scrapers desenvolvidos, o BeautifulSoup é empregado tanto em conjunto com o Playwright --- para extração de conteúdo dinâmico --- quanto isoladamente, quando as páginas são estáticas. Sua sintaxe intuitiva e robustez na manipulação de HTML malformado tornaram-na ferramenta essencial para o pré-processamento e estruturação de dados coletados, especialmente na extração de campos específicos como títulos, datas, relatores e conteúdo integral de decisões judiciais. Por conseguinte, a combinação dessas duas ferramentas assegura a cobertura adequada de diferentes tipos de fontes documentais.
 
 \section{Orquestração de Pipeline}
-\subsection{LangChain}
-Framework modular que conecta retriever (FAISS/OpenSearch) e generator (LLM), permitindo composição de fluxos e gerenciamento de prompts (\cite{langchain2024}).
+\subsection{Arquitetura de Orquestração da Pipeline RAG}
+A orquestração eficiente de múltiplos componentes de um sistema RAG incluindo extração de dados, processamento textual, indexação vetorial, recuperação semântica e geração de respostas constitui desafio arquitetural significativo, particularmente no contexto de aplicações jurídicas que demandam precisão e rastreabilidade. Diferentemente de abordagens baseadas em bibliotecas de orquestração de terceiros, este projeto optou por implementar uma arquitetura de componentes próprios modulares, desenvolvidos em Python, que encapsulam as etapas do fluxo de processamento e consulta de forma explícita e configurável.
 
-\subsection{Controle de Prompt e Fallback}
-Implementação de lógica para reformulação de prompts e fallback a dados oficiais caso o LLM retorne resposta vaga.
+A pipeline inicia-se pela etapa de coleta de dados, na qual scrapers implementados com os frameworks Scrapy e Playwright extraem decisões e documentos jurídicos de tribunais brasileiros --- incluindo STJ, STF, TRF4 e SEEU. Esses scrapers processam páginas dinâmicas, lidam com renderização baseada em JavaScript quando necessário e armazenam os documentos em formato estruturado, como JSONL, preservando metadados relevantes tais como tribunal de origem, número do processo, data de julgamento, órgão julgador e tema jurídico associado. Subsequentemente, os dados são submetidos a uma etapa de tratamento e normalização, na qual ocorrem operações de limpeza de HTML, remoção de duplicidades, filtragem de registros inválidos e consolidação dos documentos em um conjunto apto à indexação.
 
-\section{Infraestrutura e Deployment}
-\subsection{Docker e Kubernetes}
-Containerização para padronização de ambientes e orquestração em cluster, garantindo escalabilidade horizontal e isolamento.
+A partir desse conjunto limpo, os documentos são fragmentados em trechos menores --- processo denominado \textit{chunking} --- com sobreposição de contexto, baseado em tokenização via biblioteca \texttt{tiktoken}. Cada fragmento recebe metadados que permitem rastrear o documento original, a posição relativa do trecho e as informações jurídicas associadas, garantindo rastreabilidade e possibilitando a construção de contextos ricos para o modelo de linguagem. Para a representação semântica desses trechos, o sistema utiliza modelos de embeddings baseados em \textit{Sentence-Transformers}, tais como \texttt{all-MiniLM-L6-v2}, que geram vetores de dimensão fixa normalizados para otimizar a busca por similaridade. Esses vetores são então indexados em estruturas de busca vetorial como FAISS, para uso local, ou OpenSearch, para ambientes distribuídos, permitindo consultas \textit{k-NN} eficientes sobre grandes volumes de documentos.
 
-\subsection{API REST com Flask}
-Microframework escolhido pela maturidade e simplicidade, expondo endpoints para chatbot e integração externa (\cite{flask2024}).
+Em tempo de consulta, a interface de usuário --- construída com Nuxt e Vue.js --- envia a pergunta do operador para uma API \textit{backend} implementada com FastAPI. Antes da recuperação vetorial propriamente dita, a consulta passa por um componente de normalização de consulta jurídica, no qual um modelo de linguagem da OpenAI ou da Anthropic é utilizado para extrair elementos estruturados da solicitação, incluindo intenção, tema jurídico, palavras-chave, eventuais dados de execução penal e uma versão otimizada da consulta destinada à busca vetorial. Essa normalização reduz ambiguidades e melhora a qualidade da recuperação semântica. Em seguida, um serviço central de orquestração RAG utiliza a consulta otimizada para gerar o embedding correspondente, realizar a busca vetorial nos índices FAISS ou OpenSearch, selecionar os trechos mais relevantes, agrupá-los por documento de origem e calcular métricas de relevância relativa para cada decisão identificada. Com base nos trechos recuperados, o sistema monta um contexto estruturado que inclui informações sobre tribunal, número do processo, data de julgamento, órgão julgador e os trechos textuais pertinentes. Esse contexto é então incorporado ao \textit{prompt} final enviado ao modelo de linguagem, que gera a resposta jurídica em formato textual estruturado, podendo ser JSON ou Markdown conforme o endpoint solicitado.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% CAPÍTULO 4 – METODOLOGIA (revisado)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+A interface, ao receber a resposta gerada, exibe ao usuário não apenas a explicação textual, mas também a fundamentação jurisprudencial e as referências explícitas aos documentos que subsidiaram a construção da resposta, reforçando a transparência e a confiabilidade do sistema. Essa arquitetura modular, baseada em componentes próprios, permite substituir provedores de modelos de linguagem, \textit{backends} de busca vetorial ou mecanismos de embedding por meio de configuração, sem exigir reestruturação do código, promovendo flexibilidade e facilitando a experimentação com diferentes configurações tecnológicas.
 
-\chapter{Metodologia}
-\label{chap:metodologia}
+\subsection{Controle de Prompt, Recuperação e Estratégias de Fallback}
+Em sistemas baseados em modelos generativos, a confiabilidade das respostas depende fundamentalmente da qualidade e clareza das instruções fornecidas ao modelo. Nesse sentido, o componente de normalização de consulta jurídica desempenha papel central na mitigação de ambiguidades e no aprimoramento da qualidade das instruções enviadas ao LLM. Ao processar a consulta inicial do usuário, esse componente extrai elementos estruturados --- tais como intenção, tema jurídico, palavras-chave e dados específicos de execução penal --- e reformula a consulta em uma versão otimizada para a busca vetorial. Tal processamento prévio reduz significativamente a taxa de respostas vagas ou irrelevantes, contribuindo para maior precisão na recuperação semântica e na geração de respostas.
 
-\section{Arquitetura da Pipeline}
-A pipeline combina quatro estágios principais: ingestão, pré‐processamento, indexação e geração. Cada estágio é containerizado e orquestrado via Kubernetes (Figura~\ref{fig:arquitetura_pipeline}).
+Adicionalmente, a arquitetura prevê estratégias de \textit{fallback} para situações em que a recuperação vetorial não retorna evidências suficientes ou quando o modelo de linguagem gera respostas insuficientemente embasadas. Nessas circunstâncias, o sistema pode recorrer a um modo de chat simples, sem o componente RAG, destacando explicitamente na resposta as limitações e incertezas identificadas. Além disso, o sistema está preparado para encaminhar consultas a fontes oficiais e bases normativas internas em fluxos futuros, combinando a flexibilidade dos modelos generativos com o respaldo factual de dados estruturados e verificados. Essa abordagem híbrida assegura que, mesmo em cenários de baixa cobertura documental ou de consultas ambíguas, o usuário seja informado de forma transparente sobre a origem e a confiabilidade das informações apresentadas.
 
-\section{Coleta de Dados}
-\begin{itemize}[label=\textbullet]
-  \item Raspagem automática dos portais do CNJ usando Python e bibliotecas como \texttt{requests} e \texttt{BeautifulSoup};
-  \item Agendamento via \emph{cron} ou Airflow para verificações diárias de novos documentos.
-\end{itemize}
+A estratégia de controle de \textit{prompt} também se estende à construção do contexto enviado ao modelo de linguagem. Os trechos recuperados pela busca vetorial são organizados de forma estruturada, incluindo metadados completos sobre tribunal, processo e órgão julgador, e apresentados ao modelo em um formato que facilita a geração de respostas fundamentadas e citadas. Essa organização reduz o risco de alucinações --- geração de informações não respaldadas pelos documentos recuperados --- e reforça a rastreabilidade das respostas, aspecto crítico em aplicações jurídicas nas quais a acurácia e a verificabilidade das informações são imperativas. Portanto, a combinação de normalização de consultas, controle rigoroso de prompts e estratégias de \textit{fallback} constitui um conjunto de mecanismos que visam garantir maior segurança, qualidade e confiabilidade do sistema em um domínio sensível e de alta responsabilidade.
 
-\section{Pré-processamento e Segmentação}
-\begin{enumerate}[label=\\arabic*.]
-  \item Conversão PDF→texto com \texttt{pdfplumber};
-  \item Remoção de cabeçalhos, rodapés e caracteres especiais;
-  \item Divisão em \emph{chunks} de 500–1\,000 tokens para otimizar a busca local.
-\end{enumerate}
+\section{Tecnologias de Interface e Frontend}
+\subsection{Nuxt.js}
+A construção de interfaces web modernas e interativas requer \textit{frameworks} que equilibrem produtividade de desenvolvimento, desempenho em tempo de execução e manutenibilidade de código. Nesse contexto, Nuxt.js foi selecionado como base para a interface de usuário do protótipo de \textit{chatbot} desenvolvido. Conforme a documentação oficial \cite{nuxt2024docs}, o Nuxt é um \textit{framework} de código aberto construído sobre Vue.js, orientado para criação de aplicações web \textit{full-stack} com suporte a renderização do lado do servidor (SSR), geração de sites estáticos (SSG) e modo SPA (\textit{Single Page Application}). Além disso, oferece roteamento automático, gerenciamento de estado integrado e facilidade de integração com APIs REST. Sua arquitetura modular e suporte nativo a TypeScript permitem desenvolvimento ágil e escalável de componentes de apresentação, características que se mostraram adequadas aos requisitos de prototipagem rápida do projeto. A escolha do Nuxt justifica-se, portanto, pela combinação de recursos avançados, maturidade do ecossistema e facilidade de integração com os demais componentes da arquitetura proposta.
 
-\section{Engenharia de Embeddings}
-Escolha de modelo de embedding (BERTimbau ou OpenAI), parametrização de tamanho e normalização para garantir coerência semântica.
+\subsection{Vue.js}
+No cerne do Nuxt.js encontra-se Vue.js, \textit{framework} JavaScript progressivo para construção de interfaces de usuário baseadas em componentes reativos \cite{vue2024docs}. Segundo a documentação oficial, o Vue adota um modelo declarativo baseado em componentes que permite construir interfaces complexas a partir de unidades reutilizáveis e auto-contidas. Essa arquitetura componentizada facilita a criação de interfaces dinâmicas e interativas, nas quais cada elemento da interface tal como o campo de entrada de consultas, o painel de exibição de respostas, a listagem de fontes citadas e os controles auxiliares é encapsulado em um componente independente e reutilizável. A reatividade nativa do Vue.js, baseada em um sistema de reatividade refinado, garante que qualquer alteração no estado da aplicação seja refletida instantaneamente na interface, proporcionando experiência de usuário fluida e responsiva. Tal característica mostra-se especialmente relevante em sistemas conversacionais, nos quais a percepção de imediatez e interatividade influencia diretamente a aceitação pelos usuários. Por conseguinte, a combinação de Vue.js como base e Nuxt.js como camada de abstração proporciona fundamento sólido para o desenvolvimento da interface do protótipo.
 
-\section{Indexação e Armazenamento}
-\begin{itemize}[label=\textbullet]
-  \item Indexação dos embeddings em OpenSearch/FAISS com metadados (origem, data, posição);
-  \item Definição de métricas de similaridade (cosine similarity) e thresholds de corte.
-\end{itemize}
+\section{Ambiente de Execução e Segurança de Rede}
+\label{sec:ambiente_execucao}
 
-\section{Orquestração e Consulta}
-Implementação em LangChain:
-\begin{itemize}[label=\textbullet]
-  \item Conversão da consulta em embedding;
-  \item Recuperação dos top-k \emph{chunks};
-  \item Geração da resposta pelo LLM, mesclando múltiplas fontes se necessário (\emph{RAG-Token}).
-\end{itemize}
+O ambiente de execução da solução proposta foi configurado em sistema operacional Linux, aproveitando os recursos nativos do sistema para controle de rede, gerenciamento de processos e segurança de acesso. A escolha do Linux como plataforma de \textit{deployment} fundamenta-se em sua ampla adoção em ambientes de servidor, na disponibilidade de ferramentas consolidadas para administração de sistemas e na compatibilidade com o ecossistema de desenvolvimento em Python adotado neste trabalho. Diferentemente de abordagens baseadas em orquestração de contêineres, a arquitetura implementada privilegia a simplicidade operacional e o controle direto dos serviços, adequando-se ao contexto de protótipo funcional e facilitando diagnóstico e manutenção.
 
-\section{Desenvolvimento do Chatbot e da API}
-\begin{itemize}[label=\textbullet]
-  \item Chatbot baseado em WebSocket para interação síncrona;
-  \item Endpoints RESTful em Flask para consultas e feedback de usabilidade.
-\end{itemize}
+\subsection{Controle de Acesso à Rede com UFW}
 
-\section{Avaliação e Métricas}
-\begin{itemize}[label=\textbullet]
-  \item Precisão, recall e F1-Score em um conjunto de questões de benchmark (fase de testes);
-  \item Ensaios de usabilidade qualitativos com operadores do Direito para avaliar intuitividade e confiança.
-\end{itemize}
+O controle de acesso às portas de rede constitui elemento fundamental na estratégia de segurança da aplicação. Para esse fim, utiliza-se o \textit{Uncomplicated Firewall} (UFW), ferramenta nativa do ecossistema Linux projetada para simplificar a configuração de regras de \textit{firewall} baseadas no \textit{netfilter} do \textit{kernel} \cite{ufw2024}. O UFW permite definir, de forma declarativa e intuitiva, quais portas permanecem abertas para acesso externo e quais devem ser bloqueadas, estabelecendo uma camada de proteção na borda da rede.
 
-\section{MLOps e Monitoramento}
-\begin{itemize}[label=\textbullet]
-  \item Pipelines de CI/CD para build e deploy automáticos;
-  \item Monitoramento de latência e acurácia em produção, com alertas para queda de desempenho;
-  \item Feedback loop para re-treinamento periódico com dados reais de uso.
-\end{itemize}
+Na configuração adotada, apenas a porta 3000 é exposta para acesso externo, permitindo que operadores judiciários acessem a interface \textit{web} da aplicação. A porta 8000, utilizada pelo serviço de indexação vetorial (DBVECTOR), permanece fechada para conexões externas, sendo acessível exclusivamente por processos locais executados na mesma máquina. Essa segregação de acesso reduz a superfície de ataque da aplicação, impedindo que usuários externos interajam diretamente com a API interna de indexação e consulta vetorial, e assegurando que todas as requisições sejam mediadas pela camada de apresentação.
 
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.8\textwidth]{04-figuras/arquitetura_pipeline.png}
-  \caption{Arquitetura geral da pipeline RAG.}
-  \label{fig:arquitetura_pipeline}
-\end{figure}
+\subsection{Arquitetura SSR da Interface de Usuário}
+
+A interface de usuário foi desenvolvida utilizando Nuxt.js, \textit{framework} baseado em Vue.js que oferece suporte nativo a \textit{Server-Side Rendering} (SSR). Nessa arquitetura, as páginas da aplicação são renderizadas no servidor antes de serem enviadas ao navegador do usuário, ao contrário do modelo tradicional de aplicações puramente \textit{client-side}, nas quais o navegador recebe apenas código JavaScript e renderiza a interface localmente \cite{nuxt2024ssr}.
+
+A adoção do SSR proporciona benefícios significativos em termos de desempenho, otimização para mecanismos de busca (SEO) e controle de acesso. Do ponto de vista de desempenho, o envio de HTML pré-renderizado reduz o tempo de carregamento inicial percebido pelo usuário, especialmente em redes de baixa velocidade ou dispositivos com capacidade de processamento limitada. Para SEO, o conteúdo HTML renderizado no servidor é imediatamente indexável por \textit{web crawlers}, aspecto relevante caso a aplicação evolua para disponibilização pública de documentação ou busca de precedentes jurídicos. No contexto de segurança, o SSR permite que o servidor controle integralmente quais informações são expostas ao \textit{frontend}, mantendo credenciais de acesso a serviços internos (como a API do DBVECTOR) protegidas no ambiente \textit{server-side}.
+
+Na arquitetura implementada, a interface Nuxt.js executa na porta 3000, servindo requisições HTTP dos usuários e atuando como único ponto de entrada para a aplicação. Internamente, a camada \textit{server-side} do Nuxt.js realiza chamadas à API REST do serviço DBVECTOR, que escuta na porta 8000 em \texttt{localhost}. Essa configuração estabelece um modelo de \textit{backend for frontend} (BFF), no qual a interface não apenas apresenta conteúdo, mas também orquestra a comunicação com os serviços internos, agregando resultados e filtrando informações antes de enviá-las ao navegador do usuário.
+
+\subsection{Separação de Responsabilidades e Camadas de Segurança}
+
+A separação entre a interface pública (porta 3000) e o serviço interno de indexação vetorial (porta 8000) reflete um princípio arquitetural de defesa em profundidade. Ao expor apenas a camada de apresentação e manter o serviço de dados isolado, reduz-se o risco de exposição de informações sensíveis ou de exploração de vulnerabilidades em componentes internos. Caso um atacante tente acessar diretamente a porta 8000 a partir de uma máquina externa, a tentativa será bloqueada pelo \textit{firewall}, uma vez que a porta não está configurada para aceitar conexões externas.
+
+Essa abordagem alinha-se com boas práticas de segurança para aplicações \textit{web} que consomem serviços internos, recomendadas tanto em diretrizes de desenvolvimento seguro quanto em padrões de arquitetura de microsserviços \cite{owasp2024}. Embora o protótipo atual execute ambos os componentes (interface e DBVECTOR) em um único servidor, a arquitetura foi concebida de modo a permitir evolução futura para ambientes distribuídos, nos quais o serviço de indexação vetorial poderia ser implantado em servidor dedicado, protegido por \textit{Virtual Private Network} (VPN) ou segmentação de rede interna, sem necessidade de alterações substanciais na lógica da aplicação.
+
+Dessa forma, o ambiente de execução baseado em Linux, aliado ao controle de acesso via UFW e à arquitetura SSR da interface, proporciona base técnica sólida para operação segura e eficiente do protótipo, ao mesmo tempo em que preserva flexibilidade para expansão e adaptação a cenários de maior escala ou requisitos institucionais específicos.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% CAPÍTULO 5 – RESULTADOS ESPERADOS
+% NOTE: Os capítulos 3 (Metodologia) e 4 (Desenvolvimento) foram
+%       movidos para arquivos separados: metodologia.tex e desenvolvimento.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOTE: Os cap�tulos 3 (Metodologia) e 4 (Desenvolvimento) foram
+%       movidos para arquivos separados: metodologia.tex e desenvolvimento.tex
+%       Estes arquivos s�o inclu�dos no main.tex na ordem correta.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Resultados Esperados}
 \label{chap:resultados}
 
-\begin{itemize}[label=\textbullet]
-  \item Redução de ≥80\% no tempo de busca;
-  \item Precisão ≥0,85, recall ≥0,80, F1-Score ≥0,82;
-  \item Alucinações ≤5\%;
-  \item Latência média <1 s;
-  \item Escalabilidade via Docker/Kubernetes.
+Este capítulo descreve, de forma detalhada, os resultados que se almejou alcançar com a execução do presente Trabalho de Conclusão de Curso (TCC). Tais resultados derivam dos objetivos estabelecidos no Capítulo~\ref{sec:objetivos} e da metodologia apresentada no Capítulo~\ref{chap:metodologia}, respeitando as normas da Associação Brasileira de Normas Técnicas -- ABNT (NBR 14724:2011) para trabalhos acadêmicos.
+
+\section{Proposta de arquitetura de \textit{pipeline} RAG funcional}
+Em alinhamento ao objetivo geral e aos objetivos específicos 1 a 4 (coleta, organização, vetorização e conexão ao LLM), o trabalho propôs e desenvolveu, em ambiente de prototipação, uma arquitetura de \textit{pipeline} RAG capaz de integrar um modelo de LLM a um índice vetorial contendo documentos públicos relacionados ao SEEU, legislação penal, súmulas e doutrinas correlatas. O protótipo desenvolvido oferece interface conversacional (\textit{chatbot}) em língua portuguesa e API REST documentada em ambiente de desenvolvimento, permitindo consultas em linguagem natural com respostas fundamentadas nas fontes originais. Espera-se que essa arquitetura proposta sirva de base conceitual e técnica para futuras implementações em ambiente de produção, correspondendo aos objetivos específicos 5, 6 e 7 (disponibilização do protótipo de \textit{chatbot}, implementação da API REST documentada e preparação do ambiente de empacotamento).
+
+\section{Potencial ganho de eficiência na recuperação de informações}
+A arquitetura proposta visa proporcionar redução no tempo médio despendido pelos operadores do Direito para localizar e consolidar informações relacionadas ao SEEU, quando comparado ao processo manual atualmente utilizado. Embora testes formais de eficiência e usabilidade com usuários finais não tenham sido realizados no escopo deste trabalho, a fundamentação teórica e a arquitetura desenvolvida sugerem que futuras implementações, acompanhadas de ensaios controlados, poderão mensurar ganhos quantitativos de tempo de resposta, empregando métricas de precisão, \textit{recall} e F\textsubscript{1}. Tais avaliações constituem etapa essencial para validação em ambiente de produção e representam oportunidade para trabalhos futuros.
+
+\section{Escalabilidade e portabilidade comprovadas}
+Em conformidade com o objetivo específico 8 (preparar o ambiente de \textit{deployment} com segurança e escalabilidade), a solução será entregue em contêineres Docker orquestrados via Kubernetes, garantindo portabilidade entre ambientes e escalabilidade horizontal necessária para suportar picos de demanda. A arquitetura deverá manter latência média de recuperação inferior a 1 segundo para consultas padrão.
+
+\section{Alinhamento institucional e potencial impacto social}
+Almeja-se que a arquitetura proposta e o protótipo desenvolvido se alinhem às iniciativas de transformação digital do Conselho Nacional de Justiça (Programa Justiça 4.0) e aos Objetivos de Desenvolvimento Sustentável nº 16 da Organização das Nações Unidas, oferecendo base conceitual e técnica para futuras soluções que contribuam para a transparência e o acesso à justiça de populações vulnerabilizadas. A efetivação desse potencial dependerá de implementações subsequentes em ambiente de produção, acompanhadas de avaliações de impacto e adequação às políticas institucionais do Poder Judiciário.
+
+\section{Base para melhoria contínua}
+Será implementado um mecanismo de \emph{feedback loop} que registre as interações dos usuários e permita o re-treinamento periódico do modelo de linguagem, assegurando a evolução constante do sistema e a adaptação às mudanças normativas ou procedimentais.
+
+\section{Documentação técnica completa}
+Serão entregues: código-fonte comentado, arquivos \texttt{Dockerfile}, manual do desenvolvedor, manual do usuário final e documentação da API. Essa documentação facilitará a reprodutibilidade acadêmica e a eventual adoção da solução por outros órgãos do Judiciário.
+
+\section{Mitigação de riscos operacionais}
+O projeto contemplará um plano de mitigação de riscos que inclua atualização contínua de dependências \emph{open source}, testes automatizados de regressão e políticas de segurança da informação, garantindo a confiabilidade e a sustentabilidade da aplicação em produção.
+
+A consecução dos resultados elencados neste capítulo demonstrará a viabilidade técnica e o impacto prático da aplicação de técnicas de RAG na execução penal brasileira, servindo de base para futuras pesquisas e para possíveis expansões em âmbito nacional.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CAPÍTULO 6 – MELHORIAS FUTURAS E JUSTIFICATIVA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Melhorias Futuras e Justificativa}
+\label{chap:melhorias}
+
+\section{Introdução}
+
+Este capítulo apresenta propostas de melhorias e extensões para a \textit{pipeline} RAG desenvolvida neste trabalho. As sugestões são organizadas por área temática (infraestrutura, modelos e \textit{embeddings}, indexação, módulos de extração, API/interface, testes, observabilidade e segurança) e têm por objetivo orientar trabalhos futuros, experimentos acadêmicos e evoluções para ambientes de produção.
+
+\section{Visão Geral das Melhorias Propostas}
+
+As principais direções de melhoria identificadas incluem:
+
+\begin{itemize}
+  \item \textbf{Escalabilidade e disponibilidade}: migração da arquitetura para suporte a índices distribuídos e serviços de alta disponibilidade em produção;
+  \item \textbf{Qualidade dos \textit{embeddings}}: avaliação de modelos mais recentes e estratégias de \textit{fine-tuning} específicas para o domínio jurídico;
+  \item \textbf{Robustez dos módulos de extração}: implementação de mecanismos de recuperação automática, tolerância a bloqueios e paralelização;
+  \item \textbf{Observabilidade e testes}: ampliação da cobertura de testes automatizados e implementação de métricas de monitoramento em tempo real;
+  \item \textbf{Segurança e governança de dados}: fortalecimento de privacidade, controle de acesso e conformidade com a Lei Geral de Proteção de Dados (LGPD).
 \end{itemize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% CAPÍTULO 6 – CONCLUSÕES
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Arquitetura e Infraestrutura}
 
-\chapter{Conclusões}
-\label{chap:conclusoes}
+\textbf{Proposta de melhoria:} Evoluir a arquitetura para suportar execução em produção com orquestração completa via Kubernetes, armazenamento gerenciado de índices (OpenSearch/Milvus em \textit{cluster}) e \textit{pipelines} de processamento baseadas em filas (RabbitMQ, Redis ou Cloud Tasks).
 
-A pipeline proposta demonstra a viabilidade de aplicar RAG ao SEEU, alinhando-se a iniciativas de Justiça 4.0 e ODS 16. Com redução de tempo e maior precisão, espera-se uma execução penal mais transparente e eficiente. Trabalhos futuros podem expandir o escopo para outros domínios jurídicos e refinar embeddings em português jurídico.
+\textbf{Justificativa:} A solução atual, baseada em FAISS local e \textit{scripts} ad hoc, é adequada para prototipagem, mas não oferece alta disponibilidade, replicação automática ou escalabilidade horizontal -- requisitos essenciais para uso em produção e experimentos em larga escala.
+
+\textbf{Benefícios esperados:} Tolerância a falhas, balanceamento de carga, reinício automático de serviços, capacidade de lidar com crescimento de dados e possibilidade de realizar testes A/B entre diferentes \textit{backends} de armazenamento vetorial.
+
+\textbf{Sugestão de implementação:} Definir infraestrutura mínima de produção utilizando Helm \textit{charts}, \textit{manifests} Kubernetes com \textit{StatefulSets} para armazenamento vetorial persistente e volumes compartilhados. Prioridade: alta.
+
+\section{Modelos de \textit{Embeddings} e Gerenciamento de Modelos}
+
+\textbf{Proposta de melhoria:} Avaliar modelos de \textit{embeddings} mais recentes, especialmente aqueles multilingues ou ajustados ao domínio jurídico, implementar versionamento de \textit{embeddings} e mecanismos de re-indexação incremental. Considerar técnicas de quantização e aproximação para reduzir custos de armazenamento.
+
+\textbf{Justificativa:} A qualidade da recuperação semântica depende fundamentalmente da qualidade dos \textit{embeddings}. Modelos aprimorados ou submetidos a \textit{fine-tuning} específico para linguagem jurídica tendem a aumentar significativamente as métricas de precisão e \textit{recall}.
+
+\textbf{Benefícios esperados:} Maior relevância nas respostas, redução de falsos positivos e melhoria nas métricas de avaliação (precisão@k, \textit{recall}@k). O versionamento permite experimentação controlada e comparação sistemática entre modelos.
+
+\textbf{Sugestão de implementação:} Adicionar módulo de experimentação que registre modelo, hiperparâmetros e \textit{seeds} aleatórias; utilizar \textit{pipelines} automatizadas para re-indexação incremental com registro de metadados por versão. Prioridade: alta.
+
+\section{Indexação e Backends de Busca Vetorial}
+
+\textbf{Proposta de melhoria:} Comparar FAISS com alternativas (OpenSearch vector search, Milvus, Pinecone) considerando custo, latência e facilidade operacional; implementar suporte a \textit{sharding} e replicação; oferecer mecanismo de \textit{fallback} híbrido combinando busca vetorial e léxica (BM25).
+
+\textbf{Justificativa:} Diferentes \textit{backends} apresentam compromissos distintos. FAISS é rápido localmente, mas não oferece clusterização nativa; OpenSearch permite consultas híbridas e persistência integrada.
+
+\textbf{Benefícios esperados:} Menor latência sob carga, maior resiliência e melhores resultados ao combinar sinais léxicos e semânticos.
+
+\textbf{Sugestão de implementação:} Criar \textit{benchmarks} automatizados e uma camada de abstração para alternar \textit{backends} via configuração. Prioridade: média-alta.
+
+\section{Pipelines de Ingestão e Tratamento de Dados}
+
+\textbf{Proposta de melhoria:} Tornar as \textit{pipelines} idempotentes, tolerantes a falhas e escaláveis; adicionar etapas de normalização jurídica, incluindo extração robusta de metadados, enriquecimento semântico e deduplicação avançada.
+
+\textbf{Justificativa:} A qualidade dos dados de entrada impacta diretamente a qualidade da recuperação e da avaliação do sistema. \textit{Pipelines} manuais dificultam a reprodutibilidade e a auditoria do processo.
+
+\textbf{Benefícios esperados:} Redução de ruído no índice, indexação mais rápida e reprocessamento controlado quando \textit{embeddings} ou modelos são atualizados.
+
+\textbf{Sugestão de implementação:} Adotar \textit{frameworks} de orquestração (Airflow, Prefect) ou \textit{jobs} em Kubernetes, com armazenamento intermediário (Parquet/NDJSON) e \textit{checksums} para identificação de mudanças. Prioridade: média.
+
+\section{Módulos de Extração Automatizada (TRF4, STF, STJ)}
+
+\textbf{Proposta de melhoria:} Tornar os módulos de extração mais resilientes, implementando mecanismos de \textit{retry/backoff}, tratamento de CAPTCHAs e rotação de proxies; instrumentar métricas de sucesso e erro; padronizar saída (esquemas e contratos JSONL). Modularizar os componentes para reuso e permitir execução distribuída.
+
+\textbf{Justificativa:} A extração confiável garante cobertura adequada de dados e respeito às políticas dos portais. A arquitetura atual pode ser frágil frente a mudanças de estrutura (DOM) e bloqueios.
+
+\textbf{Benefícios esperados:} Redução de falhas, menor necessidade de intervenção manual e melhor reprodutibilidade do conjunto de dados.
+
+\textbf{Sugestão de implementação:} Encapsular interações Playwright em adaptadores testáveis, usar filas para distribuir trabalho e registrar estados em banco de dados leve (SQLite/Redis). Prioridade: alta.
+
+\section{API, Interface e Experiência do Usuário}
+
+\textbf{Proposta de melhoria:} Adicionar mecanismos de autenticação e autorização (API \textit{keys}/JWT), limitação de taxa de requisições (\textit{rate limiting}), paginação e filtros avançados; implementar na interface funcionalidades de \textit{feedback} do usuário sobre relevância das respostas para coleta de sinais e treinamento posterior.
+
+\textbf{Justificativa:} Para ambientes de produção, o controle de acesso é obrigatório. Sinais coletados dos usuários permitem medir e melhorar continuamente a relevância do sistema.
+
+\textbf{Benefícios esperados:} Segurança do serviço, métricas de uso e ciclo de \textit{feedback} humano no processo (\textit{human-in-the-loop}) para otimização contínua.
+
+\textbf{Sugestão de implementação:} Integrar FastAPI com \textit{middleware} de autenticação; adicionar componente de avaliação de resultado na interface, conectado a \textit{endpoint} que registra \textit{feedback}. Prioridade: média.
+
+\section{Testes, Validação e Reprodutibilidade}
+
+\textbf{Proposta de melhoria:} Ampliar cobertura de testes (unitários, integração, \textit{end-to-end}), adicionar testes de carga e cenários de regressão; padronizar \textit{seeds} aleatórias, salvar pontos de referência e criar \textit{scripts} de reprodutibilidade para experimentos.
+
+\textbf{Justificativa:} A confiança nas mudanças e a capacidade de comparar configurações experimentais dependem de testes abrangentes e reprodutibilidade dos resultados.
+
+\textbf{Benefícios esperados:} Ciclos de desenvolvimento mais rápidos, redução de regressões e resultados experimentais confiáveis para validação científica.
+
+\textbf{Sugestão de implementação:} Ampliar conjunto de testes com \textit{fixtures} que simulem armazenamentos e modelos; integrar integração contínua (CI) via GitHub Actions para execução automática de testes e \textit{benchmarks}. Prioridade: alta.
+
+\section{Observabilidade e Operações}
+
+\textbf{Proposta de melhoria:} Instrumentar serviços com métricas (Prometheus), rastreamento distribuído (OpenTelemetry) e \textit{logs} estruturados; criar painéis de monitoramento (Grafana) com latência, vazão (\textit{throughput}), erros e qualidade de resposta.
+
+\textbf{Justificativa:} O monitoramento é fundamental para identificar gargalos e regressões, além de apoiar decisões de otimização e escalonamento.
+
+\textbf{Benefícios esperados:} Visibilidade operacional, diagnósticos mais rápidos e fundamentação para decisões de escalonamento e ajuste fino.
+
+\textbf{Sugestão de implementação:} Adicionar \textit{middleware} para métricas no FastAPI, exportadores para Prometheus e coletores de rastreamento. Prioridade: média.
+
+\section{Segurança, Privacidade e Governança de Dados}
+
+\textbf{Proposta de melhoria:} Implementar anonimização de dados sensíveis, políticas de retenção, \textit{logs} auditáveis e controle de acesso granular; avaliar conformidade com normas aplicáveis, especialmente a Lei Geral de Proteção de Dados (LGPD).
+
+\textbf{Justificativa:} O projeto lida com documentos jurídicos que podem conter dados pessoais. A conformidade legal é imprescindível para uso além do contexto de pesquisa acadêmica.
+
+\textbf{Benefícios esperados:} Mitigação de riscos legais, maior aceitação institucional e proteção adequada de dados pessoais.
+
+\textbf{Sugestão de implementação:} Criar módulo de sanitização de textos antes da indexação, implementar consentimento informado e processar dados pessoais com marcadores e técnicas de ocultação (\textit{redaction}). Prioridade: alta.
+
+\section{Documentação, Reprodutibilidade e Processo de Pesquisa}
+
+\textbf{Proposta de melhoria:} Centralizar documentação operacional, apresentar instruções reproduzíveis para experimentos (datasets, \textit{seeds}, versões de modelos) e exemplos “how‑to” para ingressar novos colaboradores.
+
+\textbf{Justificativa:} A documentação abrangente facilita a avaliação no contexto acadêmico e acelera a adoção por outros pesquisadores.
+
+\textbf{Benefícios esperados:} Redução da barreira de entrada, facilidade para replicação e validação científica dos resultados.
+
+\textbf{Sugestão de implementação:} Atualizar documentação principal do projeto, criar manuais operacionais e adicionar seção de experimentos com \textit{scripts} automatizados. Prioridade: média.
+
+\section{Cronograma de Implementação Sugerido}
+
+Com base nas prioridades identificadas, propõe-se o seguinte cronograma de implementação das melhorias:
+
+\begin{enumerate}
+  \item \textbf{Curto prazo (1 a 3 meses):} Fortalecimento dos módulos de extração, versionamento de \textit{embeddings}, implementação de autenticação na API e ampliação de testes unitários.
+  \item \textbf{Médio prazo (3 a 9 meses):} Orquestração de \textit{pipelines}, avaliação comparativa de \textit{backends} vetoriais, implementação de monitoramento básico com Prometheus e Grafana.
+  \item \textbf{Longo prazo (9 a 18 meses):} Migração para infraestrutura clusterizada com Kubernetes, suporte a reindexação em larga escala, \textit{fine-tuning} de modelos jurídicos e publicação de conjunto de dados documentado para reprodutibilidade.
+\end{enumerate}
+
+\section{Considerações Finais do Capítulo}
+
+As melhorias propostas neste capítulo visam evoluir a \textit{pipeline} RAG implementada em uma plataforma robusta para experimentação acadêmica e, potencialmente, uso em ambientes de produção. As prioridades destacadas equilibram ganhos de qualidade (aprimoramento de \textit{embeddings}, \textit{pipelines} e módulos de extração) com necessidades operacionais (segurança, observabilidade e infraestrutura escalável). Implementações incrementais, acompanhadas de testes sistemáticos e documentação adequada, permitirão avaliar o impacto de cada melhoria e ajustar a trajetória conforme os resultados experimentais obtidos.
+
+\section{Recomendações para Trabalhos Futuros}
+
+Com base na análise apresentada, recomendam-se as seguintes ações para trabalhos futuros:
+
+\begin{itemize}
+  \item Selecionar 2 a 3 itens prioritários (por exemplo: robustez dos módulos de extração, versionamento de \textit{embeddings} e ampliação de testes com integração contínua) e estabelecer tarefas com critérios de aceitação bem definidos.
+  \item Implementar avaliação comparativa (\textit{benchmark}) entre FAISS e OpenSearch considerando latência e precisão no conjunto de dados atual.
+  \item Planejar revisão de segurança e privacidade com orientador e, se necessário, consultor especializado em proteção de dados.
+\end{itemize}
+
+\begin{itemize}
+  \item Selecionar 2 a 3 itens prioritários (por exemplo: robustez dos módulos de extração, versionamento de \textit{embeddings} e ampliação de testes com integração contínua) e estabelecer tarefas com critérios de aceitação bem definidos.
+  \item Implementar avaliação comparativa (\textit{benchmark}) entre FAISS e OpenSearch considerando latência e precisão no conjunto de dados atual.
+  \item Planejar revisão de segurança e privacidade com orientador e, se necessário, consultor especializado em proteção de dados.
+\end{itemize}

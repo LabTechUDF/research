@@ -1,0 +1,114 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CAPÍTULO 3 – METODOLOGIA
+% NOTE: Reorganizado para separar metodologia de pesquisa do desenvolvimento
+%       técnico, conforme estrutura ABNT para TCC.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Metodologia}
+\label{chap:metodologia}
+
+Este capítulo apresenta a metodologia de pesquisa adotada para o desenvolvimento deste trabalho, descrevendo o tipo de pesquisa, as etapas metodológicas, os procedimentos de coleta e análise de dados, a modelagem de requisitos e a estratégia de avaliação proposta. A abordagem metodológica combina revisão bibliográfica, desenvolvimento experimental de protótipo e proposição de arquitetura escalável para futuras implementações em ambiente de produção.
+
+\section{Tipo de Pesquisa e Abordagem Metodológica}
+\label{sec:tipo_pesquisa}
+
+Este trabalho caracteriza-se como pesquisa aplicada de natureza exploratória e experimental. Do ponto de vista metodológico, adota-se a abordagem de \textit{Design Science Research} (DSR), comum em pesquisas de Ciência da Computação que buscam desenvolver artefatos tecnológicos para solucionar problemas práticos. Segundo a literatura especializada, a DSR envolve ciclos iterativos de projeto, implementação e avaliação, visando criar soluções inovadoras e validá-las em contextos reais ou simulados \cite{edwards2024hybrid}.
+
+No contexto deste trabalho, o problema identificado refere-se à dificuldade de recuperação eficiente de informações jurídicas em grandes acervos documentais relacionados ao Sistema Eletrônico de Execução Unificado (SEEU). A solução proposta consiste em uma arquitetura de \textit{pipeline} RAG que integra modelos de linguagem de grande porte a bancos de dados vetoriais, permitindo consultas semânticas fundamentadas em fontes oficiais.
+
+Quanto à natureza dos dados, a pesquisa utiliza dados públicos disponibilizados por portais do Supremo Tribunal Federal (STF), Superior Tribunal de Justiça (STJ), Tribunal Regional Federal da 4ª Região (TRF4) e documentação oficial do SEEU publicada pelo Conselho Nacional de Justiça (CNJ). A análise dos dados é predominantemente qualitativa na fase de prototipação, com perspectiva de incorporação de métricas quantitativas (precisão, \textit{recall}, F\textsubscript{1}) em futuras implementações.
+
+\section{Procedimentos Metodológicos e Etapas do Estudo}
+\label{sec:procedimentos_metodologicos}
+
+A execução deste trabalho seguiu um conjunto estruturado de etapas metodológicas, organizadas de forma sequencial e iterativa:
+
+\subsection{Etapa 1 – Levantamento Bibliográfico e Revisão de Literatura}
+Realizou-se revisão sistemática de literatura sobre bancos de dados vetoriais, modelos de linguagem de grande porte (LLMs), técnicas de Geração Aumentada por Recuperação (RAG) e aplicações de inteligência artificial no domínio jurídico. As bases de dados consultadas incluíram ACM Digital Library, IEEE Xplore, Google Scholar e repositórios de artigos pré-impressos como arXiv. Foram priorizados trabalhos publicados entre 2020 e 2025, com ênfase em aplicações de RAG em domínios especializados e técnicas de indexação vetorial.
+
+\subsection{Etapa 2 – Definição da Arquitetura Conceitual da Pipeline RAG}
+Com base na revisão bibliográfica, definiu-se a arquitetura conceitual da \textit{pipeline} RAG, identificando os componentes principais: módulos de coleta de dados (scrapers), módulo de pré-processamento e segmentação textual, módulo de geração de \textit{embeddings}, módulo de indexação vetorial, módulo de orquestração de consultas e interface de usuário. A arquitetura foi projetada de forma modular, permitindo substituição de componentes e facilitando manutenção e evolução futura.
+
+\subsection{Etapa 3 – Seleção de Tecnologias e Ferramentas}
+A seguir, apresenta-se a seleção das tecnologias adotadas para implementação dos módulos da arquitetura, com breve justificativa das escolhas e dos critérios avaliados (maturidade, desempenho, documentação e compatibilidade com o ecossistema de código aberto).
+Foram selecionadas as tecnologias e ferramentas adequadas para implementação de cada componente da arquitetura proposta, considerando critérios de maturidade, desempenho, documentação e compatibilidade com o ecossistema de código aberto. As principais tecnologias selecionadas foram: Python como linguagem principal, FAISS para indexação vetorial, modelos da família Sentence-Transformers para geração de \textit{embeddings}, OpenAI GPT como modelo de linguagem, Playwright e BeautifulSoup para extração de dados, Nuxt.js e Vue.js para interface de usuário com \textit{Server-Side Rendering} (SSR), e FastAPI para desenvolvimento da API REST do serviço DBVECTOR.
+
+\subsection{Etapa 4 – Desenvolvimento dos Módulos de Coleta de Dados}
+Foram desenvolvidos módulos automatizados de extração de dados (scrapers) para cada fonte documental identificada: STF, STJ, TRF4 e SEEU. Cada módulo foi projetado para respeitar as políticas de uso dos portais, implementando mecanismos de controle de taxa de requisições, tratamento de erros e validação de integridade dos dados extraídos. A saída de cada scraper foi padronizada em formato JSON Lines (JSONL), facilitando processamento incremental e auditoria.
+
+\subsection{Etapa 5 – Implementação do Módulo de Indexação Vetorial}
+Foi desenvolvido o módulo DBVECTOR, responsável pelo pré-processamento de textos, geração de \textit{embeddings} e indexação em banco vetorial. O módulo implementa estratégias de chunking (segmentação de textos em fragmentos menores), normalização de vetores e persistência de metadados em formato Parquet. A indexação foi realizada utilizando FAISS com produto interno (equivalente à similaridade de cosseno quando os vetores são normalizados), permitindo recuperação eficiente de trechos relevantes.
+
+\subsection{Etapa 6 – Desenvolvimento da Interface de Usuário e API}
+Foi desenvolvida interface de usuário baseada em Nuxt.js e Vue.js, oferecendo modo de consulta RAG (com recuperação de documentos) e modo de chat simples (sem recuperação). A interface foi concebida para ser intuitiva, permitindo que operadores judiciários realizem consultas em linguagem natural e visualizem tanto as respostas geradas quanto os documentos consultados como evidência. Paralelamente, foi implementada API REST utilizando FastAPI, expondo \textit{endpoints} documentados para consulta, recuperação de metadados e integração com o modelo de linguagem.
+
+\subsection{Etapa 7 – Testes e Validação Técnica do Protótipo}
+Foram realizados testes funcionais e de integração para validar o funcionamento dos componentes da \textit{pipeline}. Os testes incluíram verificação da corretude da extração de dados, validação da qualidade dos \textit{embeddings}, testes de recuperação semântica com consultas conhecidas e validação da geração de respostas pelo modelo de linguagem. Embora testes formais com usuários finais não tenham sido realizados no escopo deste trabalho, a arquitetura foi concebida para permitir futuras avaliações de usabilidade e eficácia.
+
+\subsection{Etapa 8 – Documentação e Configuração do Ambiente de Execução}
+Foram elaboradas documentações técnicas do código, manuais de instalação e configuração, e orientações para implantação em ambiente Linux. A documentação inclui descrição dos módulos, instruções de uso, configuração do \textit{firewall} UFW para controle de acesso às portas da aplicação, exemplos de configuração do servidor SSR e orientações para futuras extensões. O ambiente de execução foi configurado de forma a isolar o serviço interno DBVECTOR (porta 8000) da interface pública (porta 3000), reforçando a segurança da solução.
+
+\section{Modelagem de Requisitos e Casos de Uso}
+\label{sec:modelagem_requisitos}
+
+A modelagem de requisitos foi realizada utilizando diagramas de casos de uso, técnica amplamente adotada em Engenharia de Software para especificação de requisitos funcionais e identificação de interações entre atores e sistema \cite{edwards2024hybrid}. O diagrama de casos de uso desenvolvido (Figura~\ref{fig:diagrama-rag-seeu}) identifica os principais atores --- Operador Judiciário, Administrador e Sistema --- e os casos de uso principais, incluindo:
+
+\begin{itemize}[label=\textbullet]
+  \item UC-01 – Enviar Pergunta
+  \item UC-02 – Configurar Pipeline
+  \item UC-03 – Atualizar Base de Conhecimento
+  \item UC-04 – Coletar Documentos Públicos
+  \item UC-05 – Pré-processar e Segmentar Texto
+  \item UC-06 – Gerar Embeddings e Atualizar Índice
+  \item UC-07 – Realizar Consulta Semântica (RAG)
+  \item UC-08 – Exibir Resposta ao Usuário
+  \item UC-09 – Avaliar Métricas e Monitorar Desempenho
+\end{itemize}
+
+A especificação detalhada de cada caso de uso, incluindo atores, pré-condições, pós-condições, fluxo principal e fluxos alternativos, foi documentada para orientar o desenvolvimento e servir como referência para futuras extensões do sistema.
+
+\paragraph{Observação}
+\noindent
+O \textbf{UC-09 – Avaliar Métricas e Monitorar Desempenho} foi descrito como extensão funcional para suporte ao monitoramento operacional. Contudo, no escopo deste protótipo a implementação desse caso de uso não foi concluída, e o painel de administração associado também não foi desenvolvido. Estas funcionalidades permanecem como recomendações para trabalhos futuros, conforme detalhado no capítulo de desenvolvimento.
+
+\section{Estratégia de Avaliação e Métricas Previstas}
+\label{sec:estrategia_avaliacao}
+
+A arquitetura desenvolvida contempla mecanismos que permitirão, em futuras implementações, realizar avaliações quantitativas e qualitativas da solução proposta. Do ponto de vista quantitativo, propõe-se a adoção de métricas consagradas na literatura de Recuperação de Informação (IR) e Processamento de Linguagem Natural (NLP), incluindo:
+
+\begin{itemize}[label=\textbullet]
+  \item \textbf{Precisão (Precision)}: proporção de documentos recuperados que são relevantes para a consulta.
+  \item \textbf{Recall}: proporção de documentos relevantes que foram efetivamente recuperados.
+  \item \textbf{F\textsubscript{1}-Score}: média harmônica entre precisão e \textit{recall}, oferecendo medida equilibrada de desempenho.
+  \item \textbf{Latência}: tempo médio decorrido entre a submissão de uma consulta e a exibição da resposta ao usuário.
+  \item \textbf{Taxa de sucesso}: proporção de consultas que resultam em respostas consideradas adequadas pelos usuários.
+\end{itemize}
+
+Do ponto de vista qualitativo, propõe-se a realização de ensaios de usabilidade com operadores do Direito, avaliando aspectos como intuitividade da interface, confiança nas respostas geradas, adequação ao fluxo de trabalho real e percepção de utilidade da ferramenta. Tais avaliações, embora não realizadas no escopo deste trabalho, constituem etapa essencial para validação em ambiente de produção e são recomendadas como trabalhos futuros.
+
+Adicionalmente, a arquitetura prevê mecanismos de coleta de \textit{feedback} dos usuários, permitindo que operadores avaliem a relevância das respostas e dos documentos recuperados. Esses sinais podem ser utilizados em futuras iterações para ajuste fino dos modelos e aprimoramento da qualidade da recuperação.
+
+\section{Considerações Éticas e Conformidade Legal}
+\label{sec:consideracoes_eticas}
+
+Este trabalho utiliza exclusivamente dados públicos disponibilizados por portais oficiais do Poder Judiciário brasileiro. Não foram coletados, processados ou armazenados dados pessoais sensíveis ou informações protegidas por sigilo. A extração de dados foi realizada em conformidade com as políticas de uso dos portais consultados, implementando mecanismos de respeito aos limites de taxa de requisições e identificação adequada do agente de coleta.
+
+Para futuras implementações em ambiente de produção, recomenda-se avaliação detalhada de conformidade com a Lei Geral de Proteção de Dados (LGPD), especialmente no que se refere ao tratamento de dados pessoais eventualmente presentes em documentos judiciais. Técnicas de anonimização, sanitização de dados e controle de acesso granular devem ser implementadas para garantir proteção adequada e mitigar riscos legais.
+
+\section{Limitações Metodológicas}
+\label{sec:limitacoes_metodologicas}
+
+As principais limitações metodológicas deste trabalho incluem:
+
+\begin{itemize}[label=\textbullet]
+  \item \textbf{Escopo de avaliação}: A avaliação formal da solução, incluindo testes de usabilidade com usuários finais e medição quantitativa de métricas de desempenho, não foi realizada no escopo deste trabalho, ficando proposta para trabalhos futuros.
+  \item \textbf{Cobertura de dados}: A coleta de dados foi limitada a portais específicos (STF, STJ, TRF4, SEEU), não contemplando outros tribunais ou fontes documentais relevantes.
+  \item \textbf{Generalização}: A solução foi desenvolvida e testada especificamente para o domínio de execução penal brasileira, podendo requerer adaptações para aplicação em outros domínios jurídicos ou contextos geográficos.
+  \item \textbf{Infraestrutura}: O protótipo foi desenvolvido em ambiente de desenvolvimento local, não sendo testado em ambiente de produção com cargas reais de usuários ou volumes massivos de dados.
+\end{itemize}
+
+Tais limitações são inerentes ao escopo de um Trabalho de Conclusão de Curso e devem ser consideradas na interpretação dos resultados e na proposição de trabalhos futuros.
+
+\section{Conclusão do Capítulo}
+
+Este capítulo apresentou a metodologia de pesquisa adotada, caracterizando o trabalho como pesquisa aplicada de natureza exploratória e experimental, fundamentada na abordagem de \textit{Design Science Research}. Foram descritas as oito etapas metodológicas seguidas, desde o levantamento bibliográfico até a preparação para \textit{deployment}, bem como a modelagem de requisitos por meio de diagramas de casos de uso. A estratégia de avaliação proposta, baseada em métricas quantitativas e qualitativas, oferece fundamento para futuras validações da solução em ambiente de produção. As limitações metodológicas foram explicitadas, contribuindo para a transparência e a integridade científica do trabalho. O próximo capítulo apresentará o desenvolvimento técnico da solução, detalhando a arquitetura implementada e os componentes da \textit{pipeline} RAG.

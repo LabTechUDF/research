@@ -7,27 +7,38 @@
 }
 
 \PassOptionsToClass{%
-    % Opções da classe memoir
-    12pt,                       % Tamanho da fonte
-    openright,                 % Capítulos começam em página ímpar (insere página vazia caso preciso)
-    a4paper,                    % Tamanho do papel
-    sumario=abnt-6027-2012,     % Seleciona o sumário abnt-6027-2012
-    % Opções da classe abntex2
-    chapter=TITLE,              % Títulos de capítulos convertidos em letras maiúsculas
-    section=TITLE,              % Títulos de seções convertidos em letras maiúsculas
-    % Opções do pacote babel
-    brazil,                     % Idioma do documento
-    }{abntex2}
+    12pt,        % Fonte 12pt conforme ABNT
+    oneside,     % Páginas apenas na frente
+    openright,   % Capítulos em págs ímpares
+    a4paper,     % Papel A4
+    sumario=abnt-6027-2012,
+    chapter=TITLE,
+    section=TITLE,
+    brazil,
+}{abntex2}
 
 \ProcessOptions\relax
 \LoadClass{abntex2}
 
+% ====================================================================
+%  Desativa o recuo do 1.º parágrafo após títulos (ABNT §5.3.1)
+%  → coloque este bloco logo após \LoadClass{abntex2}
+% ====================================================================
+\RequirePackage{etoolbox}   % carrega só se ainda não estiver
+
+\AtBeginDocument{            % executa depois que tudo está definido
+  \patchcmd{\chapter}    {\indent}{}{}{}
+  \patchcmd{\section}    {\indent}{}{}{}
+  \patchcmd{\subsection} {\indent}{}{}{}
+  \patchcmd{\subsubsection}{\indent}{}{}{}
+}
+
 \RequirePackage[brazilian,hyperpageref]{backref}        % Produzir índice nas referências
 \RequirePackage{makeidx}                                % Produzir índice remissivo de palavras
 \RequirePackage{chngcntr}
+\OnehalfSpacing
 
-\usepackage{setspace}
-\usepackage{caption}
+\RequirePackage{caption}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CONFIGURAÇÕES GERAIS
@@ -258,10 +269,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Tamanho da endentação do parágrafo
-\setlength{\parindent}{1.5cm}
+\setlength{\parindent}{1.25cm}
 
 % Espaçamento entre um parágrafo e outro
-\setlength{\parskip}{0.2cm}
+\setlength{\parskip}{0pt}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -283,11 +296,6 @@
 \renewcommand*{\cftsubsectionfont}{\normalfont}
 \renewcommand*{\cftsubsubsectionfont}{\normalfont}
 
-% Alteração da indentação dos itens do sumário
-\cftsetindents{section}{0pt}{20pt}
-\cftsetindents{subsection}{0pt}{32pt}
-\cftsetindents{subsubsection}{0pt}{42pt}
-
 %\newcommand{\sumario}
 %{
 %        \thispagestyle{empty}
@@ -300,27 +308,38 @@
 %        \newpage
 %}
 
-\newcommand{\sumario}
-{	
-		\setlength\cftpartnumwidth{\cftparagraphnumwidth}
-		\setlength\cftchapternumwidth{\cftparagraphnumwidth}
-		\setlength\cftsectionnumwidth{\cftparagraphnumwidth}
-		\setlength\cftsubsectionnumwidth{\cftparagraphnumwidth}
-		\setlength\cftsubsubsectionnumwidth{\cftparagraphnumwidth}
-		\setlength\cftsectionindent{0pt}
-		\setlength\cftsubsectionindent{0pt}
-		\setlength\cftsubsubsectionindent{0pt}
-		%\renewcommand{\cftpartfont}{\normalfont}
-		%\renewcommand*{\cftsubsubsectionfont}{\bfseries}
-
-		\thispagestyle{empty}
-        \setlength{\baselineskip}{-2\baselineskip} % Espacamento: 0.7
-        \begin{center}
-                \large\textbf{SUM\'ARIO} \\ [1.5\baselineskip]
-        \end{center}
-        \@starttoc{toc}
-        \cleardoublepage
-        \newpage
+\newcommand{\sumario}{%
+    \cleardoublepage                  % inicia em página ímpar
+    \thispagestyle{empty}             % sem cabeçalho/rodapé
+    %
+    % --- Título (centralizado, caixa-alta, 12 pt negrito) ---
+    \begin{center}
+        \Large\bfseries SUMÁRIO
+    \end{center}
+    \vspace{1.5\baselineskip}         % duas linhas em entrelinha 1,5
+    %
+    % --- Recuos conforme ABNT (1,5 cm por nível a partir do §) ---
+    \setlength{\cftchapterindent}{0cm}      % CAPÍTULO
+    \setlength{\cftsectionindent}{1.5cm}    % Seção
+    \setlength{\cftsubsectionindent}{3cm}   % Subseção
+    \setlength{\cftsubsubsectionindent}{4.5cm}
+    %
+    % --- Largura dos algarismos (garante alinhamento dos números) ---
+    \setlength{\cftchapternumwidth}{1.5cm}
+    \setlength{\cftsectionnumwidth}{1.5cm}
+    \setlength{\cftsubsectionnumwidth}{1.5cm}
+    \setlength{\cftsubsubsectionnumwidth}{1.5cm}
+    %
+    % --- Fonte dos níveis (capítulo normal, demais negrito) ---
+    \renewcommand*{\cftchapterfont}{\normalfont}
+    \renewcommand*{\cftsectionfont}{\normalfont\bfseries}
+    \renewcommand*{\cftsubsectionfont}{\normalfont\bfseries}
+    \renewcommand*{\cftsubsubsectionfont}{\normalfont}
+    %
+    % --- Geração do sumário em espaçamento simples ---
+    \SingleSpacing
+    \@starttoc{toc}
+    \cleardoublepage
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -451,9 +470,9 @@
 %\checkandfixthelayout
 
 % Recuo do paragrafo
-\setlength{\parindent}{1.5 cm} % normativo citatanto o valor de 1,25 qto 1,5cm
+\setlength{\parindent}{1.25 cm} % normativo citatanto o valor de 1,25 qto 1,5cm
 % sem espaco entre os paragrafos
-\setlength{\parskip}{0.5 cm}
+\setlength{\parskip}{0pt}
 
 
 % Espacamentos nos titulos:
@@ -479,4 +498,3 @@
    \relax %
   \fi%
 }
-

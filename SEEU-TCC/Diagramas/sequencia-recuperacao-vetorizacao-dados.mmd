@@ -1,0 +1,25 @@
+sequenceDiagram
+    %% --- Participantes principais --------------------------------------
+    participant Scheduler   as "Scheduler / Orquestrador"
+    participant Crawler     as "Crawler / DocumentFetcher"
+    participant RemoteSources as "Fontes Remotas"
+    participant PreProc     as "Pre-Processor"
+    participant EmbedSvc    as "Embedding Service"
+    participant VectorDB    as "Vector DB / Índice Vetorial"
+    participant LogService  as "Log & Métricas"  %% opcional (extend)
+
+    %% --- Fluxo principal -----------------------------------------------
+    Scheduler ->> Crawler: startCollection(jobId)
+    Crawler ->> RemoteSources: GET novos documentos
+    RemoteSources -->> Crawler: HTML / PDF / JSON
+    Crawler -->> PreProc: docsBrutos[]
+    PreProc ->> PreProc: limpar() / segmentar() / normalizar()
+    PreProc -->> EmbedSvc: textosProcessados[]
+    EmbedSvc ->> EmbedSvc: gerarEmbedding(vetor)
+    EmbedSvc ->> VectorDB: upsert(vetor, metadados)
+    VectorDB -->> EmbedSvc: ack / ids
+    EmbedSvc -->> Scheduler: jobStatus(OK)
+
+    %% --- Passo opcional: logging / métricas ----------------------------
+    EmbedSvc -->> LogService: writeMetrics(jobId)
+    note over EmbedSvc,LogService: «extend» executado somente se monitoramento habilitado

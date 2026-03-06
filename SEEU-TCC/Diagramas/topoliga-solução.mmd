@@ -1,0 +1,82 @@
+---
+config:
+  layout: dagre
+---
+flowchart TB
+    %% ──────────────────────────── FONTES & USUÁRIOS ────────────────────────────
+    subgraph Externo["Fontes e Usuários Externos"]
+        X["Portais CNJ / SEEU"]
+        User["Operador Judiciário"]
+        OpenAI["LLM externo<br>(API OpenAI ou serviço privado)"]
+    end
+
+    %% ───────────────────────────── CLUSTER KUBERNETES ──────────────────────────
+    subgraph K8s["Kubernetes Cluster"]
+        direction TB
+
+        %% ─── Observabilidade ───
+        subgraph Observabilidade["Observabilidade"]
+            Prom["Prometheus + Grafana"]
+            Loki["Loki / Fluent Bit"]
+            Jaeger["Jaeger Tracing"]
+        end
+
+        %% ─── Pipeline de Ingestão e Indexação ───
+        subgraph Pipeline["Pipeline de Ingestão e Indexação"]
+            CronJob["DocumentCollector<br>(CronJob)"]
+            Broker["Fila de Mensagens<br>(Kafka / NATS)"]
+            PreProc["Preprocessor<br>(Deployment)"]
+            Embed["EmbeddingGenerator<br>(Deployment – GPU)"]
+            VecDB["Vector DB<br>(StatefulSet – Milvus/Weaviate)"]
+        end
+
+        %% ─── Serviços de Aplicação ───
+        subgraph Servicos["Serviços de Aplicação"]
+            RagSvc["RagService<br>(Deployment + HPA)"]
+            ChatAPI["ChatbotInterface&nbsp;& REST API<br>(Deployment + Ingress)"]
+            Metrics["MetricsEvaluator<br>(Job)"]
+        end
+
+        %% ─── DevOps / MLOps ───
+        subgraph DevOps["CI/CD & MLOps"]
+            GitOps["GitOps (ArgoCD)"]
+            Registry["Container Registry"]
+            Tekton["Tekton / Argo Workflows"]
+        end
+    end
+
+    %% ──────────────────────── RELAÇÕES EXTERNAS ────────────────────────
+    X --> CronJob
+    User -- WS / REST --> ChatAPI
+    RagSvc -->|Prompt| OpenAI
+
+    %% ────────────────────────── FLUXO DA PIPELINE ──────────────────────────
+    CronJob --> Broker
+    Broker --> PreProc
+    PreProc --> Broker
+    Broker --> Embed
+    Embed --> VecDB
+
+    %% ─────────────────── CONSULTA E GERAÇÃO DE RESPOSTA ──────────────────
+    ChatAPI --> RagSvc
+    RagSvc --> VecDB
+
+    %% ─────────────────── REGISTRO DE MÉTRICAS E LOGS ────────────────────
+    Metrics --> Observabilidade
+    RagSvc --> Metrics
+    ChatAPI --> Metrics
+    Embed --> Metrics
+    ChatAPI --> Loki
+    RagSvc  --> Loki
+    Embed   --> Loki
+    PreProc --> Loki
+    CronJob --> Loki
+    Prom <---> ChatAPI
+    Prom <---> RagSvc
+    Prom <---> Embed
+    Prom <---> VecDB
+
+    %% ────────────────────────── FLUXO DEVOPS ─────────────────────────────
+    Tekton --> Registry
+    Registry --> GitOps
+    GitOps --> K8s
