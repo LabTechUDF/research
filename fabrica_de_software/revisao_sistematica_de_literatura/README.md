@@ -51,6 +51,6 @@ As questões a seguir servem como guia inicial e serão refinadas após a revis�
 
 https://pepsic.bvsalud.org/scielo.php?script=sci_arttext&pid=S1677-11682020000100006
 
-Com base nesse artigo, decidimos seguir com a revisão de literatura X pelos motivos Y, Z e K.
+Com base nesse artigo, decidimos seguir com a revisão sistemática de literatura X pelos motivos Y, Z e K.
 
 ##
