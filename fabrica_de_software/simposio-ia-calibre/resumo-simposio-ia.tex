@@ -1,0 +1,206 @@
+% =============================================================================
+% Resumo Expandido --- Modalidade EXPERIÊNCIA EXITOSA
+% Sessão de Temas Livres --- III Simpósio Internacional de Educação do Ensino
+% Superior: inteligência artificial e ensino superior
+% Publicação como suplemento na Revista CALIBRE.
+% Formatação: Times New Roman, título 14pt, texto 12pt, espaçamento 1,5,
+% máx. 1200 palavras, notas de rodapé 11pt, referências NBR 6023 (máx. 20).
+% =============================================================================
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{times}
+\usepackage[top=3cm,left=3cm,bottom=2cm,right=2cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{indentfirst}
+
+% Notas de rodapé em 11pt (conforme edital)
+\renewcommand{\footnotesize}{\fontsize{11pt}{13pt}\selectfont}
+
+% Bibliografia ABNT NBR 6023 --- hyperref ANTES de abntcite (ordem crítica)
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue}
+\usepackage[alf]{abntcite}
+\bibliographystyle{abnt-alf}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\providecommand{\abntreprintinfo}[1]{\citeonline{#1}}
+
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0.2cm}
+
+% Rótulos das seções da modalidade (texto em 12pt, em negrito)
+\newcommand{\secao}[1]{\medskip\noindent\textbf{#1}\par\nobreak\vspace{-0.1cm}}
+
+\pagestyle{empty}
+
+\begin{document}
+
+% ---------------------------------------------------------------------------
+% TÍTULO (14pt) --- português e inglês, até 2 linhas cada
+% ---------------------------------------------------------------------------
+\begin{center}
+{\fontsize{14pt}{17pt}\selectfont\bfseries
+Inteligência Artificial no Apoio à Avaliação Formativa em Fábricas de
+Software Acadêmicas: uma Experiência Exitosa\par}
+
+\vspace{6pt}
+
+{\fontsize{14pt}{17pt}\selectfont\bfseries\itshape
+Artificial Intelligence Supporting Formative Assessment in Academic
+Software Factories: a Successful Experience\par}
+
+\vspace{12pt}
+
+% ---------------------------------------------------------------------------
+% AUTORES (instituição + titulação; e-mail do autor correspondente)
+% ---------------------------------------------------------------------------
+{\normalsize
+Esp.~Danrley Pereira\footnote{Autor correspondente. E-mail:
+\texttt{danrley.pereira@cs.udf.edu.br}} \quad
+Dra.~Kerlla de Souza Luz\par}
+
+\vspace{2pt}
+
+{\small Centro Universitário do Distrito Federal (UDF) --- Curso de Ciência da
+Computação, Brasília, Brasil\par}
+\end{center}
+
+\vspace{6pt}
+
+\noindent\textbf{Palavras-chave:} Inteligência Artificial; Fábrica de Software
+Acadêmica; Avaliação Formativa; \textit{Software Analytics}; Ensino Superior.
+
+\vspace{4pt}
+
+% ---------------------------------------------------------------------------
+% SITUAÇÃO
+% ---------------------------------------------------------------------------
+\secao{Situação}
+
+A Fábrica de Software Acadêmica LabTech, projeto de extensão do Centro
+Universitário do Distrito Federal (UDF), insere estudantes dos cursos de
+Tecnologia da Informação em projetos reais, com metodologias ágeis e
+ferramentas da indústria, aproximando teoria e prática
+\cite{cusumano1991japan,dos2021experiencia,oliveira2017conduccao}. O relato de
+experiência do programa entre 2022 e 2024 \cite{pereira2026cadernos} evidenciou
+ganhos consistentes de competências técnicas e interpessoais: em instrumentos
+validados aplicados a quatorze participantes, as médias do
+\textit{Entrepreneurship Competence Framework} (EntreComp)
+\cite{bacigalupo2016entrecomp} situaram-se entre 3,51 e 3,79 (escala 1--4) e o
+escore de autoeficácia geral \cite{sherer1982gse} concentrou-se na metade
+superior da escala (média 79,5/100).
+
+Contudo, o mesmo relato reafirmou uma limitação metodológica central: a
+ausência de instrumentação contínua e de registros padronizados das atividades.
+Sem visibilidade sistemática do andamento dos projetos, os docentes enfrentavam
+assimetria de informação, dificuldade para avaliar objetivamente a colaboração
+entre discentes e pouca capacidade de detectar precocemente estudantes ou
+equipes em risco de baixo engajamento. A leitura manual de repositórios é
+trabalhosa, e as estatísticas nativas do GitHub mostram-se insuficientes para a
+decisão pedagógica \cite{hamer2021using}. Essa lacuna --- registrada por meio de
+diários de bordo, entrevistas e análise de conteúdo --- motivou a adoção de
+Inteligência Artificial (IA) e de \textit{analytics} automatizado como apoio à
+avaliação formativa, dando origem à experiência aqui relatada.
+
+% ---------------------------------------------------------------------------
+% AÇÃO REALIZADA
+% ---------------------------------------------------------------------------
+\secao{Ação realizada}
+
+Para endereçar essa necessidade, desenvolveu-se, no âmbito do Programa
+Institucional de Bolsas de Iniciação Tecnológica e Inovação (PIBIT) do UDF, um
+\textit{dashboard} de monitoramento de código aberto (licença GPL v3.0) para
+acompanhamento contínuo de projetos em fábricas de software acadêmicas. A
+plataforma extrai dados da API do GitHub --- \textit{commits}, \textit{pull
+requests}, \textit{issues}, revisões e tráfego de repositórios --- e os organiza
+em uma Arquitetura Medalhão de três camadas (\textit{Bronze}, dados brutos;
+\textit{Silver}, dados normalizados; \textit{Gold}, métricas agregadas),
+preservando a linhagem desde a origem até o indicador final e garantindo
+reprodutibilidade.
+
+Sobre essa base, calcula-se um conjunto de indicadores-chave de desempenho
+(KPIs) técnicos (frequência de \textit{commits}, \textit{code churn},
+\textit{lead time} de PR) e colaborativos (participação em revisões, rede de
+colaboração entre autores e revisores, regularidade semanal e concentração de
+contribuições). A seleção dos KPIs seguiu a abordagem \textit{Goal--Question--Metric}
+\cite{basili1994gqm} e o processo de medição da norma ISO/IEC/IEEE 15939
+\cite{iso15939}, com atenção explícita aos riscos de interpretação ingênua de
+contagens brutas \cite{fenton2014metrics}.
+
+O diferencial da experiência é o módulo de IA: a plataforma integra um modelo de
+linguagem de grande escala (Google Gemini) \cite{googlegemini2024} que gera, em
+linguagem natural, análises das contribuições de cada estudante, oferecendo ao
+docente uma interpretação contextual dos dados quantitativos. O
+\textit{dashboard} foi construído em ciclos iterativos de co-desenvolvimento
+academia--academia \cite{marijan2020lessons} com uma docente parceira
+(laboratório LabLivre/UnB), que definia, a cada iteração, quais dados
+\textit{Silver} e \textit{Gold} eram necessários para acompanhar suas turmas; o
+módulo de IA foi acrescentado justamente para atender à demanda por
+interpretações contextuais. A solução opera com infraestrutura zero, via GitHub
+Actions (\textit{pipeline} diário) e GitHub Pages, à semelhança de ferramentas
+de monitoramento ágil \cite{ozkan2019agile,vega2022scrumwatch}.
+
+% ---------------------------------------------------------------------------
+% RESULTADOS OBTIDOS
+% ---------------------------------------------------------------------------
+\secao{Resultados obtidos}
+
+O \textit{dashboard} foi implantado em duas instâncias independentes em
+produção, em dois contextos pedagógicos reais: a disciplina de Métodos de
+Desenvolvimento de Software (MDS) e o projeto de extensão LabTech, na UDF. Em
+conjunto, as instâncias cobriram mais de uma centena de repositórios e cerca de
+quatrocentos colaboradores externos acumulados ao longo dos ciclos da disciplina
+de MDS --- essencialmente todos os discentes que por ela passaram.
+
+A validação mais significativa foi de natureza pedagógica: ao final do semestre
+2025/2, a docente parceira utilizou o \textit{dashboard}, apoiada pelas análises
+geradas por IA, para avaliar seus alunos, analisando mais de setenta
+repositórios de sua organização. Esse uso real confirmou que indicadores como o
+ritmo inicial de contribuições (inclinação das primeiras oito semanas), a
+regularidade semanal e a centralidade na rede de colaboração são suficientemente
+acionáveis para a avaliação formativa.
+
+Da percepção docente, registraram-se três efeitos principais. Primeiro, os
+resumos em linguagem natural produzidos pela IA reduziram a leitura ingênua de
+contagens brutas, fornecendo interpretação contextual das contribuições.
+Segundo, os grafos de colaboração permitiram distinguir perfis de estudantes
+\textit{integradores} (com muitos vínculos entre áreas) de \textit{especialistas}
+(focados em uma trilha), enriquecendo a avaliação para além do volume de
+\textit{commits}. Terceiro, a atualização semanal mostrou-se cadência suficiente
+para o acompanhamento e a governança pedagógica. Esses achados convergem com os
+ganhos de competência colaborativa já observados no relato de experiência
+anterior (dimensão de criação de valor colaborativa do EntreComp~=~3,79), agora
+instrumentados de forma contínua e automatizada.
+
+% ---------------------------------------------------------------------------
+% CONCLUSÃO
+% ---------------------------------------------------------------------------
+\secao{Conclusão}
+
+A experiência demonstra que a Inteligência Artificial, combinada a um
+\textit{pipeline} aberto de \textit{software analytics}, pode apoiar de forma
+eficaz a avaliação formativa em fábricas de software acadêmicas, qualificando o
+\textit{feedback} docente e democratizando o acesso a \textit{analytics} ---
+uma vez que a solução é gratuita, de código aberto e opera sem infraestrutura
+própria. A principal contribuição é mostrar que práticas de engenharia de dados
+da indústria, aliadas a um modelo de linguagem, transformam dados dispersos de
+repositórios em informação pedagógica acionável. Ressalva-se, porém, que a IA
+atuou como apoio --- e não substituto --- da decisão docente: combinações
+automáticas de KPIs não devem ditar a nota final. Como perspectivas futuras,
+preveem-se a incorporação de predições baseadas em aprendizado de máquina para a
+identificação precoce de equipes em risco, a expansão para novas instituições e
+disciplinas e a integração com plataformas além do GitHub.
+
+% ---------------------------------------------------------------------------
+% REFERÊNCIAS (NBR 6023)
+% ---------------------------------------------------------------------------
+\begin{singlespace}
+\small
+\bibliography{resumo-simposio-ia}
+\end{singlespace}
+
+\end{document}
