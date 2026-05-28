@@ -16,6 +16,9 @@
 \usepackage{setspace}
 \onehalfspacing
 \usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf,justification=centering,skip=4pt}
 
 % Notas de rodapé em 11pt (conforme edital)
 \renewcommand{\footnotesize}{\fontsize{11pt}{13pt}\selectfont}
@@ -61,7 +64,7 @@ Software Factories\par}
 {\normalsize
 Esp.~Danrley Pereira\footnote{Autor correspondente. E-mail:
 \texttt{danrley.pereira@cs.udf.edu.br}} \quad
-Dra.~Kerlla de Souza Luz\par}
+Dra.~Kerlla de Souza Luz\footnote{E-mail: \texttt{kerlla.luz@udf.edu.br}}\par}
 
 \vspace{2pt}
 
@@ -106,6 +109,17 @@ diários de bordo, entrevistas e análise de conteúdo --- motivou a adoção de
 Inteligência Artificial (IA) e de \textit{analytics} automatizado como apoio à
 avaliação formativa, dando origem à experiência aqui relatada.
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{assets/problema-distribuicao-commits.png}
+\caption{Distribuição do número de \textit{commits} por participante no
+LabTech/UDF, evidenciando forte assimetria de contribuição
+(mediana~$\approx$~23; amplitude 0--49) --- difícil de avaliar sem
+instrumentação contínua.}
+\par\vspace{2pt}{\footnotesize Fonte: os autores (2026), a partir de dados de repositórios do LabTech/UDF.\par}
+\label{fig:problema}
+\end{figure}
+
 % ---------------------------------------------------------------------------
 % AÇÃO REALIZADA
 % ---------------------------------------------------------------------------
@@ -143,6 +157,16 @@ módulo de IA foi acrescentado justamente para atender à demanda por
 interpretações contextuais. A solução opera com infraestrutura zero, via GitHub
 Actions (\textit{pipeline} diário) e GitHub Pages, à semelhança de ferramentas
 de monitoramento ágil \cite{ozkan2019agile,vega2022scrumwatch}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\textwidth]{assets/analise-ia-membro.png}
+\caption{Módulo de análise por IA (Google Gemini) do \textit{dashboard}: resumo
+em linguagem natural das contribuições (\textit{issues}) de um membro de equipe,
+gerado automaticamente para apoiar a leitura docente.}
+\par\vspace{2pt}{\footnotesize Fonte: os autores (2026) --- \textit{dashboard} em produção.\par}
+\label{fig:ia}
+\end{figure}
 
 % ---------------------------------------------------------------------------
 % RESULTADOS OBTIDOS
