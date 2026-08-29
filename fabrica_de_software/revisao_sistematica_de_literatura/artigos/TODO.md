@@ -1,0 +1,3 @@
+- [x] Definir estratégia para filtragem de artigos com base no resumo.
+- [ ] Filtrar os 544 artigos com base no resumo.
+- [ ] Quantos destes artigos conseguimos realizar o download??
